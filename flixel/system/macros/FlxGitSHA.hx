@@ -1,8 +1,11 @@
 package flixel.system.macros;
 
+#if macro
 import haxe.macro.Context;
 import haxe.macro.Expr;
+#if sys
 import sys.io.Process;
+#end
 
 using StringTools;
 
@@ -77,6 +80,7 @@ class FlxGitSHA
 
 	public static function getProcessOutput(cmd:String, args:Array<String>):String
 	{
+		#if sys
 		try
 		{
 			var process = new Process(cmd, args);
@@ -95,5 +99,9 @@ class FlxGitSHA
 		{
 			return "";
 		}
+		#else
+		return "";
+		#end
 	}
 }
+#end

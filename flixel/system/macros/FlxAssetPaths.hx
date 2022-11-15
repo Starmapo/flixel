@@ -1,8 +1,11 @@
 package flixel.system.macros;
 
+#if macro
 import haxe.macro.Context;
 import haxe.macro.Expr;
+#if sys
 import sys.FileSystem;
+#end
 
 using flixel.util.FlxArrayUtil;
 using StringTools;
@@ -38,6 +41,7 @@ class FlxAssetPaths
 			?rename:String->String):Array<FileReference>
 	{
 		var fileReferences:Array<FileReference> = [];
+		#if sys
 		var resolvedPath = #if (ios || tvos) "../assets/" + directory #else directory #end;
 		var directoryInfo = FileSystem.readDirectory(resolvedPath);
 		for (name in directoryInfo)
@@ -64,6 +68,7 @@ class FlxAssetPaths
 				fileReferences = fileReferences.concat(getFileReferences(directory + name + "/", true, filterExtensions, rename));
 			}
 		}
+		#end
 
 		return fileReferences;
 	}
@@ -100,3 +105,4 @@ private class FileReference
 		this.documentation = "`\"" + value + "\"` (auto generated).";
 	}
 }
+#end
