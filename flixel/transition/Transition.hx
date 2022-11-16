@@ -1,19 +1,12 @@
-package flixel.addons.transition;
+package flixel.transition;
 
-import flixel.addons.transition.TransitionData.TransitionType;
-import flixel.addons.transition.TransitionEffect;
-import flixel.addons.transition.TransitionFade;
-import flixel.addons.transition.TransitionTiles;
-import flixel.addons.transition.FlxTransitionSprite.TransitionStatus;
-import flixel.FlxG;
-import flixel.FlxSprite;
+import flixel.transition.TransitionData.TransitionType;
+import flixel.transition.TransitionEffect;
+import flixel.transition.TransitionFade;
+import flixel.transition.TransitionTiles;
+import flixel.transition.FlxTransitionSprite.TransitionStatus;
 import flixel.FlxSubState;
-import flixel.group.FlxGroup;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
 
 /**
  * This substate is automatically created to play the actual transition visuals inside a FlxTransitionState.
@@ -28,6 +21,13 @@ class Transition extends FlxSubState
 
 	public function new(data:TransitionData)
 	{
+		var cam = new FlxCamera(0, 0, Std.int(data.region.width), Std.int(data.region.height));
+		cam.bgColor = 0;
+		cam.setSize(Std.int(data.region.width), Std.int(data.region.height));
+		cam.widescreen = FlxG.widescreen || (function() {for(e in FlxG.cameras.list) if (e.widescreen == true) return true; return false;})();
+		FlxG.cameras.add(cam, false);
+		cameras = [cam];
+		
 		super(FlxColor.TRANSPARENT);
 		_effect = createEffect(data);
 		_effect.scrollFactor.set(0, 0);

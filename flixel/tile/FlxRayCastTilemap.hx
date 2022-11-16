@@ -1,4 +1,4 @@
-package flixel.addons.tile;
+package flixel.tile;
 
 import flixel.tile.FlxTilemap;
 import flixel.math.FlxPoint;

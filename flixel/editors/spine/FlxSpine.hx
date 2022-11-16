@@ -1,7 +1,7 @@
-package flixel.addons.editors.spine;
+package flixel.editors.spine;
 
 #if spinehaxe
-import flixel.addons.editors.spine.texture.FlixelTextureLoader;
+import flixel.editors.spine.texture.FlixelTextureLoader;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;

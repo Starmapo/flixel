@@ -1,4 +1,4 @@
-package flixel.addons.tile;
+package flixel.tile;
 
 import flash.display.BitmapData;
 import flash.geom.Point;

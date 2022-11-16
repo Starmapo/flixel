@@ -1,6 +1,6 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.StrNameLabel;
+import flixel.ui.StrNameLabel;
 import flixel.util.FlxStringUtil;
 
 class StrNameLabel

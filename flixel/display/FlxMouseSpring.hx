@@ -1,4 +1,4 @@
-package flixel.addons.display;
+package flixel.display;
 
 #if FLX_MOUSE
 import flixel.FlxG;

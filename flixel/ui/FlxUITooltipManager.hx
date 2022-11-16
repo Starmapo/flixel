@@ -1,10 +1,10 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flixel.FlxCamera;
-import flixel.addons.ui.FlxUITooltip;
-import flixel.addons.ui.interfaces.IFlxUIButton;
-import flixel.addons.ui.interfaces.IFlxUIState;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
+import flixel.ui.FlxUITooltip;
+import flixel.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IFlxUIState;
+import flixel.ui.interfaces.IFlxUIWidget;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
@@ -65,9 +65,9 @@ class FlxUITooltipManager implements IFlxDestroyable
 		defaultStyle = FlxUITooltip.cloneStyle(tooltip.style);
 	}
 
-	@:access(flixel.addons.ui.FlxUI)
-	@:access(flixel.addons.ui.FlxUIState)
-	@:access(flixel.addons.ui.FlxUISubState)
+	@:access(flixel.ui.FlxUI)
+	@:access(flixel.ui.FlxUIState)
+	@:access(flixel.ui.FlxUISubState)
 	public function init():Void
 	{
 		var ui:FlxUI = (state != null) ? state._ui : ((subState != null) ? subState._ui : null);
@@ -487,7 +487,7 @@ class FlxUITooltipManager implements IFlxDestroyable
 		return fixedPosition;
 	}
 
-	@:access(flixel.addons.ui.FlxUITooltip)
+	@:access(flixel.ui.FlxUITooltip)
 	private function set_showTooltipArrow(b:Bool):Bool
 	{
 		showTooltipArrow = b;

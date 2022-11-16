@@ -1,4 +1,4 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flixel.FlxObject;
 import flixel.util.FlxDestroyUtil.IFlxDestroyable;

@@ -1,8 +1,8 @@
-package flixel.addons.editors.ogmo;
+package flixel.editors.ogmo;
 
 import flixel.FlxG;
-import flixel.addons.tile.FlxTileSpecial;
-import flixel.addons.tile.FlxTilemapExt;
+import flixel.tile.FlxTileSpecial;
+import flixel.tile.FlxTilemapExt;
 import flixel.group.FlxGroup;
 import flixel.math.FlxAngle;
 import flixel.math.FlxPoint;
@@ -14,7 +14,7 @@ import haxe.Json;
 import openfl.Assets;
 
 using StringTools;
-using flixel.addons.editors.ogmo.FlxOgmo3Loader;
+using flixel.editors.ogmo.FlxOgmo3Loader;
 
 /**
  * @since 2.8.0

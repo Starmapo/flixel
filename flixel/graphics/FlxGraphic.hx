@@ -364,6 +364,8 @@ class FlxGraphic implements IFlxDestroyable
 	 */
 	public var unique:Bool = false;
 
+	public var hasJustBeenAdded:Bool = true;
+
 	/**
 	 * Internal var holding `FlxImageFrame` for the whole bitmap of this graphic.
 	 * Use public `imageFrame` var to access/generate it.
@@ -390,6 +392,7 @@ class FlxGraphic implements IFlxDestroyable
 	 * @param   Persist   Whether or not this graphic stay in the cache after resetting it.
 	 *                    Default value is `false`, which means that this graphic will be destroyed at the cache reset.
 	 */
+	@:allow(flixel.graphics.frames.FlxAtlasFrames)
 	function new(Key:String, Bitmap:BitmapData, ?Persist:Bool)
 	{
 		key = Key;

@@ -1,4 +1,4 @@
-package flixel.addons.plugin;
+package flixel.plugin;
 
 import flash.display.BitmapData;
 import flash.geom.Point;

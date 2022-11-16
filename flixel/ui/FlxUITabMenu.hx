@@ -1,11 +1,11 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.geom.Rectangle;
-import flixel.addons.ui.interfaces.IEventGetter;
-import flixel.addons.ui.interfaces.IFlxUIButton;
-import flixel.addons.ui.interfaces.IFlxUIClickable;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IResizable;
+import flixel.ui.interfaces.IEventGetter;
+import flixel.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IFlxUIClickable;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IResizable;
 import flixel.FlxSprite;
 import flixel.system.FlxAssets;
 import flixel.text.FlxText;

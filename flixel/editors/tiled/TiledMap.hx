@@ -1,4 +1,4 @@
-package flixel.addons.editors.tiled;
+package flixel.editors.tiled;
 
 import flixel.util.FlxColor;
 import flixel.util.typeLimit.OneOfTwo;

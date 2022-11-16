@@ -1,4 +1,4 @@
-package flixel.addons.editors.tiled;
+package flixel.editors.tiled;
 
 import haxe.Int64;
 import flixel.math.FlxPoint;

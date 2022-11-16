@@ -1,4 +1,4 @@
-package flixel.addons.util;
+package flixel.util;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -8,7 +8,7 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
-import flixel.addons.display.FlxBackdrop;
+import flixel.display.FlxBackdrop;
 import openfl.Assets;
 import haxe.xml.Parser;
 

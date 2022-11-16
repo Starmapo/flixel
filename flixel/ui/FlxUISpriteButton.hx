@@ -1,6 +1,6 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IFlxUIButton;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxColor;

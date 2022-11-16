@@ -1,4 +1,4 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.events.Event;
 import flash.events.MouseEvent;

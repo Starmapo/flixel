@@ -1,4 +1,4 @@
-package flixel.addons.display.shapes;
+package flixel.display.shapes;
 
 import flash.geom.Matrix;
 import flixel.math.FlxPoint;

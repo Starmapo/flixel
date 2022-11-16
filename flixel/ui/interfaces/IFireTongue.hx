@@ -1,4 +1,4 @@
-package flixel.addons.ui.interfaces;
+package flixel.ui.interfaces;
 
 /**
  * An interface to match FireTongue, so we can use this without making

@@ -1,4 +1,4 @@
-package flixel.addons.display;
+package flixel.display;
 
 import flash.display.BitmapData;
 import flash.geom.Point;
@@ -15,6 +15,8 @@ import flixel.util.FlxColor;
  */
 class FlxGridOverlay
 {
+	public static var cache:Map<String, BitmapData> = new Map();
+
 	/**
 	 * Creates a FlxSprite of the given width and height filled with a checkerboard pattern.
 	 * Each grid cell is the specified width and height, and alternates between two colors.
@@ -101,6 +103,10 @@ class FlxGridOverlay
 
 	public static function createGrid(CellWidth:Int, CellHeight:Int, Width:Int, Height:Int, Alternate:Bool, Color1:FlxColor, Color2:FlxColor):BitmapData
 	{
+		var key = '$CellWidth::$CellHeight::$Width::$Height::$Alternate::$Color1::$Color2';
+		if (cache.exists(key))
+			return cache.get(key);
+
 		// How many cells can we fit into the width/height? (round it UP if not even, then trim back)
 		var rowColor:Int = Color1;
 		var lastColor:Int = Color1;
@@ -146,6 +152,7 @@ class FlxGridOverlay
 			y += CellHeight;
 		}
 
+		cache.set(key, grid);
 		return grid;
 	}
 }

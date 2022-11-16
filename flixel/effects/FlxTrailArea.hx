@@ -1,4 +1,4 @@
-package flixel.addons.effects;
+package flixel.effects;
 
 import flash.display.BitmapData;
 import flash.display.BlendMode;

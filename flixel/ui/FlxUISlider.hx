@@ -1,8 +1,8 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 #if FLX_MOUSE
-import flixel.addons.ui.FlxSlider;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
+import flixel.ui.FlxSlider;
+import flixel.ui.interfaces.IFlxUIWidget;
 
 class FlxUISlider extends FlxSlider implements IFlxUIWidget
 {

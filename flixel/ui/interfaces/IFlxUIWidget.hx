@@ -1,6 +1,6 @@
-package flixel.addons.ui.interfaces;
+package flixel.ui.interfaces;
 
-import flixel.addons.ui.FlxUI.UIEventCallback;
+import flixel.ui.FlxUI.UIEventCallback;
 import flixel.FlxSprite;
 
 /**

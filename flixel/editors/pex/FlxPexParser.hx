@@ -1,4 +1,4 @@
-package flixel.addons.editors.pex;
+package flixel.editors.pex;
 
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;

@@ -1,7 +1,7 @@
-package flixel.addons.nape;
+package flixel.nape;
 
 #if nape
-import flixel.addons.nape.FlxNapeSpace;
+import flixel.nape.FlxNapeSpace;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;

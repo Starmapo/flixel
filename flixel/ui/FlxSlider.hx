@@ -1,4 +1,4 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 #if FLX_MOUSE
 import flixel.FlxG;

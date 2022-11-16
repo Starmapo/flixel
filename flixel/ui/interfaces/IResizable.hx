@@ -1,4 +1,4 @@
-package flixel.addons.ui.interfaces;
+package flixel.ui.interfaces;
 
 /**
  * ...

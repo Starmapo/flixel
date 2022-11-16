@@ -1,4 +1,4 @@
-package flixel.addons.plugin.taskManager;
+package flixel.plugin.taskManager;
 
 import flixel.FlxBasic;
 import flixel.FlxG;

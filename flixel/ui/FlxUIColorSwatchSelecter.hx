@@ -1,8 +1,8 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.geom.Rectangle;
-import flixel.addons.ui.FlxUIColorSwatchSelecter.SwatchGraphic;
-import flixel.addons.ui.interfaces.IFlxUIClickable;
+import flixel.ui.FlxUIColorSwatchSelecter.SwatchGraphic;
+import flixel.ui.interfaces.IFlxUIClickable;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.system.FlxAssets.FlxGraphicAsset;

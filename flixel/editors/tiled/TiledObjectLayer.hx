@@ -1,6 +1,6 @@
-package flixel.addons.editors.tiled;
+package flixel.editors.tiled;
 
-import flixel.addons.editors.tiled.TiledLayer.TiledLayerType;
+import flixel.editors.tiled.TiledLayer.TiledLayerType;
 import flixel.util.FlxColor;
 #if haxe4
 import haxe.xml.Access;

@@ -1,4 +1,4 @@
-package flixel.addons.effects.chainable;
+package flixel.effects.chainable;
 
 import flixel.math.FlxPoint;
 import flixel.util.FlxAxes;

@@ -1,9 +1,12 @@
 package flixel.addons.ui;
 
+import flixel.input.FlxPointer;
+import openfl.desktop.Clipboard;
+import lime.app.Application;
 import flash.errors.Error;
 import flash.events.KeyboardEvent;
 import flash.geom.Rectangle;
-import flixel.addons.ui.FlxUI.NamedString;
+import flixel.ui.FlxUI.NamedString;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
@@ -224,6 +227,7 @@ class FlxInputText extends FlxText
 
 		lines = 1;
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		Application.current.window.onTextInput.add(onTextInput);
 
 		if (Text == null)
 		{
@@ -241,6 +245,7 @@ class FlxInputText extends FlxText
 	override public function destroy():Void
 	{
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		Application.current.window.onTextInput.remove(onTextInput);
 
 		backgroundSprite = FlxDestroyUtil.destroy(backgroundSprite);
 		fieldBorderSprite = FlxDestroyUtil.destroy(fieldBorderSprite);
@@ -305,7 +310,15 @@ class FlxInputText extends FlxText
 		if (FlxG.mouse.justPressed)
 		{
 			var hadFocus:Bool = hasFocus;
-			if (FlxG.mouse.overlaps(this))
+			var overlap = false;
+			for (camera in cameras)
+			{
+				if (checkInput(FlxG.mouse, camera))
+				{
+					overlap = true;
+				}
+			}
+			if (overlap)
 			{
 				caretIndex = getCaretIndex();
 				hasFocus = true;
@@ -320,6 +333,26 @@ class FlxInputText extends FlxText
 			}
 		}
 		#end
+		if (hasFocus && FlxG.keys.justPressed.V && FlxG.keys.pressed.CONTROL)
+		{
+			var text = Clipboard.generalClipboard.getData(TEXT_FORMAT);
+			if (text != null)
+				onTextInput(text);
+		}
+	}
+
+	function checkInput(pointer:FlxPointer, camera:FlxCamera):Bool
+	{
+		return overlapsPoint(pointer.getWorldPosition(camera, _point), true, camera);
+	}
+
+	private function onTextInput(text:String)
+	{
+		if (!hasFocus)
+			return;
+		var newText = this.text.substr(0, caretIndex) + text + this.text.substr(caretIndex);
+		this.text = newText;
+		caretIndex += text.length;
 	}
 
 	/**
@@ -388,23 +421,9 @@ class FlxInputText extends FlxText
 			// Enter
 			else if (key == 13)
 			{
+				if (lines == -1)
+					onTextInput("\n");
 				onChange(ENTER_ACTION);
-			}
-			// Actually add some text
-			else
-			{
-				if (e.charCode == 0) // non-printable characters crash String.fromCharCode
-				{
-					return;
-				}
-				var newText:String = filter(String.fromCharCode(e.charCode));
-
-				if (newText.length > 0 && (maxLength == 0 || (text.length + newText.length) < maxLength))
-				{
-					text = insertSubstring(text, newText, caretIndex);
-					caretIndex++;
-					onChange(INPUT_ACTION);
-				}
 			}
 		}
 	}
@@ -533,11 +552,9 @@ class FlxInputText extends FlxText
 				switch (getAlignStr())
 				{
 					case RIGHT:
-						X = X - textField.width + textField.textWidth
-							;
+						X = X - textField.width + textField.textWidth;
 					case CENTER:
-						X = X - textField.width / 2 + textField.textWidth / 2
-							;
+						X = X - textField.width / 2 + textField.textWidth / 2;
 					default:
 				}
 			}
@@ -951,7 +968,7 @@ class FlxInputText extends FlxText
 		if (Value == 0)
 			return 0;
 
-		if (Value > 1)
+		if (Value > 1 || Value == -1)
 		{
 			textField.wordWrap = true;
 			textField.multiline = true;

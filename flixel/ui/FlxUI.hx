@@ -1,4 +1,4 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.display.BitmapData;
 import flash.errors.Error;
@@ -6,27 +6,27 @@ import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.Lib;
-import flixel.addons.ui.FlxUI.MaxMinSize;
-import flixel.addons.ui.ButtonLabelStyle;
-import flixel.addons.ui.FlxUI.Rounding;
-import flixel.addons.ui.FlxUI.VarValue;
-import flixel.addons.ui.FlxUIBar.FlxBarStyle;
-import flixel.addons.ui.FlxUICursor.WidgetList;
-import flixel.addons.ui.FlxUIDropDownMenu;
-import flixel.addons.ui.BorderDef;
-import flixel.addons.ui.FlxUILine.LineAxis;
-import flixel.addons.ui.FlxUIRadioGroup.CheckStyle;
-import flixel.addons.ui.FlxUITooltipManager.FlxUITooltipData;
-import flixel.addons.ui.FontDef;
-import flixel.addons.ui.interfaces.IEventGetter;
-import flixel.addons.ui.interfaces.IFireTongue;
-import flixel.addons.ui.interfaces.IFlxUIButton;
-import flixel.addons.ui.interfaces.IFlxUIClickable;
-import flixel.addons.ui.interfaces.IFlxUIState;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IHasParams;
-import flixel.addons.ui.interfaces.ILabeled;
-import flixel.addons.ui.interfaces.IResizable;
+import flixel.ui.FlxUI.MaxMinSize;
+import flixel.ui.ButtonLabelStyle;
+import flixel.ui.FlxUI.Rounding;
+import flixel.ui.FlxUI.VarValue;
+import flixel.ui.FlxUIBar.FlxBarStyle;
+import flixel.ui.FlxUICursor.WidgetList;
+import flixel.ui.FlxUIDropDownMenu;
+import flixel.ui.BorderDef;
+import flixel.ui.FlxUILine.LineAxis;
+import flixel.ui.FlxUIRadioGroup.CheckStyle;
+import flixel.ui.FlxUITooltipManager.FlxUITooltipData;
+import flixel.ui.FontDef;
+import flixel.ui.interfaces.IEventGetter;
+import flixel.ui.interfaces.IFireTongue;
+import flixel.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IFlxUIClickable;
+import flixel.ui.interfaces.IFlxUIState;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IHasParams;
+import flixel.ui.interfaces.ILabeled;
+import flixel.ui.interfaces.IResizable;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -221,7 +221,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 		return U.font(str, style, extension);
 	}
 
-	@:access(flixel.addons.ui.interfaces.IFlxUIState)
+	@:access(flixel.ui.interfaces.IFlxUIState)
 	private static inline function __getTongue():IFireTongue
 	{
 		var currState:IFlxUIState = getLeafUIState();
@@ -3902,7 +3902,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 		return new FlxPoint(-1, -1);
 	}
 
-	@:access(flixel.addons.ui.FlxUITypedButton)
+	@:access(flixel.ui.FlxUITypedButton)
 	private function _loadButton(data:Access, setCallback:Bool = true, isToggle:Bool = false, load_code:String = ""):IFlxUIWidget
 	{
 		var fb:IFlxUIButton = null;

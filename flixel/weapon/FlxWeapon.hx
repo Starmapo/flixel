@@ -1,10 +1,10 @@
-package flixel.addons.weapon;
+package flixel.weapon;
 
 import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.addons.weapon.FlxWeapon.FlxTypedWeapon;
+import flixel.weapon.FlxWeapon.FlxTypedWeapon;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.touch.FlxTouch;
 import flixel.math.FlxAngle;

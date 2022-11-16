@@ -1,4 +1,4 @@
-package flixel.addons.effects;
+package flixel.effects;
 
 import flixel.animation.FlxAnimation;
 import flixel.FlxG;

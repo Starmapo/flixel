@@ -1,7 +1,7 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.FlxUILine.LineAxis;
-import flixel.addons.ui.interfaces.IResizable;
+import flixel.ui.FlxUILine.LineAxis;
+import flixel.ui.interfaces.IResizable;
 import flixel.util.FlxColor;
 
 /**

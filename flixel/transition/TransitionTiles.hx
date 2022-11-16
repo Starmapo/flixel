@@ -1,8 +1,8 @@
-package flixel.addons.transition;
+package flixel.transition;
 
 import flash.display.BitmapData;
-import flixel.addons.transition.TransitionEffect;
-import flixel.addons.transition.FlxTransitionSprite.TransitionStatus;
+import flixel.transition.TransitionEffect;
+import flixel.transition.FlxTransitionSprite.TransitionStatus;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 

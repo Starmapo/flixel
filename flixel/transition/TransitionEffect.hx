@@ -1,7 +1,7 @@
-package flixel.addons.transition;
+package flixel.transition;
 
-import flixel.addons.transition.FlxTransitionSprite.TransitionStatus;
-import flixel.addons.transition.TransitionData;
+import flixel.transition.FlxTransitionSprite.TransitionStatus;
+import flixel.transition.TransitionData;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxTimer;
@@ -9,7 +9,7 @@ import flixel.util.FlxTimer;
 /**
  * @author larsiusprime
  */
-@:allow(flixel.addons.transition.Transition)
+@:allow(flixel.transition.Transition)
 class TransitionEffect extends FlxSpriteGroup
 {
 	public var finishCallback:Void->Void;

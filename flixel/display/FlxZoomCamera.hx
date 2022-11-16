@@ -1,4 +1,4 @@
-package flixel.addons.display;
+package flixel.display;
 
 import flixel.FlxCamera;
 import flixel.math.FlxMath;

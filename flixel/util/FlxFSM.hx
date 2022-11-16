@@ -1,4 +1,4 @@
-package flixel.addons.util;
+package flixel.util;
 
 import flixel.util.FlxDestroyUtil;
 import flixel.math.FlxRandom;

@@ -1,9 +1,9 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.FlxUI.UIEventCallback;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IHasParams;
-import flixel.addons.ui.interfaces.IResizable;
+import flixel.ui.FlxUI.UIEventCallback;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IHasParams;
+import flixel.ui.interfaces.IResizable;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import openfl.text.TextField;

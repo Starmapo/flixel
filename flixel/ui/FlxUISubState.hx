@@ -1,9 +1,9 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.interfaces.IEventGetter;
-import flixel.addons.ui.interfaces.IFireTongue;
-import flixel.addons.ui.interfaces.IFlxUIState;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IEventGetter;
+import flixel.ui.interfaces.IFireTongue;
+import flixel.ui.interfaces.IFlxUIState;
+import flixel.ui.interfaces.IFlxUIWidget;
 import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSubState;
@@ -238,7 +238,7 @@ class FlxUISubState extends FlxSubState implements IFlxUIState
 		return Flag;
 	}
 
-	@:access(flixel.addons.ui.FlxUI)
+	@:access(flixel.ui.FlxUI)
 	private function cleanup():Void
 	{
 		// Clean up intermediate cached graphics that are no longer necessary

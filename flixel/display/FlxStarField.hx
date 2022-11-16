@@ -3,7 +3,7 @@
  * @see https://github.com/photonstorm/Flixel-Power-Tools/blob/master/src/org/flixel/plugin/photonstorm/FX/StarfieldFX.as
  */
 
-package flixel.addons.display;
+package flixel.display;
 
 import flixel.FlxG;
 import flixel.FlxSprite;

@@ -1,4 +1,4 @@
-package flixel.addons.plugin.control;
+package flixel.plugin.control;
 
 #if FLX_KEYBOARD
 import flash.geom.Rectangle;

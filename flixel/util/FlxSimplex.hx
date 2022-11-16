@@ -1,4 +1,4 @@
-package flixel.addons.util;
+package flixel.util;
 
 /**
  * Simplex noise generation.

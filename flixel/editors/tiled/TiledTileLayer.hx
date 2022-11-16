@@ -1,7 +1,7 @@
-package flixel.addons.editors.tiled;
+package flixel.editors.tiled;
 
 import flash.utils.Endian;
-import flixel.addons.editors.tiled.TiledLayer.TiledLayerType;
+import flixel.editors.tiled.TiledLayer.TiledLayerType;
 import openfl.utils.ByteArray;
 #if haxe4
 import haxe.xml.Access;

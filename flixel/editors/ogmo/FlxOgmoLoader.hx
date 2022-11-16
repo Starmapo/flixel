@@ -1,4 +1,4 @@
-package flixel.addons.editors.ogmo;
+package flixel.editors.ogmo;
 
 import flixel.FlxG;
 import flixel.math.FlxRect;

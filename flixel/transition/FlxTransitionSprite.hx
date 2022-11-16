@@ -1,6 +1,6 @@
-package flixel.addons.transition;
+package flixel.transition;
 
-import flixel.addons.transition.FlxTransitionSprite.TransitionStatus;
+import flixel.transition.FlxTransitionSprite.TransitionStatus;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;

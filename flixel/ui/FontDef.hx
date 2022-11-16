@@ -1,8 +1,8 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.text.TextField;
 import flash.text.TextFormat;
-import flixel.addons.ui.BorderDef;
+import flixel.ui.BorderDef;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import openfl.Assets;

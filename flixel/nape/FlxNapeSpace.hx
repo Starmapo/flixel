@@ -1,4 +1,4 @@
-package flixel.addons.nape;
+package flixel.nape;
 
 #if nape
 import flash.display.BitmapData;

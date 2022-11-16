@@ -1,6 +1,6 @@
-package flixel.addons.editors.tiled;
+package flixel.editors.tiled;
 
-import flixel.addons.editors.tiled.TiledObject;
+import flixel.editors.tiled.TiledObject;
 
 /** @since 2.2.0 */
 typedef TileAnimationData =

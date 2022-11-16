@@ -1,4 +1,4 @@
-package flixel.addons.display;
+package flixel.display;
 
 #if (openfl >= "8.0.0")
 import flixel.FlxBasic;

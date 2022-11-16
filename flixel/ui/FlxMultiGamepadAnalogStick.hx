@@ -1,6 +1,6 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.FlxMultiGamepadAnalogStick.StickInput;
+import flixel.ui.FlxMultiGamepadAnalogStick.StickInput;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.input.gamepad.FlxGamepadInputID;
 

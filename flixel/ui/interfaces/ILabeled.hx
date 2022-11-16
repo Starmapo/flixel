@@ -1,6 +1,6 @@
-package flixel.addons.ui.interfaces;
+package flixel.ui.interfaces;
 
-import flixel.addons.ui.FlxUIText;
+import flixel.ui.FlxUIText;
 import flixel.text.FlxText;
 
 /**

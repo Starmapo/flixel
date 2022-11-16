@@ -1,4 +1,4 @@
-package flixel.addons.editors.tiled;
+package flixel.editors.tiled;
 
 /*
  * Helper class to get the original tileset id of the tile and if the tile is

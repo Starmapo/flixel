@@ -1,4 +1,4 @@
-package flixel.addons.display;
+package flixel.display;
 
 import flash.geom.ColorTransform;
 import flixel.FlxBasic;

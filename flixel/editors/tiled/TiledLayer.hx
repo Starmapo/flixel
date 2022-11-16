@@ -1,4 +1,4 @@
-package flixel.addons.editors.tiled;
+package flixel.editors.tiled;
 
 import flash.utils.ByteArray;
 #if haxe4

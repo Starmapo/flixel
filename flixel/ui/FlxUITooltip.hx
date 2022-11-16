@@ -1,6 +1,6 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
+import flixel.ui.FlxUITooltip.FlxUITooltipStyle;
 import flixel.FlxObject;
 import flixel.text.FlxText;
 import flixel.text.FlxText.FlxTextBorderStyle;
@@ -551,7 +551,7 @@ class FlxUITooltip extends FlxUIGroup
 		return a;
 	}
 
-	@:allow(flixel.addons.ui.FlxUITooltipManager)
+	@:allow(flixel.ui.FlxUITooltipManager)
 	private static function styleFix(Style:FlxUITooltipStyle, ?DefaultStyle:FlxUITooltipStyle):FlxUITooltipStyle
 	{
 		if (Style == null)

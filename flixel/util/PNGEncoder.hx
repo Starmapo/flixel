@@ -30,7 +30,7 @@
 	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package flixel.addons.util;
+package flixel.util;
 
 #if !js
 import flash.display.Bitmap;

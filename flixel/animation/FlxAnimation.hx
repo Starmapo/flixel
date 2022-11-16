@@ -71,6 +71,16 @@ class FlxAnimation extends FlxBaseAnimation
 	public var frames:Array<Int>;
 
 	/**
+	 *
+	 */
+	public var inputIndices:Array<Int> = [];
+
+	/**
+		Animation prefix used during the creation
+	**/
+	public var prefix:String = null;
+
+	/**
 	 * Internal, used to time each frame of animation.
 	 */
 	var _frameTimer:Float = 0;

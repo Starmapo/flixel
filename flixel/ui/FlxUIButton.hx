@@ -1,15 +1,15 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.text.Font;
 import flash.text.TextFormat;
-import flixel.addons.ui.BorderDef;
-import flixel.addons.ui.FontDef;
-import flixel.addons.ui.interfaces.IFlxUIButton;
-import flixel.addons.ui.interfaces.IHasParams;
-import flixel.addons.ui.interfaces.ILabeled;
+import flixel.ui.BorderDef;
+import flixel.ui.FontDef;
+import flixel.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IHasParams;
+import flixel.ui.interfaces.ILabeled;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.system.FlxAssets;

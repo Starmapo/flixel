@@ -1,14 +1,14 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.display.BitmapData;
 import flash.display.BlendMode;
 import flash.geom.Point;
-import flixel.addons.ui.FlxUI.MaxMinSize;
+import flixel.ui.FlxUI.MaxMinSize;
 import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.addons.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IFlxUIButton;
 import flixel.graphics.FlxGraphic;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;

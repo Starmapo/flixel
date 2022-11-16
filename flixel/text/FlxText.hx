@@ -221,6 +221,10 @@ class FlxText extends FlxSprite
 		_defaultFormat = null;
 		_formatAdjusted = null;
 		shadowOffset = FlxDestroyUtil.put(shadowOffset);
+
+		if (graphic != null)
+			FlxG.bitmap.remove(graphic);
+
 		super.destroy();
 	}
 
@@ -800,6 +804,10 @@ class FlxText extends FlxSprite
 			// Need to generate a new buffer to store the text graphic
 			height = newHeight;
 			var key:String = FlxG.bitmap.getUniqueKey("text");
+
+			if (graphic != null)
+				FlxG.bitmap.remove(graphic);
+
 			makeGraphic(newWidth, newHeight, FlxColor.TRANSPARENT, false, key);
 
 			if (_hasBorderAlpha)

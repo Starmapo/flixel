@@ -1,10 +1,10 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 #if FLX_MOUSE
 import flash.events.MouseEvent;
 import flash.geom.Rectangle;
 import flash.Lib;
-import flixel.addons.display.FlxExtendedSprite;
+import flixel.display.FlxExtendedSprite;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;

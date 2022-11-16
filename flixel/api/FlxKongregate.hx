@@ -1,4 +1,4 @@
-package flixel.addons.api;
+package flixel.api;
 
 #if flash
 import flash.display.DisplayObject;

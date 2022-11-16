@@ -1,4 +1,4 @@
-package flixel.addons.transition;
+package flixel.transition;
 
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;

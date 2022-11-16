@@ -1,4 +1,4 @@
-package flixel.addons.weapon;
+package flixel.weapon;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -19,7 +19,7 @@ class FlxBullet extends FlxSprite
 	public var yAcceleration:Int;
 	public var lifespan:Float;
 
-	@:allow(flixel.addons.weapon)
+	@:allow(flixel.weapon)
 	var bounds:FlxRect;
 
 	public function new()

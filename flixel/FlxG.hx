@@ -1,5 +1,6 @@
 package flixel;
 
+import flixel.input.FlxTextInput;
 import flash.Lib;
 import flash.display.DisplayObject;
 import flash.display.Stage;
@@ -65,6 +66,21 @@ import flixel.system.frontEnds.HTML5FrontEnd;
 class FlxG
 {
 	/**
+	 * Whenever black bars for cameras shouldn't show up.
+	 */
+	public static var widescreen(default, set):Bool = false;
+
+	private static function set_widescreen(v:Bool)
+	{
+		widescreen = v;
+		for (e in FlxG.cameras.list)
+		{
+			e.updateScrollRect();
+		}
+		return widescreen;
+	}
+
+	/**
 	 * Whether the game should be paused when focus is lost or not. Use `-D FLX_NO_FOCUS_LOST_SCREEN`
 	 * if you only want to get rid of the default pause screen.
 	 * Override `onFocus()` and `onFocusLost()` for your own behaviour in your state.
@@ -89,11 +105,23 @@ class FlxG
 	 */
 	public static var worldDivisions:Int = 6;
 
+	private static var _camera:FlxCamera;
+
 	/**
 	 * By default this just refers to the first entry in the `FlxG.cameras.list`
 	 * array but you can do what you like with it.
 	 */
-	public static var camera:FlxCamera;
+	public static var camera(get, set):FlxCamera;
+
+	private static function get_camera()
+	{
+		return _camera == null || _camera.flashSprite == null ? FlxG.cameras.list[0] : _camera;
+	}
+
+	private static function set_camera(v:FlxCamera)
+	{
+		return _camera = v;
+	}
 
 	/**
 	 * The HaxeFlixel version, in semantic versioning syntax. Use `Std.string()`
@@ -310,6 +338,8 @@ class FlxG
 	 * Contains a list of all plugins and the functions required to `add()`, `remove()` them etc.
 	 */
 	public static var plugins(default, null):PluginFrontEnd;
+
+	public static var textInput:FlxTextInput;
 
 	public static var initialWidth(default, null):Int = 0;
 	public static var initialHeight(default, null):Int = 0;
@@ -586,6 +616,7 @@ class FlxG
 		// Instantiate inputs
 		#if FLX_KEYBOARD
 		keys = inputs.add(new FlxKeyboard());
+		textInput = new FlxTextInput();
 		#end
 
 		#if FLX_MOUSE

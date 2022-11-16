@@ -1,4 +1,4 @@
-package flixel.addons.transition;
+package flixel.transition;
 
 import flixel.FlxState;
 
@@ -72,9 +72,9 @@ class FlxTransitionableState extends FlxState
 		_onExit = null;
 	}
 
-	override public function create():Void
+	override public function createPost():Void
 	{
-		super.create();
+		super.createPost();
 		transitionIn();
 	}
 
@@ -126,6 +126,7 @@ class FlxTransitionableState extends FlxState
 
 			_trans.setStatus(FULL);
 			openSubState(_trans);
+			persistentUpdate = persistentDraw = true;
 
 			_trans.finishCallback = finishTransIn;
 			_trans.start(OUT);
@@ -144,6 +145,7 @@ class FlxTransitionableState extends FlxState
 
 			_trans.setStatus(EMPTY);
 			openSubState(_trans);
+			persistentUpdate = false;
 
 			_trans.finishCallback = finishTransOut;
 			_trans.start(IN);
@@ -173,8 +175,7 @@ class FlxTransitionableState extends FlxState
 	{
 		return switch (data.type)
 		{
-			case TILES: new Transition(data);
-			case FADE: new Transition(data);
+			case TILES, FADE: new Transition(data);
 			default: null;
 		}
 	}

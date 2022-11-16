@@ -5,6 +5,9 @@ import flash.events.KeyboardEvent;
 import flixel.FlxG;
 import flixel.input.FlxInput;
 import flixel.system.replay.CodeValuePair;
+#if cpp
+import openfl.Lib;
+#end
 
 /**
  * Keeps track of what keys are pressed and how with handy Bools or strings.
@@ -12,6 +15,8 @@ import flixel.system.replay.CodeValuePair;
  */
 class FlxKeyboard extends FlxKeyManager<FlxKey, FlxKeyList>
 {
+	public var lastHit:Map<FlxKey, Float> = [];
+
 	#if !web
 	/**
 	 * Function and numpad keycodes on native targets are incorrect,
@@ -110,6 +115,8 @@ class FlxKeyboard extends FlxKeyManager<FlxKey, FlxKeyList>
 	override function onKeyDown(event:KeyboardEvent):Void
 	{
 		super.onKeyDown(event);
+
+		lastHit[resolveKeyCode(event)] = (#if cpp Lib.getTimer() #else haxe.Timer.stamp() * 1000 #end);
 
 		// Attempted to cancel the replay?
 		#if FLX_RECORD

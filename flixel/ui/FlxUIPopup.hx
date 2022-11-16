@@ -1,8 +1,8 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.interfaces.IFlxUIButton;
-import flixel.addons.ui.interfaces.IFlxUIState;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IFlxUIState;
+import flixel.ui.interfaces.IFlxUIWidget;
 import flixel.math.FlxPoint;
 import flixel.util.FlxDirectionFlags;
 

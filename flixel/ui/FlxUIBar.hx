@@ -1,9 +1,9 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.FlxUIBar.FlxBarStyle;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IHasParams;
-import flixel.addons.ui.interfaces.IResizable;
+import flixel.ui.FlxUIBar.FlxBarStyle;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IHasParams;
+import flixel.ui.interfaces.IResizable;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.ui.FlxBar;
 import flixel.util.FlxColor;

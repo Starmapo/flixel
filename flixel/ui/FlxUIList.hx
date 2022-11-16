@@ -1,7 +1,7 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.interfaces.IFlxUIButton;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IFlxUIWidget;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.ui.FlxButton;
@@ -223,7 +223,7 @@ class FlxUIList extends FlxUIGroup
 		return super.add(Object);
 	}
 
-	@:allow(flixel.addons.ui.FlxUIRadioGroup) private var _skipRefresh:Bool = false;
+	@:allow(flixel.ui.FlxUIRadioGroup) private var _skipRefresh:Bool = false;
 
 	private function getMoreString(i:Int):String
 	{
@@ -248,7 +248,7 @@ class FlxUIList extends FlxUIGroup
 		refreshList();
 	}
 
-	@:allow(flixel.addons.ui.FlxUIRadioGroup) private function refreshList():Void
+	@:allow(flixel.ui.FlxUIRadioGroup) private function refreshList():Void
 	{
 		if (_skipRefresh)
 		{

@@ -1,10 +1,10 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.FlxUI9SliceSprite;
-import flixel.addons.ui.FlxUIPopup;
-import flixel.addons.ui.FlxUIText;
-import flixel.addons.ui.FlxUITypedButton.FlxUITypedButton;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
+import flixel.ui.FlxUI9SliceSprite;
+import flixel.ui.FlxUIPopup;
+import flixel.ui.FlxUIText;
+import flixel.ui.FlxUITypedButton.FlxUITypedButton;
+import flixel.ui.interfaces.IFlxUIWidget;
 import flixel.FlxG;
 import flixel.util.FlxTimer;
 

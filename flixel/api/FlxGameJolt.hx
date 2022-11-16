@@ -1,4 +1,4 @@
-package flixel.addons.api;
+package flixel.api;
 
 import flash.display.Loader;
 import flash.display.BitmapData;
@@ -166,7 +166,7 @@ class FlxGameJolt
 
 	/**
 	 * A string map that contains what is returned from GameJolt servers.
-	 */	
+	 */
 	static var returnMap:Map<String, String> = new Map<String, String>();
 
 	/**

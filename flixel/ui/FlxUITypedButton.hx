@@ -1,14 +1,14 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.display.BitmapData;
 import flash.errors.Error;
-import flixel.addons.ui.FlxUI.UIEventCallback;
-import flixel.addons.ui.interfaces.ICursorPointable;
-import flixel.addons.ui.interfaces.IFlxUIButton;
-import flixel.addons.ui.interfaces.IFlxUIClickable;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IHasParams;
-import flixel.addons.ui.interfaces.IResizable;
+import flixel.ui.FlxUI.UIEventCallback;
+import flixel.ui.interfaces.ICursorPointable;
+import flixel.ui.interfaces.IFlxUIButton;
+import flixel.ui.interfaces.IFlxUIClickable;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IHasParams;
+import flixel.ui.interfaces.IResizable;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
@@ -183,7 +183,7 @@ class FlxUITypedButton<T:FlxSprite> extends FlxTypedButton<T> implements IFlxUIB
 		}
 	}
 
-	@:access(flixel.addons.ui.FlxUITypedButton)
+	@:access(flixel.ui.FlxUITypedButton)
 	public function copyGraphic(other:FlxUITypedButton<FlxSprite>):Void
 	{
 		_src_w = other._src_w;

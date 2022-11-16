@@ -1,4 +1,4 @@
-package flixel.addons.tile;
+package flixel.tile;
 
 import flixel.util.FlxDestroyUtil;
 

@@ -1,11 +1,11 @@
-package flixel.addons.tile;
+package flixel.tile;
 
 import flash.display.BitmapData;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
-import flixel.addons.tile.FlxTileSpecial;
-import flixel.addons.tile.FlxTilemapExt;
+import flixel.tile.FlxTileSpecial;
+import flixel.tile.FlxTilemapExt;
 import flixel.graphics.frames.FlxFrame;
 import flixel.graphics.frames.FlxFramesCollection;
 import flixel.math.FlxMath;

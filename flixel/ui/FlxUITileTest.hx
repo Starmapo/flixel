@@ -1,9 +1,9 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.display.BitmapData;
 import flash.geom.Point;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IResizable;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IResizable;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 

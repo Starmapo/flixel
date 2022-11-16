@@ -1,4 +1,4 @@
-package flixel.addons.display;
+package flixel.display;
 
 import flixel.FlxStrip;
 import flixel.FlxSprite;

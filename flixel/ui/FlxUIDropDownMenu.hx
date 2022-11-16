@@ -1,9 +1,9 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.geom.Rectangle;
-import flixel.addons.ui.interfaces.IFlxUIClickable;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IHasParams;
+import flixel.ui.interfaces.IFlxUIClickable;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IHasParams;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;

@@ -1,4 +1,4 @@
-package flixel.addons.display.shapes;
+package flixel.display.shapes;
 
 import flash.display.BlendMode;
 import flash.geom.Matrix;

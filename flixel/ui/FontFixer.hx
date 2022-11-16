@@ -1,4 +1,4 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import openfl.Assets;
 #if (openfl >= "4.0.0")

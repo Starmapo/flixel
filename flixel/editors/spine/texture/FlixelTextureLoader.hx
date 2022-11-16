@@ -1,4 +1,4 @@
-package flixel.addons.editors.spine.texture;
+package flixel.editors.spine.texture;
 
 #if spinehaxe
 import flixel.graphics.FlxGraphic;

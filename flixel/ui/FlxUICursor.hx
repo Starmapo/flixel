@@ -1,12 +1,12 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flash.events.MouseEvent;
-import flixel.addons.ui.Anchor;
-import flixel.addons.ui.FlxUIAssets;
-import flixel.addons.ui.FlxUICursor.WidgetList;
-import flixel.addons.ui.FlxUISprite;
-import flixel.addons.ui.interfaces.ICursorPointable;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
+import flixel.ui.Anchor;
+import flixel.ui.FlxUIAssets;
+import flixel.ui.FlxUICursor.WidgetList;
+import flixel.ui.FlxUISprite;
+import flixel.ui.interfaces.ICursorPointable;
+import flixel.ui.interfaces.IFlxUIWidget;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;

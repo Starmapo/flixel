@@ -1,7 +1,7 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IResizable;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IResizable;
 import flixel.FlxCamera;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;

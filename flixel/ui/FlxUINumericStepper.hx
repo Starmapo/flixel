@@ -1,9 +1,9 @@
-package flixel.addons.ui;
+package flixel.ui;
 
-import flixel.addons.ui.FlxUI.NamedFloat;
-import flixel.addons.ui.interfaces.IFlxUIClickable;
-import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flixel.addons.ui.interfaces.IHasParams;
+import flixel.ui.FlxUI.NamedFloat;
+import flixel.ui.interfaces.IFlxUIClickable;
+import flixel.ui.interfaces.IFlxUIWidget;
+import flixel.ui.interfaces.IHasParams;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxArrayUtil;
@@ -98,7 +98,7 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 		{
 			value = max;
 		}
-		if (text_field != null)
+		if (text_field != null && !cast(text_field, FlxUIInputText).hasFocus)
 		{
 			var displayValue:Float = value;
 			if (isPercent)
@@ -218,7 +218,7 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 		{
 			var fuit:FlxUIInputText = cast text_field;
 			fuit.lines = 1;
-			fuit.callback = _onInputTextEvent; // internal communication only
+			fuit.focusLost = _onInputTextEvent; // internal communication only
 			fuit.broadcastToFlxUI = false;
 		}
 
@@ -262,8 +262,14 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 		stack = Stack;
 	}
 
-	private function _onInputTextEvent(text:String, action:String):Void
+	var lastText = '';
+
+	private function _onInputTextEvent():Void
 	{
+		var text = text_field.text;
+		if (text == lastText)
+			return; // dont continue if nothing actually changed
+
 		if (text == "")
 		{
 			text = Std.string(min);
@@ -288,6 +294,8 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 			_doCallback(EDIT_EVENT);
 			_doCallback(CHANGE_EVENT);
 		}
+
+		lastText = text;
 	}
 
 	private function _onPlus():Void
