@@ -1,5 +1,6 @@
 package flixel;
 
+import flixel.display.FlxGridOverlay;
 import flixel.system.FlxAssets.FlxShader;
 import openfl.filters.ShaderFilter;
 import flash.Lib;

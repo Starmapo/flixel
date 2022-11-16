@@ -1,4 +1,4 @@
-package flixel.addons.ui;
+package flixel.ui;
 
 import flixel.input.FlxPointer;
 import openfl.desktop.Clipboard;

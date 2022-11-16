@@ -1,5 +1,6 @@
 package flixel.display;
 
+import flixel.graphics.FlxGraphic;
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -15,8 +16,6 @@ import flixel.util.FlxColor;
  */
 class FlxGridOverlay
 {
-	public static var cache:Map<String, BitmapData> = new Map();
-
 	/**
 	 * Creates a FlxSprite of the given width and height filled with a checkerboard pattern.
 	 * Each grid cell is the specified width and height, and alternates between two colors.
@@ -51,11 +50,11 @@ class FlxGridOverlay
 			return null;
 		}
 
-		var grid:BitmapData = createGrid(CellWidth, CellHeight, Width, Height, Alternate, Color1, Color2);
+		var grid:FlxGraphic = createGrid(CellWidth, CellHeight, Width, Height, Alternate, Color1, Color2);
 
 		var output = new FlxSprite();
 
-		output.pixels = grid;
+		output.graphic = grid;
 		output.dirty = true;
 
 		return output;
@@ -96,16 +95,16 @@ class FlxGridOverlay
 			return null;
 		}
 
-		var grid:BitmapData = createGrid(CellWidth, CellHeight, Width, Height, Alternate, Color1, Color2);
-		Sprite.pixels.copyPixels(grid, new Rectangle(0, 0, Width, Height), new Point(0, 0), null, null, true);
+		var grid:FlxGraphic = createGrid(CellWidth, CellHeight, Width, Height, Alternate, Color1, Color2);
+		Sprite.pixels.copyPixels(grid.bitmap, new Rectangle(0, 0, Width, Height), new Point(0, 0), null, null, true);
 		return Sprite;
 	}
 
-	public static function createGrid(CellWidth:Int, CellHeight:Int, Width:Int, Height:Int, Alternate:Bool, Color1:FlxColor, Color2:FlxColor):BitmapData
+	public static function createGrid(CellWidth:Int, CellHeight:Int, Width:Int, Height:Int, Alternate:Bool, Color1:FlxColor, Color2:FlxColor):FlxGraphic
 	{
 		var key = '$CellWidth::$CellHeight::$Width::$Height::$Alternate::$Color1::$Color2';
-		if (cache.exists(key))
-			return cache.get(key);
+		if (FlxG.bitmap.checkCache(key))
+			return FlxG.bitmap.get(key);
 
 		// How many cells can we fit into the width/height? (round it UP if not even, then trim back)
 		var rowColor:Int = Color1;
@@ -152,7 +151,7 @@ class FlxGridOverlay
 			y += CellHeight;
 		}
 
-		cache.set(key, grid);
-		return grid;
+		var graphic:FlxGraphic = FlxG.bitmap.add(grid, false, key);
+		return graphic;
 	}
 }

@@ -1,9 +1,7 @@
 package flixel.effects;
 
 import flixel.animation.FlxAnimation;
-import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.system.FlxAssets;
 import flixel.util.FlxArrayUtil;
@@ -241,7 +239,7 @@ class FlxTrail extends FlxSpriteGroup
 		super.update(elapsed);
 	}
 
-	function cacheValue<T>(array:Array<T>, value:T)
+	function cacheValue(array:Array<Any>, value:Any)
 	{
 		array.unshift(value);
 		FlxArrayUtil.setLength(array, _trailLength);

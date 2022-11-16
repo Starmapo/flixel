@@ -1367,7 +1367,7 @@ class FlxCamera extends FlxBasic
 			widescreenMultipliers.set(1, 1);
 		}
 
-		if (angleFix)
+		if (angle != 0 && angleFix)
 		{
 			var flxRect = FlxRect.get();
 
