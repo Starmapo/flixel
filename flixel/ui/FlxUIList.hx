@@ -2,9 +2,7 @@ package flixel.ui;
 
 import flixel.ui.interfaces.IFlxUIButton;
 import flixel.ui.interfaces.IFlxUIWidget;
-import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.ui.FlxButton;
 import flixel.math.FlxPoint;
 
 class FlxUIList extends FlxUIGroup

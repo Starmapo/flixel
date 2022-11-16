@@ -5,7 +5,6 @@ import flash.events.MouseEvent;
 import flash.geom.Rectangle;
 import flash.Lib;
 import flixel.display.FlxExtendedSprite;
-import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;

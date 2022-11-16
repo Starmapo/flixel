@@ -1,12 +1,7 @@
 package flixel.ui;
 
-import flash.geom.Rectangle;
-import flixel.ui.FlxUISprite;
-import flixel.ui.interfaces.ICursorPointable;
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.util.FlxColor;
-import flixel.util.FlxStringUtil;
 
 class FlxUIColorSwatch extends FlxUIButton
 {

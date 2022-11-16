@@ -2,13 +2,10 @@ package flixel.ui;
 
 import flixel.ui.FlxUI.NamedBool;
 import flixel.ui.interfaces.ICursorPointable;
-import flixel.ui.interfaces.IFlxUIButton;
 import flixel.ui.interfaces.IFlxUIClickable;
 import flixel.ui.interfaces.IHasParams;
 import flixel.ui.interfaces.ILabeled;
 import flixel.FlxSprite;
-import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxTimer;
 
 /**

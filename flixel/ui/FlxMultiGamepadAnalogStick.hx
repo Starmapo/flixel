@@ -1,6 +1,5 @@
 package flixel.ui;
 
-import flixel.ui.FlxMultiGamepadAnalogStick.StickInput;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.input.gamepad.FlxGamepadInputID;
 

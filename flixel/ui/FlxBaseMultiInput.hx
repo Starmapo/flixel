@@ -1,9 +1,5 @@
 package flixel.ui;
 
-import flixel.FlxG;
-import flixel.input.gamepad.FlxGamepadInputID;
-import flixel.input.gamepad.FlxGamepad;
-import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxDestroyUtil;
 
 /**
