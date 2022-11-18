@@ -1,20 +1,20 @@
 package flixel.ui;
 
-import flixel.input.FlxPointer;
-import openfl.desktop.Clipboard;
-import lime.app.Application;
 import flash.errors.Error;
 import flash.events.KeyboardEvent;
 import flash.geom.Rectangle;
-import flixel.ui.FlxUI.NamedString;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.input.FlxPointer;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.text.FlxText;
+import flixel.ui.FlxUI.NamedString;
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxTimer;
+import lime.app.Application;
+import openfl.desktop.Clipboard;
 
 /**
  * FlxInputText v1.11, ported to Haxe
@@ -294,6 +294,12 @@ class FlxInputText extends FlxText
 		{
 			Sprite.scrollFactor = scrollFactor;
 			Sprite.cameras = cameras;
+			if (Sprite.clipRect != null)
+				Sprite.clipRect.put();
+			if (clipRect == null)
+				Sprite.clipRect = null;
+			else
+				Sprite.clipRect = FlxRect.get(clipRect.x - Sprite.x + x, clipRect.y - Sprite.y + y, clipRect.width, clipRect.height);
 			Sprite.draw();
 		}
 	}

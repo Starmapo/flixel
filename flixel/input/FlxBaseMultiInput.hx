@@ -1,4 +1,4 @@
-package flixel.ui;
+package flixel.input;
 
 import flixel.util.FlxDestroyUtil;
 
