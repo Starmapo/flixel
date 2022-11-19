@@ -264,7 +264,7 @@ class FlxUIColorSwatchSelecter extends FlxUIGroup implements IFlxUIClickable
 					if ((sprite is FlxUIColorSwatch))
 					{
 						fuics = cast sprite;
-						if (fuics.equalsSwatch(list[i]) == false)
+						if (!fuics.equalsSwatch(list[i]))
 						{
 							fuics.colors = list[i];
 						}
@@ -296,7 +296,7 @@ class FlxUIColorSwatchSelecter extends FlxUIGroup implements IFlxUIClickable
 				{
 					members.splice(j, 1);
 				}
-				else if (thing.visible == false && thing.active == false)
+				else if (!thing.visible && !thing.active)
 				{
 					thing.destroy();
 					remove(thing, true);
@@ -390,7 +390,7 @@ class FlxUIColorSwatchSelecter extends FlxUIGroup implements IFlxUIClickable
 		_selectedSwatch = null;
 		for (sprite in members)
 		{
-			if (sprite != _selectionSprite && sprite != _selectedSwatch && sprite.visible == true && sprite.active == true)
+			if (sprite != _selectionSprite && sprite != _selectedSwatch && sprite.visible && sprite.active)
 			{
 				var swatch:FlxUIColorSwatch = cast sprite;
 				var swatchData:SwatchData = swatch.colors;

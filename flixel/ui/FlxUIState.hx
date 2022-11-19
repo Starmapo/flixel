@@ -111,7 +111,7 @@ class FlxUIState extends FlxState implements IEventGetter implements IFlxUIState
 		#end
 
 		#if FLX_MOUSE
-		if (_makeCursor == true)
+		if (_makeCursor)
 		{
 			cursor = createCursor();
 		}
@@ -280,7 +280,7 @@ class FlxUIState extends FlxState implements IEventGetter implements IFlxUIState
 	public override function openSubState(SubState:FlxSubState):Void
 	{
 		#if FLX_MOUSE
-		if (cursor != null && hideCursorOnSubstate && cursor.visible == true)
+		if (cursor != null && hideCursorOnSubstate && cursor.visible)
 		{
 			_cursorHidden = true;
 			cursor.visible = false;

@@ -153,7 +153,7 @@ class FlxScrollingText extends FlxBasic
 		}
 
 		//	Copy the side of the character
-		if (data.complete == false)
+		if (!data.complete)
 		{
 			//	Update
 			data.x += data.pixels;
@@ -171,7 +171,7 @@ class FlxScrollingText extends FlxBasic
 					data.scrolling = false;
 				}
 
-				if (data.complete == false)
+				if (!data.complete)
 				{
 					data.x = 0;
 				}
@@ -276,7 +276,7 @@ class FlxScrollingText extends FlxBasic
 	{
 		for (obj in members)
 		{
-			if (obj != null && (obj.onScreenScroller == true && obj.sprite.isOnScreen()) && obj.scrolling == true && obj.sprite.exists)
+			if (obj != null && (obj.onScreenScroller && obj.sprite.isOnScreen()) && obj.scrolling && obj.sprite.exists)
 			{
 				scroll(obj);
 			}

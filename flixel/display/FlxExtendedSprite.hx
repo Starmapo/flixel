@@ -321,7 +321,7 @@ class FlxExtendedSprite extends FlxSprite
 		_throwXFactor = FactorX;
 		_throwYFactor = FactorY;
 
-		if (clickable == false && draggable == false)
+		if (!clickable && !draggable)
 		{
 			clickable = true;
 		}
@@ -394,7 +394,7 @@ class FlxExtendedSprite extends FlxSprite
 			mouseSpring.gravity = Gravity;
 		}
 
-		if (clickable == false && draggable == false)
+		if (!clickable && !draggable)
 		{
 			clickable = true;
 		}
@@ -430,30 +430,30 @@ class FlxExtendedSprite extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		#if FLX_MOUSE
-		if (draggable == true && isDragged == true)
+		if (draggable && isDragged)
 		{
 			updateDrag();
 		}
 
-		if (isPressed == false && FlxG.mouse.justPressed)
+		if (!isPressed)
 		{
 			checkForClick();
 		}
 
-		if (hasGravity == true)
+		if (hasGravity)
 		{
 			updateGravity();
 		}
 
-		if (hasMouseSpring == true)
+		if (hasMouseSpring)
 		{
-			if (springOnPressed == false)
+			if (!springOnPressed)
 			{
 				mouseSpring.update(elapsed);
 			}
 			else
 			{
-				if (isPressed == true)
+				if (isPressed)
 				{
 					mouseSpring.update(elapsed);
 				}
@@ -574,14 +574,14 @@ class FlxExtendedSprite extends FlxSprite
 	function updateDrag():Void
 	{
 		// TODO: touch drag
-		if (_allowHorizontalDrag == true)
+		if (_allowHorizontalDrag)
 		{
 			#if FLX_MOUSE
 			x = Math.floor(FlxG.mouse.screenX + scrollFactor.x * (FlxG.mouse.x - FlxG.mouse.screenX)) - _dragOffsetX;
 			#end
 		}
 
-		if (_allowVerticalDrag == true)
+		if (_allowVerticalDrag)
 		{
 			#if FLX_MOUSE
 			y = Math.floor(FlxG.mouse.screenY + scrollFactor.y * (FlxG.mouse.y - FlxG.mouse.screenY)) - _dragOffsetY;
@@ -612,10 +612,11 @@ class FlxExtendedSprite extends FlxSprite
 	function checkForClick():Void
 	{
 		#if FLX_MOUSE
-		if (mouseOver && FlxG.mouse.justPressed)
+		if (mouseOver && FlxG.mouse.checkJustPressed())
 		{
+			FlxG.mouse.onPress();
 			//	If we don't need a pixel perfect check, then don't bother running one! By this point we know the mouse is over the sprite already
-			if (_clickPixelPerfect == false && _dragPixelPerfect == false)
+			if (!_clickPixelPerfect && !_dragPixelPerfect)
 			{
 				FlxMouseControl.addToStack(this);
 				return;
@@ -646,7 +647,7 @@ class FlxExtendedSprite extends FlxSprite
 	{
 		isPressed = true;
 
-		if (clickable == true && _clickOnRelease == false)
+		if (clickable && !_clickOnRelease)
 		{
 			_clickCounter++;
 		}
@@ -664,17 +665,17 @@ class FlxExtendedSprite extends FlxSprite
 	{
 		isPressed = false;
 
-		if (isDragged == true)
+		if (isDragged)
 		{
 			stopDrag();
 		}
 
-		if (clickable == true && _clickOnRelease == true)
+		if (clickable && _clickOnRelease)
 		{
 			_clickCounter++;
 		}
 
-		if (throwable == true)
+		if (throwable)
 		{
 			velocity.x = FlxMouseControl.speedX * _throwXFactor;
 			velocity.y = FlxMouseControl.speedY * _throwYFactor;
@@ -695,7 +696,7 @@ class FlxExtendedSprite extends FlxSprite
 		isDragged = true;
 
 		#if FLX_MOUSE
-		if (_dragFromPoint == false)
+		if (!_dragFromPoint)
 		{
 			_dragOffsetX = Math.floor(FlxG.mouse.screenX + scrollFactor.x * (FlxG.mouse.x - FlxG.mouse.screenX) - x);
 			_dragOffsetY = Math.floor(FlxG.mouse.screenY + scrollFactor.y * (FlxG.mouse.y - FlxG.mouse.screenY) - y);

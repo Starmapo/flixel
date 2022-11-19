@@ -498,7 +498,7 @@ class FlxUIRadioGroup extends FlxUIGroup implements IFlxUIClickable implements I
 			yy += _y_space;
 			i++;
 		}
-		if (fixedSize == false)
+		if (!fixedSize)
 		{
 			maxX += 5; // add some buffer
 			maxY += 5;
@@ -515,7 +515,7 @@ class FlxUIRadioGroup extends FlxUIGroup implements IFlxUIClickable implements I
 		}
 		_list._skipRefresh = false;
 
-		if (fixedSize == true)
+		if (fixedSize)
 		{
 			_list.refreshList();
 		}
@@ -530,11 +530,11 @@ class FlxUIRadioGroup extends FlxUIGroup implements IFlxUIClickable implements I
 		{
 			r.active = _list_active[i];
 
-			if (_list_active[i] == false && inactiveStyle != null)
+			if (!_list_active[i] && inactiveStyle != null)
 			{
 				inactiveStyle.applyToCheck(r);
 			}
-			else if (_list_active[i] == true && activeStyle != null)
+			else if (_list_active[i] && activeStyle != null)
 			{
 				activeStyle.applyToCheck(r);
 			}

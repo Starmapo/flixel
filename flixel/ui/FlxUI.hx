@@ -1842,7 +1842,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 		info = consolidateData(info, definition);
 		info = applyNodeConditionals(info);
 
-		if (_loadTest(info) == false)
+		if (!_loadTest(info))
 		{
 			return null;
 		}
@@ -2403,7 +2403,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 			}
 		}
 
-		if (resize == false) // not resizing, so space evenly
+		if (!resize) // not resizing, so space evenly
 		{
 			total_spacing = bound_range - total_size;
 			space_size = total_spacing / spaces;
@@ -2634,7 +2634,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 			return;
 		}
 
-		if (_loadTest(data) == false)
+		if (!_loadTest(data))
 		{
 			return;
 		}
@@ -2748,7 +2748,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 		if (!isGroup && (thing is FlxUI))
 		{
 			var fui_thing:FlxUI = cast thing;
-			if (fui_thing._postLoaded == false)
+			if (!fui_thing._postLoaded)
 			{
 				fui_thing.getEvent("post_load", this, null);
 			}
@@ -3041,7 +3041,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 					var new_el:Xml = new_els.next();
 
 					// if there is only one child node of that name in BOTH the definition AND the target
-					if (data.nodes.resolve(nodeName).length == 1 && new_el != null && new_els.hasNext() == false)
+					if (data.nodes.resolve(nodeName).length == 1 && new_el != null && !new_els.hasNext())
 					{
 						// combine them
 						for (att in element.attributes())
@@ -3199,7 +3199,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 				{
 					var fc:FlxUICheckBox = cast(fo, FlxUICheckBox);
 					var t:FlxText = formatButtonText(data, fc);
-					if (t != null && styleSet == false)
+					if (t != null && !styleSet)
 					{
 						var fd = FontDef.copyFromFlxText(t);
 						var bd = new BorderDef(t.borderStyle, t.borderColor, t.borderSize, t.borderQuality);
@@ -3459,7 +3459,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 		if (data.name == "load_if")
 		{
 			result = _loadTestSub(data);
-			if (result == false)
+			if (!result)
 			{
 				return false;
 			}
@@ -3491,7 +3491,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 				if (node.x.firstChild() == null) // as mentioned above, only run the test if this load_if does not have children
 				{
 					result = _loadTestSub(node);
-					if (result == false)
+					if (!result)
 					{
 						return false;
 					}
@@ -3943,7 +3943,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 
 		if (sprite == null)
 		{
-			var useDefaultGraphic = (data.hasNode.graphic == false);
+			var useDefaultGraphic = (!data.hasNode.graphic);
 			fb = new FlxUIButton(0, 0, label, null, useDefaultGraphic, false, color);
 			var fuib:FlxUIButton = cast fb;
 			fuib._autoCleanup = false;
@@ -5852,7 +5852,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 			var fsb:FlxUISpriteButton = null;
 			var ifb:IFlxUIButton = null;
 
-			if ((button is FlxUICheckBox) == false)
+			if (!(button is FlxUICheckBox))
 			{
 				ifb = cast button;
 				if (align == "" || align == null)

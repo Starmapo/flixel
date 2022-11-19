@@ -131,13 +131,13 @@ class FlxClickArea extends FlxObject
 			{
 				#if FLX_MOUSE
 				FlxG.mouse.getWorldPosition(camera, _point);
-				offAll = (updateButtonStatus(_point, camera, FlxG.mouse.justPressed) == false) ? false : offAll;
+				offAll = (!updateButtonStatus(_point, camera, FlxG.mouse.checkJustPressed(), FlxG.mouse.onPress)) ? false : offAll;
 				#end
 				#if FLX_TOUCH
 				for (touch in FlxG.touches.list)
 				{
 					touch.getWorldPosition(camera, _point);
-					offAll = (updateButtonStatus(_point, camera, touch.justPressed) == false) ? false : offAll;
+					offAll = (!updateButtonStatus(_point, camera, touch.checkJustPressed(), touch.onPress)) ? false : offAll;
 				}
 				#end
 
@@ -156,7 +156,7 @@ class FlxClickArea extends FlxObject
 	/**
 	 * Updates status and handles the onDown and onOver logic (callback function).
 	 */
-	function updateButtonStatus(Point:FlxPoint, Camera:FlxCamera, JustPressed:Bool):Bool
+	function updateButtonStatus(Point:FlxPoint, Camera:FlxCamera, JustPressed:Bool, onPress:Void->Void):Bool
 	{
 		var offAll:Bool = true;
 
@@ -166,6 +166,8 @@ class FlxClickArea extends FlxObject
 
 			if (JustPressed)
 			{
+				if (onPress != null)
+					onPress();
 				status = FlxButton.PRESSED;
 			}
 			if (status == FlxButton.NORMAL)

@@ -203,8 +203,9 @@ class FlxButtonPlus extends FlxSpriteGroup
 			{
 				offAll = false;
 
-				if (FlxG.mouse.justPressed)
+				if (FlxG.mouse.checkJustPressed())
 				{
+					FlxG.mouse.onPress();
 					_status = PRESSED;
 				}
 
@@ -320,7 +321,7 @@ class FlxButtonPlus extends FlxSpriteGroup
 
 		normalKey = normalKey + "]";
 
-		if (FlxG.bitmap.checkCache(normalKey) == false)
+		if (!FlxG.bitmap.checkCache(normalKey))
 		{
 			var normalGraphics:FlxGraphic = FlxG.bitmap.create(Std.int(w), Std.int(h), FlxColor.TRANSPARENT, false, normalKey);
 			normalGraphics.bitmap.fillRect(new Rectangle(0, 0, w, h), borderColor);
@@ -359,7 +360,7 @@ class FlxButtonPlus extends FlxSpriteGroup
 
 		highlightKey = highlightKey + "]";
 
-		if (FlxG.bitmap.checkCache(highlightKey) == false)
+		if (!FlxG.bitmap.checkCache(highlightKey))
 		{
 			var highlightGraphics:FlxGraphic = FlxG.bitmap.create(Std.int(w), Std.int(h), FlxColor.TRANSPARENT, false, highlightKey);
 			highlightGraphics.bitmap.fillRect(new Rectangle(0, 0, w, h), borderColor);

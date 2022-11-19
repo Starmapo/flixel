@@ -317,15 +317,18 @@ class FlxInputText extends FlxText
 		{
 			var hadFocus:Bool = hasFocus;
 			var overlap = false;
-			for (camera in cameras)
-			{
-				if (checkInput(FlxG.mouse, camera))
+			if (FlxG.mouse.checkJustPressed()) {
+				for (camera in cameras)
 				{
-					overlap = true;
+					if (checkInput(FlxG.mouse, camera))
+					{
+						overlap = true;
+					}
 				}
 			}
 			if (overlap)
 			{
+				FlxG.mouse.onPress();
 				caretIndex = getCaretIndex();
 				hasFocus = true;
 				if (!hadFocus && focusGained != null)

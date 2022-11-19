@@ -101,7 +101,7 @@ class FlxMouseControl extends FlxBasic
 	{
 		if (mouseZone != null)
 		{
-			if (FlxMath.pointInFlxRect(Math.floor(FlxG.mouse.x), Math.floor(FlxG.mouse.y), mouseZone) == true)
+			if (FlxMath.pointInFlxRect(Math.floor(FlxG.mouse.x), Math.floor(FlxG.mouse.y), mouseZone))
 			{
 				_clickStack.push(Item);
 			}
@@ -159,8 +159,8 @@ class FlxMouseControl extends FlxBasic
 			if (FlxG.mouse.pressed)
 			{
 				// Has the mouse moved? If so then we're candidate for a drag
-				if (isDragging == false
-					&& clickTarget.draggable == true
+				if (!isDragging
+					&& clickTarget.draggable
 					&& (_clickCoords.x != FlxG.mouse.x || _clickCoords.y != FlxG.mouse.y))
 				{
 					// Drag on
@@ -176,14 +176,14 @@ class FlxMouseControl extends FlxBasic
 				releaseMouse();
 			}
 
-			if (linkToDeadZone == true)
+			if (linkToDeadZone)
 			{
-				if (FlxMath.mouseInFlxRect(false, FlxG.camera.deadzone) == false)
+				if (!FlxMath.mouseInFlxRect(false, FlxG.camera.deadzone))
 				{
 					releaseMouse();
 				}
 			}
-			else if (FlxMath.mouseInFlxRect(true, mouseZone) == false)
+			else if (!FlxMath.mouseInFlxRect(true, mouseZone))
 			{
 				// Is a mouse zone enabled? In which case check if we're still in it
 				releaseMouse();

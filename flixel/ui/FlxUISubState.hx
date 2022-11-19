@@ -97,7 +97,7 @@ class FlxUISubState extends FlxSubState implements IFlxUIState
 		}
 
 		#if FLX_MOUSE
-		if (_makeCursor == true)
+		if (_makeCursor)
 		{
 			cursor = createCursor();
 		}

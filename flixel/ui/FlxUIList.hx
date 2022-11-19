@@ -194,7 +194,7 @@ class FlxUIList extends FlxUIGroup
 	public override function setSize(W:Float, H:Float):Void
 	{
 		var flip:Bool = false;
-		if (_skipRefresh == false)
+		if (!_skipRefresh)
 		{
 			_skipRefresh = true;
 			flip = true;

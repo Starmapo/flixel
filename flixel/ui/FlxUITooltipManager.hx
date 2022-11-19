@@ -354,7 +354,7 @@ class FlxUITooltipManager implements IFlxDestroyable
 			var btn = list[i].btn;
 			var obj = list[i].obj;
 
-			if (list[i].enabled == false)
+			if (!list[i].enabled)
 			{
 				if (current == i)
 				{
@@ -373,7 +373,7 @@ class FlxUITooltipManager implements IFlxDestroyable
 				btn.visible = obj.visible;
 			}
 
-			if (list[i].sticky == false && (false == btn.visible || btn.justMousedOut || btn.mouseIsOut))
+			if (!list[i].sticky && (!btn.visible || btn.justMousedOut || btn.mouseIsOut))
 			{
 				list[i].count = 0;
 				hide(i);
@@ -504,7 +504,7 @@ class FlxUITooltipManager implements IFlxDestroyable
 			return;
 		var btn = list[i].btn;
 
-		if (btn.visible == false || (list[i].obj != null && list[i].obj.visible == false))
+		if (!btn.visible || (list[i].obj != null && !list[i].obj.visible))
 		{
 			return;
 		}

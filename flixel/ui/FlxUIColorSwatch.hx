@@ -187,7 +187,7 @@ class FlxUIColorSwatch extends FlxUIButton
 		{
 			if (graphic.key != key)
 			{
-				if (FlxG.bitmap.checkCache(key) == false) // draw the swatch dynamically from supplied color values
+				if (!FlxG.bitmap.checkCache(key)) // draw the swatch dynamically from supplied color values
 				{
 					makeGraphic(Std.int(width), Std.int(height), 0xFFFFFFFF, true, key);
 					_flashRect.x = 0;

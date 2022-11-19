@@ -120,7 +120,7 @@ class FlxGridOverlay
 			{
 				(lastColor == Color1) ? lastColor = Color2 : lastColor = Color1;
 			}
-			else if (y > 0 && lastColor != rowColor && Alternate == false)
+			else if (y > 0 && lastColor != rowColor && !Alternate)
 			{
 				(lastColor == Color2) ? lastColor = Color1 : lastColor = Color2;
 			}

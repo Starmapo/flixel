@@ -949,7 +949,7 @@ class FlxControlHandler
 			|| (_jumpKeyMode == KEYMODE_RELEASED && FlxG.keys.anyJustReleased([_jumpKey])))
 		{
 			// Sprite not touching a valid jump surface
-			if (_entity.isTouching(_jumpSurface) == false)
+			if (!_entity.isTouching(_jumpSurface))
 			{
 				// They've run out of time to jump
 				if (FlxG.game.ticks > _extraSurfaceTime)
@@ -1083,14 +1083,14 @@ class FlxControlHandler
 
 			hasRotatedAntiClockwise = moveAntiClockwise();
 
-			if (hasRotatedAntiClockwise == false)
+			if (!hasRotatedAntiClockwise)
 			{
 				hasRotatedClockwise = moveClockwise();
 			}
 
 			if (_rotationStopping == ROTATION_STOPPING_DECELERATES)
 			{
-				if (_rotation == ROTATION_ACCELERATES && hasRotatedAntiClockwise == false && hasRotatedClockwise == false)
+				if (_rotation == ROTATION_ACCELERATES && !hasRotatedAntiClockwise && !hasRotatedClockwise)
 				{
 					_entity.angularAcceleration = 0;
 				}
@@ -1099,8 +1099,8 @@ class FlxControlHandler
 			// If they have got instant stopping with acceleration and are NOT pressing a key, then stop the rotation. Otherwise we let it carry on
 			if (_rotationStopping == ROTATION_STOPPING_INSTANT
 				&& _rotation == ROTATION_ACCELERATES
-				&& hasRotatedAntiClockwise == false
-				&& hasRotatedClockwise == false)
+				&& !hasRotatedAntiClockwise
+				&& !hasRotatedClockwise)
 			{
 				_entity.angularVelocity = 0;
 				_entity.angularAcceleration = 0;
@@ -1117,7 +1117,7 @@ class FlxControlHandler
 				moved = moveThrust();
 			}
 
-			if (moved == false && _reverseEnabled)
+			if (!moved && _reverseEnabled)
 			{
 				moved = moveReverse();
 			}
@@ -1132,7 +1132,7 @@ class FlxControlHandler
 				movedY = invertY ? moveDown() : moveUp();
 			}
 
-			if (_down && movedY == false)
+			if (_down && !movedY)
 			{
 				movedY = invertY ? moveUp() : moveDown();
 			}
@@ -1142,7 +1142,7 @@ class FlxControlHandler
 				movedX = invertX ? moveRight() : moveLeft();
 			}
 
-			if (_right && movedX == false)
+			if (_right && !movedX)
 			{
 				movedX = invertX ? moveLeft() : moveRight();
 			}

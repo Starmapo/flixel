@@ -55,7 +55,7 @@ class FlxUICursor extends FlxUISprite
 			return;
 
 		var wrapped = false;
-		while (_widgets[location] == null || _widgets[location].visible == false)
+		while (_widgets[location] == null || !_widgets[location].visible)
 		{
 			if (forwardIfInvisible)
 			{
@@ -270,7 +270,7 @@ class FlxUICursor extends FlxUISprite
 		scrollFactor.set(0, 0);
 
 		#if FLX_MOUSE
-		if (FlxG.mouse != null && (FlxG.mouse is FlxUIMouse) == false)
+		if (FlxG.mouse != null && !(FlxG.mouse is FlxUIMouse))
 		{
 			_newMouse = new FlxUIMouse(FlxG.mouse.cursorContainer);
 			FlxG.mouse = _newMouse;
@@ -423,7 +423,7 @@ class FlxUICursor extends FlxUISprite
 				for (i in 0...list.widgets.length)
 				{
 					var w:IFlxUIWidget = list.widgets[i];
-					if (w.visible == true && X >= w.x && Y >= w.y && X <= w.x + w.width && Y <= w.y + w.height)
+					if (w.visible && X >= w.x && Y >= w.y && X <= w.x + w.width && Y <= w.y + w.height)
 					{
 						var dx = ((w.x + w.width / 2) - X);
 						var dy = ((w.y + w.height / 2) - Y);
@@ -450,7 +450,7 @@ class FlxUICursor extends FlxUISprite
 			for (i in 0..._widgets.length)
 			{
 				var w:IFlxUIWidget = _widgets[i];
-				if (w.visible == true && X >= w.x && Y >= w.y && X <= w.x + w.width && Y <= w.y + w.height)
+				if (w.visible && X >= w.x && Y >= w.y && X <= w.x + w.width && Y <= w.y + w.height)
 				{
 					var dx = ((w.x + w.width / 2) - X);
 					var dy = ((w.y + w.height / 2) - Y);
@@ -803,7 +803,7 @@ class FlxUICursor extends FlxUISprite
 
 	private function _checkKeys():Void
 	{
-		var wasInvisible = (visible == false);
+		var wasInvisible = !visible;
 		var lastLocation = location;
 
 		for (key in keysUp)
@@ -1209,7 +1209,7 @@ class FlxUICursor extends FlxUISprite
 
 				dy = yy - currY;
 
-				if (FlxMath.sameSign(dy, Y) == false && dy != 0)
+				if (!FlxMath.sameSign(dy, Y) && dy != 0)
 				{ // I want the WRONG direction this time
 					dy = Math.abs(dy);
 					if (dy > bestdy)
@@ -1324,7 +1324,7 @@ class FlxUICursor extends FlxUISprite
 
 		if (currWidget != null && _widgets != null)
 		{
-			if (currWidget.visible == false && (recursion < _widgets.length))
+			if (!currWidget.visible && (recursion < _widgets.length))
 			{
 				_doInput(X, Y, recursion + 1);
 				return;

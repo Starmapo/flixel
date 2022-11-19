@@ -1434,7 +1434,7 @@ class U
 	{
 		var assetKey:String = orig_id + "_x" + scale;
 
-		if (FlxG.bitmap.checkCache(assetKey) == false)
+		if (!FlxG.bitmap.checkCache(assetKey))
 		{
 			var bmp = scaleTileBmp(orig_id, scale, OrigW, OrigH, TileW, TileH, Smooth);
 			FlxG.bitmap.add(bmp, false, assetKey);

@@ -409,8 +409,26 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 			for (buttonID in mouseButtons)
 			{
 				var button = FlxMouseButton.getByID(buttonID);
-				if (button != null && checkInput(FlxG.mouse, button, button.justPressedPosition, camera))
+				var justPressed = switch (buttonID) {
+					case LEFT:
+						FlxG.mouse.checkJustPressed();
+					case MIDDLE:
+						FlxG.mouse.checkJustPressedMiddle();
+					case RIGHT:
+						FlxG.mouse.checkJustPressedRight();
+				};
+				if (button != null && checkInput(FlxG.mouse, button, justPressed, button.justPressedPosition, camera))
 				{
+					if (justPressed) {
+						switch (buttonID) {
+							case LEFT:
+								FlxG.mouse.onPress();
+							case MIDDLE:
+								FlxG.mouse.onPressMiddle();
+							case RIGHT:
+								FlxG.mouse.onPressRight();
+						};
+					}
 					overlap = true;
 				}
 			}
@@ -427,8 +445,11 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		{
 			for (touch in FlxG.touches.list)
 			{
-				if (checkInput(touch, touch, touch.justPressedPosition, camera))
+				var justPressed = touch.checkJustPressed();
+				if (checkInput(touch, touch, justPressed, touch.justPressedPosition, camera))
 				{
+					if (justPressed)
+						touch.onPress();
 					overlap = true;
 				}
 			}
@@ -437,7 +458,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		return overlap;
 	}
 
-	function checkInput(pointer:FlxPointer, input:IFlxInput, justPressedPosition:FlxPoint, camera:FlxCamera):Bool
+	function checkInput(pointer:FlxPointer, input:IFlxInput, justPressed:Bool, justPressedPosition:FlxPoint, camera:FlxCamera):Bool
 	{
 		if (maxInputMovement != Math.POSITIVE_INFINITY
 			&& justPressedPosition.distanceTo(pointer.getScreenPosition(FlxPoint.weak())) > maxInputMovement
@@ -447,7 +468,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		}
 		else if (overlapsPoint(pointer.getWorldPosition(camera, _point), true, camera))
 		{
-			updateStatus(input);
+			updateStatus(input, justPressed);
 			return true;
 		}
 
@@ -457,9 +478,9 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	/**
 	 * Updates the button status by calling the respective event handler function.
 	 */
-	function updateStatus(input:IFlxInput):Void
+	function updateStatus(input:IFlxInput, justPressed:Bool):Void
 	{
-		if (input.justPressed)
+		if (justPressed)
 		{
 			currentInput = input;
 			onDownHandler();

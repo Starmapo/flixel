@@ -106,7 +106,7 @@ class FlxUITypedButton<T:FlxSprite> extends FlxTypedButton<T> implements IFlxUIB
 
 	override function set_visible(Value:Bool):Bool
 	{
-		if (visible && Value == false)
+		if (visible && !Value)
 		{
 			inputOver.release();
 		}
@@ -274,7 +274,7 @@ class FlxUITypedButton<T:FlxSprite> extends FlxTypedButton<T> implements IFlxUIB
 	{
 		super.update(elapsed);
 
-		if (status == FlxButton.NORMAL && mouseIsOver && input.justReleased == false)
+		if (status == FlxButton.NORMAL && mouseIsOver && !input.justReleased)
 		{
 			// Detect rare edge case:
 			// The button is not in a hilight/pressed state, but the button has ALSO not just been released, HOWEVER it thinks the mouse is still hovering
@@ -322,7 +322,7 @@ class FlxUITypedButton<T:FlxSprite> extends FlxTypedButton<T> implements IFlxUIB
 	override public function draw():Void
 	{
 		super.draw();
-		if (has_toggle && toggled && toggle_label != null && toggle_label.visible == true)
+		if (has_toggle && toggled && toggle_label != null && toggle_label.visible)
 		{
 			toggle_label.cameras = cameras;
 			toggle_label.draw();
@@ -531,7 +531,7 @@ class FlxUITypedButton<T:FlxSprite> extends FlxTypedButton<T> implements IFlxUIB
 		downB = grabButtonFrame(bd, FlxButton.PRESSED, has_toggle, 0, 0, key);
 
 		var normalGraphic:FlxGraphicAsset = key;
-		if (key == null || key == "" || FlxG.bitmap.checkCache(key) == false)
+		if (key == null || key == "" || !FlxG.bitmap.checkCache(key))
 		{
 			normalGraphic = assembleButtonFrames(upB, overB, downB);
 		}

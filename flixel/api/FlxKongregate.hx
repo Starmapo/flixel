@@ -219,7 +219,7 @@ class FlxKongregate
 	 */
 	public static function showShoutBox(Message:String = ""):Void
 	{
-		if (api.services.isGuest() == false)
+		if (!api.services.isGuest())
 		{
 			api.services.showShoutBox(Message);
 		}

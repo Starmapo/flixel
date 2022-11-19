@@ -13,6 +13,18 @@ class FlxPointer
 	public var screenX(default, null):Int = 0;
 	public var screenY(default, null):Int = 0;
 
+	/**
+	 * Whether only one thing should be allowed to be pressed every frame.
+	 * For this to work, call `onPress` on this pointer after you successfully checked for input.
+	 */
+	public var onePressPerFrame:Bool = true;
+
+	/**
+	 * Whether something has been pressed this frame.
+	 * If `true` and `onePressPerFrame` is on, other checks for input will be ignored.
+	**/
+	public var pressedSomething(default, null):Bool = false;
+
 	var _globalScreenX:Int = 0;
 	var _globalScreenY:Int = 0;
 
@@ -147,6 +159,16 @@ class FlxPointer
 		_globalScreenY = Std.int(newY / FlxG.scaleMode.scale.y);
 
 		updatePositions();
+	}
+
+	public function checkJustPressed()
+	{
+		return false;
+	}
+
+	public function onPress()
+	{
+		pressedSomething = true;
 	}
 
 	public function toString():String

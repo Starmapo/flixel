@@ -75,7 +75,7 @@ class FlxUIButton extends FlxUITypedButton<FlxUIText> implements ILabeled implem
 		}
 		else
 		{
-			if (_no_graphic == false)
+			if (!_no_graphic)
 			{
 				doResize(width, height, false);
 				// initialize dimensions but don't initialize any graphics yet.

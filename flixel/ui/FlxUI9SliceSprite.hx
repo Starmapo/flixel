@@ -505,7 +505,7 @@ class FlxUI9SliceSprite extends FlxUISprite implements IResizable implements IFl
 
 		var section:BitmapData = null;
 		var cacheId:String = null;
-		if (useSectionCache == true && assetId != null)
+		if (useSectionCache && assetId != null)
 		{
 			if (sectionCache == null)
 			{
@@ -527,7 +527,7 @@ class FlxUI9SliceSprite extends FlxUISprite implements IResizable implements IFl
 
 			section.copyPixels(srcData, _staticRect2, _staticPointZero);
 
-			if (useSectionCache == true && cacheId != null)
+			if (useSectionCache && cacheId != null)
 			{
 				sectionCache.set(cacheId, section);
 			}

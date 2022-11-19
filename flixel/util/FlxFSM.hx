@@ -242,7 +242,7 @@ class FlxFSMStack<T> extends FlxFSMStackSignal implements IFlxDestroyable
 		{
 			if (_hasLocks)
 			{
-				if (_lockRemaining == false && (fsm.type & _lockedTypes) == 0 && _lockedNames.indexOf(fsm.name) == -1)
+				if (!_lockRemaining && (fsm.type & _lockedTypes) == 0 && _lockedNames.indexOf(fsm.name) == -1)
 				{
 					fsm.update(elapsed);
 				}
@@ -464,7 +464,7 @@ class FlxFSMTransitionTable<T>
 			var removeThese = [];
 			for (transition in _table)
 			{
-				if (transition.remove == true)
+				if (transition.remove)
 				{
 					if (transition.from == currentState)
 					{
@@ -486,7 +486,7 @@ class FlxFSMTransitionTable<T>
 		{
 			if (transition.from == currentState || transition.from == null)
 			{
-				if (transition.evaluate(owner) == true)
+				if (transition.evaluate(owner))
 				{
 					return transition.to;
 				}
@@ -504,7 +504,7 @@ class FlxFSMTransitionTable<T>
 	 */
 	public function add(from:Class<FlxFSMState<T>>, to:Class<FlxFSMState<T>>, condition:T->Bool)
 	{
-		if (hasTransition(from, to, condition) == false)
+		if (!hasTransition(from, to, condition))
 		{
 			var row = new Transition<T>();
 			row.from = from;
@@ -522,7 +522,7 @@ class FlxFSMTransitionTable<T>
 	 */
 	public function addGlobal(to:Class<FlxFSMState<T>>, condition:T->Bool)
 	{
-		if (hasTransition(null, to, condition) == false)
+		if (!hasTransition(null, to, condition))
 		{
 			var row = new Transition<T>();
 			row.to = to;
@@ -649,7 +649,7 @@ class FlxFSMTransitionTable<T>
 			case [f, null, null]:
 				for (transition in _table)
 				{
-					if (from == transition.from && transition.remove == false)
+					if (from == transition.from && !transition.remove)
 					{
 						return true;
 					}
@@ -657,7 +657,7 @@ class FlxFSMTransitionTable<T>
 			case [f, t, null]:
 				for (transition in _table)
 				{
-					if (from == transition.from && to == transition.to && transition.remove == false)
+					if (from == transition.from && to == transition.to && !transition.remove)
 					{
 						return true;
 					}
@@ -665,7 +665,7 @@ class FlxFSMTransitionTable<T>
 			case [null, t, c]:
 				for (transition in _table)
 				{
-					if (to == transition.to && condition == transition.condition && transition.remove == false)
+					if (to == transition.to && condition == transition.condition && !transition.remove)
 					{
 						return true;
 					}
@@ -673,7 +673,7 @@ class FlxFSMTransitionTable<T>
 			case [f, t, c]:
 				for (transition in _table)
 				{
-					if (from == transition.from && to == transition.to && condition == transition.condition && transition.remove == false)
+					if (from == transition.from && to == transition.to && condition == transition.condition && !transition.remove)
 					{
 						return true;
 					}

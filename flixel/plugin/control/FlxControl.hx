@@ -151,7 +151,7 @@ class FlxControl extends FlxBasic
 	{
 		for (handler in _members)
 		{
-			if (handler.enabled == true)
+			if (handler.enabled)
 			{
 				handler.update(elapsed);
 			}

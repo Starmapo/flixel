@@ -24,10 +24,16 @@ class Transition extends FlxSubState
 		var cam = new FlxCamera(0, 0, Std.int(data.region.width), Std.int(data.region.height));
 		cam.bgColor = 0;
 		cam.setSize(Std.int(data.region.width), Std.int(data.region.height));
-		cam.widescreen = FlxG.widescreen || (function() {for(e in FlxG.cameras.list) if (e.widescreen == true) return true; return false;})();
+		cam.widescreen = FlxG.widescreen || (function()
+		{
+			for (e in FlxG.cameras.list)
+				if (e.widescreen)
+					return true;
+			return false;
+		})();
 		FlxG.cameras.add(cam, false);
 		cameras = [cam];
-		
+
 		super(FlxColor.TRANSPARENT);
 		_effect = createEffect(data);
 		_effect.scrollFactor.set(0, 0);

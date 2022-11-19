@@ -106,7 +106,7 @@ class FlxMouse extends FlxPointer implements IFlxInputManager
 	 * Check to see if the right mouse button has just been pressed.
 	 */
 	public var justPressedRight(get, never):Bool;
-	
+
 	/**
 	 * Check to see if the right mouse button is currently not pressed.
 	 * @since 5.0.0
@@ -150,6 +150,9 @@ class FlxMouse extends FlxPointer implements IFlxInputManager
 	 * @since 4.3.0
 	 */
 	public var justPressedTimeInTicksMiddle(get, never):Int;
+
+	public var pressedSomethingRight(default, null):Bool = false;
+	public var pressedSomethingMiddle(default, null):Bool = false;
 	#end
 
 	/**
@@ -427,6 +430,33 @@ class FlxMouse extends FlxPointer implements IFlxInputManager
 		#end
 	}
 
+	override public function checkJustPressed()
+	{
+		return justPressed && (!onePressPerFrame || !pressedSomething);
+	}
+
+	#if FLX_MOUSE_ADVANCED
+	public function checkJustPressedRight()
+	{
+		return justPressedRight && (!onePressPerFrame || !pressedSomethingRight);
+	}
+
+	public function checkJustPressedMiddle()
+	{
+		return justPressedMiddle && (!onePressPerFrame || !pressedSomethingMiddle);
+	}
+
+	public function onPressRight()
+	{
+		pressedSomethingRight = true;
+	}
+
+	public function onPressMiddle()
+	{
+		pressedSomethingMiddle = true;
+	}
+	#end
+
 	/**
 	 * @param   cursorContainer   The cursor container sprite passed by FlxGame
 	 */
@@ -470,6 +500,10 @@ class FlxMouse extends FlxPointer implements IFlxInputManager
 	{
 		_prevX = x;
 		_prevY = y;
+		pressedSomething = false;
+		#if FLX_MOUSE_ADVANCED
+		pressedSomethingRight = pressedSomethingMiddle = false;
+		#end
 
 		#if !FLX_UNIT_TEST // Travis segfaults when game.mouseX / Y is accessed
 		setGlobalScreenPositionUnsafe(FlxG.game.mouseX, FlxG.game.mouseY);

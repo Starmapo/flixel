@@ -58,7 +58,7 @@ class FlxMouseEventManager extends FlxBasic
 	 * @since 4.4.0
 	 */
 	public var maxDoubleClickDelay:Int = 500;
-	
+
 	public function new()
 	{
 		super();
@@ -158,8 +158,27 @@ class FlxMouseEventManager extends FlxBasic
 			{
 				for (buttonID in current.mouseButtons)
 				{
-					if (FlxMouseButton.getByID(buttonID).justPressed)
+					var pressedSomething = false;
+					switch (buttonID)
 					{
+						case LEFT:
+							pressedSomething = FlxG.mouse.checkJustPressed();
+						case MIDDLE:
+							pressedSomething = FlxG.mouse.checkJustPressedMiddle();
+						case RIGHT:
+							pressedSomething = FlxG.mouse.checkJustPressedRight();
+					}
+					if (!pressedSomething && FlxMouseButton.getByID(buttonID).justPressed)
+					{
+						switch (buttonID)
+						{
+							case LEFT:
+								FlxG.mouse.onPress();
+							case MIDDLE:
+								FlxG.mouse.onPressMiddle();
+							case RIGHT:
+								FlxG.mouse.onPressRight();
+						}
 						current.onMouseDown(current.object);
 					}
 				}
@@ -167,7 +186,7 @@ class FlxMouseEventManager extends FlxBasic
 		}
 
 		// MouseClick/MouseDoubleClick - Look for objects with mouse down first.
-		if (FlxG.mouse.justPressed)
+		if (FlxG.mouse.checkJustPressed())
 		{
 			for (current in currentOverObjects)
 			{
@@ -175,7 +194,10 @@ class FlxMouseEventManager extends FlxBasic
 					&& current.object.exists
 					&& current.object.visible)
 				{
+					FlxG.mouse.onPress();
 					_downList.push(current);
+					if (FlxG.mouse.onePressPerFrame)
+						break;
 				}
 			}
 		}
@@ -215,10 +237,7 @@ class FlxMouseEventManager extends FlxBasic
 
 			for (down in _downList)
 			{
-				if (down.object != null
-					&& down.object.exists
-					&& down.object.visible
-					&& get(down.object, currentOverObjects) != null)
+				if (down.object != null && down.object.exists && down.object.visible && get(down.object, currentOverObjects) != null)
 				{
 					if (down.onMouseClick != null)
 					{
@@ -278,7 +297,7 @@ class FlxMouseEventManager extends FlxBasic
 
 			_list.insert(index, cast event);
 		}
-		
+
 		return event;
 	}
 
@@ -298,8 +317,8 @@ class FlxMouseEventManager extends FlxBasic
 	 * @param   pixelPerfect    If true, the collision check will be pixel-perfect. Only works for FlxSprites.
 	 * @param   mouseButtons    The mouse buttons that can trigger callbacks. Left only by default.
 	 */
-	public function add<T:FlxObject>(object:T, ?onMouseDown:T->Void, ?onMouseUp:T->Void, ?onMouseOver:T->Void, ?onMouseOut:T->Void,
-			mouseChildren = false, mouseEnabled = true, pixelPerfect = true, ?mouseButtons:Array<FlxMouseButtonID>):T
+	public function add<T:FlxObject>(object:T, ?onMouseDown:T->Void, ?onMouseUp:T->Void, ?onMouseOver:T->Void, ?onMouseOut:T->Void, mouseChildren = false,
+			mouseEnabled = true, pixelPerfect = true, ?mouseButtons:Array<FlxMouseButtonID>):T
 	{
 		var event = new FlxMouseEvent<T>(object, onMouseDown, onMouseUp, onMouseOver, onMouseOut, mouseChildren, mouseEnabled, pixelPerfect, mouseButtons);
 		addEvent(event);
