@@ -432,18 +432,18 @@ class FlxMouse extends FlxPointer implements IFlxInputManager
 
 	override public function checkJustPressed()
 	{
-		return justPressed && (!onePressPerFrame || !pressedSomething);
+		return justPressed/* && (!onePressPerFrame || !pressedSomething)*/;
 	}
 
 	#if FLX_MOUSE_ADVANCED
 	public function checkJustPressedRight()
 	{
-		return justPressedRight && (!onePressPerFrame || !pressedSomethingRight);
+		return justPressedRight/* && (!onePressPerFrame || !pressedSomethingRight)*/;
 	}
 
 	public function checkJustPressedMiddle()
 	{
-		return justPressedMiddle && (!onePressPerFrame || !pressedSomethingMiddle);
+		return justPressedMiddle/* && (!onePressPerFrame || !pressedSomethingMiddle)*/;
 	}
 
 	public function onPressRight()

@@ -59,7 +59,7 @@ class FlxTouch extends FlxPointer implements IFlxDestroyable implements IFlxInpu
 
 	override public function checkJustPressed()
 	{
-		return justPressed && (!onePressPerFrame || !pressedSomething);
+		return justPressed/* && (!onePressPerFrame || !pressedSomething)*/;
 	}
 
 	/**

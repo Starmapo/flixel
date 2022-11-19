@@ -17,7 +17,7 @@ class FlxPointer
 	 * Whether only one thing should be allowed to be pressed every frame.
 	 * For this to work, call `onPress` on this pointer after you successfully checked for input.
 	 */
-	public var onePressPerFrame:Bool = true;
+	//public var onePressPerFrame:Bool = true;
 
 	/**
 	 * Whether something has been pressed this frame.
