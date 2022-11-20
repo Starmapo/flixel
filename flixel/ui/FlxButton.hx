@@ -411,11 +411,11 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 				var button = FlxMouseButton.getByID(buttonID);
 				var justPressed = switch (buttonID) {
 					case LEFT:
-						FlxG.mouse.checkJustPressed();
+						FlxG.mouse.justPressed;
 					case MIDDLE:
-						FlxG.mouse.checkJustPressedMiddle();
+						FlxG.mouse.justPressedMiddle;
 					case RIGHT:
-						FlxG.mouse.checkJustPressedRight();
+						FlxG.mouse.justPressedRight;
 				};
 				if (button != null && checkInput(FlxG.mouse, button, justPressed, button.justPressedPosition, camera))
 				{
@@ -445,7 +445,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		{
 			for (touch in FlxG.touches.list)
 			{
-				var justPressed = touch.checkJustPressed();
+				var justPressed = touch.justPressed;
 				if (checkInput(touch, touch, justPressed, touch.justPressedPosition, camera))
 				{
 					if (justPressed)

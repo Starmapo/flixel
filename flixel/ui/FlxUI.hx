@@ -6014,6 +6014,11 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 		}
 		return null;
 	}
+
+	override function set_visible(value:Bool) {
+		visible = value;
+		return value;
+	}
 }
 
 typedef UIEventCallback = String->IFlxUIWidget->Dynamic->Array<Dynamic>->Void;

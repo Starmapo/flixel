@@ -158,17 +158,7 @@ class FlxMouseEventManager extends FlxBasic
 			{
 				for (buttonID in current.mouseButtons)
 				{
-					var pressedSomething = false;
-					switch (buttonID)
-					{
-						case LEFT:
-							pressedSomething = FlxG.mouse.checkJustPressed();
-						case MIDDLE:
-							pressedSomething = FlxG.mouse.checkJustPressedMiddle();
-						case RIGHT:
-							pressedSomething = FlxG.mouse.checkJustPressedRight();
-					}
-					if (!pressedSomething && FlxMouseButton.getByID(buttonID).justPressed)
+					if (FlxMouseButton.getByID(buttonID).justPressed)
 					{
 						switch (buttonID)
 						{
@@ -186,7 +176,7 @@ class FlxMouseEventManager extends FlxBasic
 		}
 
 		// MouseClick/MouseDoubleClick - Look for objects with mouse down first.
-		if (FlxG.mouse.checkJustPressed())
+		if (FlxG.mouse.justPressed)
 		{
 			for (current in currentOverObjects)
 			{
@@ -196,8 +186,6 @@ class FlxMouseEventManager extends FlxBasic
 				{
 					FlxG.mouse.onPress();
 					_downList.push(current);
-					if (FlxG.mouse.onePressPerFrame)
-						break;
 				}
 			}
 		}

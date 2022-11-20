@@ -131,13 +131,13 @@ class FlxClickArea extends FlxObject
 			{
 				#if FLX_MOUSE
 				FlxG.mouse.getWorldPosition(camera, _point);
-				offAll = (!updateButtonStatus(_point, camera, FlxG.mouse.checkJustPressed(), FlxG.mouse.onPress)) ? false : offAll;
+				offAll = (!updateButtonStatus(_point, camera, FlxG.mouse.justPressed, FlxG.mouse.onPress)) ? false : offAll;
 				#end
 				#if FLX_TOUCH
 				for (touch in FlxG.touches.list)
 				{
 					touch.getWorldPosition(camera, _point);
-					offAll = (!updateButtonStatus(_point, camera, touch.checkJustPressed(), touch.onPress)) ? false : offAll;
+					offAll = (!updateButtonStatus(_point, camera, touch.justPressed, touch.onPress)) ? false : offAll;
 				}
 				#end
 

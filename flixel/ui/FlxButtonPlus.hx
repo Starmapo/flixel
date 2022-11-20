@@ -203,7 +203,7 @@ class FlxButtonPlus extends FlxSpriteGroup
 			{
 				offAll = false;
 
-				if (FlxG.mouse.checkJustPressed())
+				if (FlxG.mouse.justPressed)
 				{
 					FlxG.mouse.onPress();
 					_status = PRESSED;

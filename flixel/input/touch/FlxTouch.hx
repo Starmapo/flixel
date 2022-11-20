@@ -57,11 +57,6 @@ class FlxTouch extends FlxPointer implements IFlxDestroyable implements IFlxInpu
 		this.pressure = pressure;
 	}
 
-	override public function checkJustPressed()
-	{
-		return justPressed/* && (!onePressPerFrame || !pressedSomething)*/;
-	}
-
 	/**
 	 * @param	X			stageX touch coordinate
 	 * @param	Y			stageX touch coordinate

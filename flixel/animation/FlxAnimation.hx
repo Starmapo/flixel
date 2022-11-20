@@ -71,12 +71,12 @@ class FlxAnimation extends FlxBaseAnimation
 	public var frames:Array<Int>;
 
 	/**
-	 *
-	 */
+	 * Animation indices used during the creation
+	**/
 	public var inputIndices:Array<Int> = [];
 
 	/**
-		Animation prefix used during the creation
+	 * Animation prefix used during the creation
 	**/
 	public var prefix:String = null;
 

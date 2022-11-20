@@ -161,11 +161,6 @@ class FlxPointer
 		updatePositions();
 	}
 
-	public function checkJustPressed()
-	{
-		return false;
-	}
-
 	public function onPress()
 	{
 		pressedSomething = true;
