@@ -431,6 +431,11 @@ class FlxInputText extends FlxText
 			{
 				if (lines == -1)
 					onTextInput("\n");
+				else {
+					hasFocus = false;
+					if (focusLost != null)
+						focusLost();
+				}
 				onChange(ENTER_ACTION);
 			}
 		}
