@@ -14,6 +14,9 @@ import flixel.input.touch.FlxTouch;
 /**
  * A set of functions related to angle calculations.
  * In degrees: (down = 90, right = 0, up = -90)
+ * 
+ * Note: in Flixel 5.0.0 all angle-related tools were changed so that 0 degrees points right, instead of up
+ * @see [Flixel 5.0.0 Migration guide](https://github.com/HaxeFlixel/flixel/wiki/Flixel-5.0.0-Migration-guide)
  */
 class FlxAngle
 {
@@ -85,10 +88,7 @@ class FlxAngle
 	 */
 	public static inline function angleFromOrigin(x:Float, y:Float, asDegrees:Bool = false)
 	{
-		return if (asDegrees)
-				Math.atan2(y, x) * TO_DEG;
-			else
-				Math.atan2(y, x);
+		return if (asDegrees) Math.atan2(y, x) * TO_DEG; else Math.atan2(y, x);
 	}
 
 	/**
@@ -352,7 +352,7 @@ class FlxAngle
 	 * @param	point	Optional FlxPoint if you don't want a new one created
 	 * @return	The point in cartesian coords
 	 */
-	@:deprecated("FlxAngle.getCartesianCoords is deprecated, use FlxVector.setPolarDegrees")
+	@:deprecated("FlxAngle.getCartesianCoords is deprecated, use FlxPoint.setPolarDegrees")
 	public static function getCartesianCoords(Radius:Float, Angle:Float, ?point:FlxPoint):FlxPoint
 	{
 		var p = point;
@@ -372,7 +372,7 @@ class FlxAngle
 	 * @param	point	Optional FlxPoint if you don't want a new one created
 	 * @return	The point in polar coords (x = Radius, y = Angle (degrees))
 	 */
-	@:deprecated("FlxAngle.getCartesianCoords is deprecated, use FlxVector")
+	@:deprecated("FlxAngle.getCartesianCoords is deprecated, use FlxPoint")
 	public static function getPolarCoords(X:Float, Y:Float, ?point:FlxPoint):FlxPoint
 	{
 		var p = point;

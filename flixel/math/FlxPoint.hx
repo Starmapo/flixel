@@ -69,7 +69,7 @@ import openfl.geom.Point;
  * Otherwise, the remainging points will become garbage, adding to the
  * heap, potentially triggering a garbage collection when you don't want.
  */
-@:forward abstract FlxPoint(FlxBasePoint) to FlxBasePoint from FlxBasePoint 
+@:forward abstract FlxPoint(FlxBasePoint) to FlxBasePoint from FlxBasePoint
 {
 	public static inline var EPSILON:Float = 0.0000001;
 	public static inline var EPSILON_SQUARED:Float = EPSILON * EPSILON;
@@ -142,7 +142,6 @@ import openfl.geom.Point;
 		return result;
 	}
 
-	
 	/**
 	 * Operator that divides a point by float, returning a new point.
 	 */
@@ -185,7 +184,6 @@ import openfl.geom.Point;
 		return a.scale(b);
 	}
 
-	
 	/**
 	 * Operator that adds two points, returning a new point.
 	 */
@@ -693,6 +691,8 @@ import openfl.geom.Point;
 	 *
 	 * @param   point   The other point.
 	 * @return  The angle in degrees, between -180 and 180.
+	 * 
+	 * @see [Flixel 5.0.0 Migration guide](https://github.com/HaxeFlixel/flixel/wiki/Flixel-5.0.0-Migration-guide)
 	 */
 	@:deprecated("angleBetween is deprecated, use degreesTo instead")
 	public function angleBetween(point:FlxPoint):Float
@@ -1570,7 +1570,6 @@ class FlxBasePoint implements IFlxPooled
 		return y = Value;
 	}
 }
-
 
 /**
  * A FlxPoint that calls a function when set_x(), set_y() or set() is called. Used in FlxSpriteGroup.
