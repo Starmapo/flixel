@@ -450,7 +450,8 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 				return;
 			}
 		}
-		super.update(elapsed);
+		if (visible)
+			super.update(elapsed);
 	}
 
 	public function toggleShow(key:String):Bool
@@ -2964,11 +2965,11 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 				filterMode = FlxInputText.NO_FILTER;
 		}
 
-		fti.setFormat(the_font, size, color, align);
+		fti.textSprite.setFormat(the_font, size, color, align);
 		fti.forceCase = forceCase;
 		fti.filterMode = filterMode;
-		border.apply(fti);
-		fti.drawFrame();
+		border.apply(fti.textSprite);
+		fti.regenSprites();
 		ft = fti;
 
 		if (data.hasNode.param)
@@ -3845,7 +3846,7 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 				stacking = FlxUINumericStepper.STACK_HORIZONTAL;
 		}
 
-		var theText:FlxText = null;
+		var theText:FlxInputText = null;
 		var buttPlus:FlxUITypedButton<FlxSprite> = null;
 		var buttMinus:FlxUITypedButton<FlxSprite> = null;
 

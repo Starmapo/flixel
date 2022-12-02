@@ -20,9 +20,9 @@ class FlxUIInputText extends FlxInputText implements IResizable implements IFlxU
 
 	public function resize(w:Float, h:Float):Void
 	{
-		width = w;
-		height = h;
-		calcFrame();
+		textSprite.width = w;
+		textSprite.height = h;
+		regenSprites();
 	}
 
 	private override function onChange(action:String):Void

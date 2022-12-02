@@ -1,5 +1,6 @@
 package flixel.ui;
 
+import flixel.math.FlxRect;
 import flash.events.MouseEvent;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -324,9 +325,19 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		super.draw();
 
 		if (_spriteLabel != null && _spriteLabel.visible)
+			drawSprite(_spriteLabel);
+	}
+
+	function drawSprite(Sprite:FlxSprite) {
+		if (Sprite != null && Sprite.visible)
 		{
-			_spriteLabel.cameras = cameras;
-			_spriteLabel.draw();
+			Sprite.scrollFactor = scrollFactor;
+			Sprite.cameras = cameras;
+			if (clipRect == null)
+				Sprite.clipRect = null;
+			else
+				Sprite.clipRect = FlxRect.get(clipRect.x - Sprite.x + x, clipRect.y - Sprite.y + y, clipRect.width, clipRect.height);
+			Sprite.draw();
 		}
 	}
 
@@ -523,7 +534,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	#if FLX_MOUSE
 	function onUpEventListener(_):Void
 	{
-		if (visible && exists && active && status == FlxButton.PRESSED)
+		if (exists && active && status == FlxButton.PRESSED)
 		{
 			onUpHandler();
 		}

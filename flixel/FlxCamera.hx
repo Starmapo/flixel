@@ -1,8 +1,5 @@
 package flixel;
 
-import lime.app.Application;
-import flixel.graphics.tile.FlxGraphicsShader;
-import openfl.filters.ShaderFilter;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
@@ -15,6 +12,7 @@ import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFrame;
 import flixel.graphics.tile.FlxDrawBaseItem;
 import flixel.graphics.tile.FlxDrawTrianglesItem;
+import flixel.graphics.tile.FlxGraphicsShader;
 import flixel.math.FlxMath;
 import flixel.math.FlxMatrix;
 import flixel.math.FlxPoint;
@@ -24,9 +22,11 @@ import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxSpriteUtil;
+import lime.app.Application;
+import openfl.Vector;
 import openfl.display.BlendMode;
 import openfl.filters.BitmapFilter;
-import openfl.Vector;
+import openfl.filters.ShaderFilter;
 
 using flixel.util.FlxColorTransformUtil;
 
@@ -1225,7 +1225,7 @@ class FlxCamera extends FlxBasic
 				_lastTargetPosition.y = target.y;
 			}
 
-			if (followLerp >= (1 / 60) / (1 / FlxG.updateFramerate))
+			if (followLerp >= 1)
 			{
 				scroll.copyFrom(_scrollTarget); // no easing
 			}
@@ -1982,7 +1982,7 @@ class FlxCamera extends FlxBasic
 
 	function set_followLerp(Value:Float):Float
 	{
-		return followLerp = Math.max(Value, 0);
+		return followLerp = FlxMath.bound(Value, 0, 1);
 	}
 
 	function set_width(Value:Int):Int

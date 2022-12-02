@@ -323,10 +323,7 @@ class FlxUITypedButton<T:FlxSprite> extends FlxTypedButton<T> implements IFlxUIB
 	{
 		super.draw();
 		if (has_toggle && toggled && toggle_label != null && toggle_label.visible)
-		{
-			toggle_label.cameras = cameras;
-			toggle_label.draw();
-		}
+			drawSprite(toggle_label);
 	}
 
 	public function resize(W:Float, H:Float):Void

@@ -101,9 +101,9 @@ class FlxUICheckBox extends FlxUIGroup implements ILabeled implements IFlxUIClic
 		button.down_toggle_color = 0xffffff;
 		button.over_toggle_color = 0xffffff;
 
-		button.loadGraphicSlice9(["", "", ""], Std.int(box.width + box_space + LabelW), Std.int(box.height));
+		button.loadGraphicSlice9(["", "", ""], Std.int(box.width), Std.int(box.height));
 
-		max_width = Std.int(box.width + box_space + LabelW);
+		max_width = Std.int(box.width);
 
 		button.onUp.callback = _clickCheck; // for internal use, check/uncheck box, bubbles up to _externalCallback
 
