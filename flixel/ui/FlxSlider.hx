@@ -4,13 +4,13 @@ package flixel.ui;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
-import flixel.text.FlxText;
-import flixel.util.FlxDestroyUtil;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.util.FlxSpriteUtil;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.util.FlxDestroyUtil;
+import flixel.util.FlxSpriteUtil;
 
 /**
  * A slider GUI element for float and integer manipulation.
@@ -111,11 +111,6 @@ class FlxSlider extends FlxSpriteGroup
 	public var varString(default, set):String;
 
 	/**
-	 * The dragable area for the handle. Is configured automatically.
-	 */
-	var _bounds:FlxRect;
-
-	/**
 	 * The width of the slider.
 	 */
 	var _width:Int;
@@ -188,18 +183,10 @@ class FlxSlider extends FlxSpriteGroup
 		y = Y;
 
 		if (MinValue == MaxValue)
-		{
 			FlxG.log.error("FlxSlider: MinValue and MaxValue can't be the same (" + MinValue + ")");
-		}
 
 		// Determine the amount of decimals to show
-		decimals = FlxMath.getDecimals(MinValue);
-
-		if (FlxMath.getDecimals(MaxValue) > decimals)
-		{
-			decimals = FlxMath.getDecimals(MaxValue);
-		}
-
+		decimals = FlxMath.maxInt(FlxMath.getDecimals(MinValue), FlxMath.getDecimals(MaxValue));
 		decimals++;
 
 		// Assign all those constructor vars
@@ -223,7 +210,6 @@ class FlxSlider extends FlxSpriteGroup
 	function createSlider():Void
 	{
 		offset.set(7, 18);
-		_bounds = FlxRect.get(x + offset.x, y + offset.y, _width, _height);
 
 		// Creating the "body" of the slider
 		body = new FlxSprite(offset.x, offset.y);
@@ -241,6 +227,8 @@ class FlxSlider extends FlxSpriteGroup
 		nameLabel.alignment = "center";
 		nameLabel.color = _color;
 		nameLabel.scrollFactor.set();
+		if (varString == null)
+			nameLabel.visible = false;
 
 		var textOffset:Float = _height + offset.y + 3;
 
@@ -271,25 +259,31 @@ class FlxSlider extends FlxSpriteGroup
 	override public function update(elapsed:Float):Void
 	{
 		// Clicking and sound logic
-		if (FlxMath.mouseInFlxRect(false, _bounds))
+		var mousePos = FlxG.mouse.getWorldPosition(camera, _point);
+		var overlap = false;
+		for (camera in cameras)
+		{
+			if (body.overlapsPoint(mousePos, true, camera))
+			{
+				overlap = true;
+				break;
+			}
+		}
+		if (overlap)
 		{
 			if (hoverAlpha != 1)
-			{
 				alpha = hoverAlpha;
-			}
 
 			#if FLX_SOUND_SYSTEM
 			if (hoverSound != null && !_justHovered)
-			{
 				FlxG.sound.play(hoverSound);
-			}
 			#end
 
 			_justHovered = true;
 
 			if (FlxG.mouse.pressed)
 			{
-				handle.x = FlxG.mouse.screenX;
+				handle.x = mousePos.x;
 				updateValue();
 
 				#if FLX_SOUND_SYSTEM
@@ -301,37 +295,23 @@ class FlxSlider extends FlxSpriteGroup
 				#end
 			}
 			if (!FlxG.mouse.pressed)
-			{
 				_justClicked = false;
-			}
 		}
 		else
 		{
 			if (hoverAlpha != 1)
-			{
 				alpha = 1;
-			}
 
 			_justHovered = false;
 		}
 
-		// Update the target value whenever the slider is being used
-		if ((FlxG.mouse.pressed) && (FlxMath.mouseInFlxRect(false, _bounds)))
-		{
-			updateValue();
-		}
-
 		// Update the value variable
-		if ((varString != null) && (Reflect.getProperty(_object, varString) != null))
-		{
+		if (_object != null && varString != null && Reflect.getProperty(_object, varString) != null)
 			value = Reflect.getProperty(_object, varString);
-		}
 
 		// Changes to value from outside update the handle pos
 		if (handle.x != expectedPos)
-		{
 			handle.x = expectedPos;
-		}
 
 		// Finally, update the valueLabel
 		valueLabel.text = Std.string(FlxMath.roundDecimal(value, decimals));
@@ -346,10 +326,8 @@ class FlxSlider extends FlxSpriteGroup
 	{
 		if (_lastPos != relativePos)
 		{
-			if ((setVariable) && (varString != null))
-			{
+			if (_object != null && setVariable && varString != null)
 				Reflect.setProperty(_object, varString, (relativePos * (maxValue - minValue)) + minValue);
-			}
 
 			_lastPos = relativePos;
 
@@ -367,7 +345,7 @@ class FlxSlider extends FlxSpriteGroup
 	 * @param 	Max 		Text of maxLabel - null to hide
 	 * @param 	Size 		Size to use for the texts
 	 */
-	public function setTexts(Name:String, Value:Bool = true, ?Min:String, ?Max:String, Size:Int = 8):Void
+	public function setTexts(Name:String, Value:Bool = true, ?Min:String, ?Max:String, Size:Int = 8)
 	{
 		if (Name == null)
 		{
@@ -399,19 +377,14 @@ class FlxSlider extends FlxSpriteGroup
 			maxLabel.visible = true;
 		}
 
-		if (!Value)
-		{
-			valueLabel.visible = false;
-		}
-		else
-		{
-			valueLabel.visible = true;
-		}
+		valueLabel.visible = Value;
 
 		nameLabel.size = Size;
 		valueLabel.size = Size;
 		minLabel.size = Size;
 		maxLabel.size = Size;
+
+		return this;
 	}
 
 	/**
@@ -425,8 +398,6 @@ class FlxSlider extends FlxSpriteGroup
 		maxLabel = FlxDestroyUtil.destroy(maxLabel);
 		nameLabel = FlxDestroyUtil.destroy(nameLabel);
 		valueLabel = FlxDestroyUtil.destroy(valueLabel);
-
-		_bounds = FlxDestroyUtil.put(_bounds);
 
 		super.destroy();
 	}
@@ -475,26 +446,6 @@ class FlxSlider extends FlxSpriteGroup
 		}
 
 		return Value;
-	}
-
-	override function set_x(value:Float):Float
-	{
-		super.set_x(value);
-		updateBounds();
-		return x = value;
-	}
-
-	override function set_y(value:Float):Float
-	{
-		super.set_y(value);
-		updateBounds();
-		return y = value;
-	}
-
-	inline function updateBounds()
-	{
-		if (_bounds != null)
-			_bounds.set(x + offset.x, y + offset.y, _width, _height);
 	}
 }
 #end

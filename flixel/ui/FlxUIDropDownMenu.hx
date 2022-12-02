@@ -120,7 +120,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 		return params = p;
 	}
 
-	public var dropDirection(default, set):FlxUIDropDownMenuDropDirection = Automatic;
+	public var dropDirection(default, set):FlxUIDropDownMenuDropDirection = Down;
 
 	function set_dropDirection(dropDirection):FlxUIDropDownMenuDropDirection
 	{
@@ -322,7 +322,6 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 
 	function selectSomething(name:String, label:String):Void
 	{
-		trace('selected: $name, $label');
 		header.text.text = label;
 		selectedId = name;
 		selectedLabel = label;
@@ -486,7 +485,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 
 	function onDropdown():Void
 	{
-		(dropPanel.visible) ? showList(false) : showList(true);
+		showList(!dropPanel.visible);
 	}
 
 	function onClickItem(i:Int):Void
