@@ -16,6 +16,7 @@ class FlxUIColorSwatchSelecter extends FlxUIGroup implements IFlxUIClickable
 	public var spacingH(default, set):Float;
 	public var spacingV(default, set):Float;
 	public var maxColumns(default, set):Float;
+	public var callback:SwatchData->Void;
 
 	var _previewSwatch:FlxUIColorSwatch;
 
@@ -340,6 +341,10 @@ class FlxUIColorSwatchSelecter extends FlxUIGroup implements IFlxUIClickable
 	private function selectCallback(i:Int):Void
 	{
 		selectByIndex(i);
+
+		if (callback != null)
+			callback(_selectedSwatch.colors);
+
 		if (broadcastToFlxUI)
 		{
 			if (_selectedSwatch != null)

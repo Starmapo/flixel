@@ -1,7 +1,12 @@
 package flixel.ui;
 
+import flash.geom.Rectangle;
 import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.ui.FlxUISprite;
+import flixel.ui.interfaces.ICursorPointable;
 import flixel.util.FlxColor;
+import flixel.util.FlxStringUtil;
 
 class FlxUIColorSwatch extends FlxUIButton
 {
@@ -97,7 +102,8 @@ class FlxUIColorSwatch extends FlxUIButton
 	private function set_midtone(i:Int):Int
 	{
 		midtone = i;
-		colors.midtone = midtone;
+		if (colors != null)
+			colors.midtone = midtone;
 		refreshColor();
 		return midtone;
 	}
@@ -127,11 +133,10 @@ class FlxUIColorSwatch extends FlxUIButton
 	 */
 	public function new(X:Float, Y:Float, ?Color:Int = 0xFFFFFF, ?Colors:SwatchData, ?Asset:Dynamic, ?Callback:Void->Void, Width:Int = -1, Height:Int = -1)
 	{
+		_skipRefresh = true;
 		super(X, Y, onClick);
 
 		callback = Callback;
-
-		_skipRefresh = true;
 
 		if (Width != -1 && Height != -1)
 		{
@@ -187,7 +192,7 @@ class FlxUIColorSwatch extends FlxUIButton
 		{
 			if (graphic.key != key)
 			{
-				if (!FlxG.bitmap.checkCache(key)) // draw the swatch dynamically from supplied color values
+				if (FlxG.bitmap.checkCache(key) == false) // draw the swatch dynamically from supplied color values
 				{
 					makeGraphic(Std.int(width), Std.int(height), 0xFFFFFFFF, true, key);
 					_flashRect.x = 0;
