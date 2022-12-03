@@ -292,16 +292,18 @@ class FlxInputText extends FlxSpriteGroup
 
 		#if FLX_MOUSE
 		// Set focus and caretIndex as a response to mouse press
-		if (visible && FlxG.mouse.justPressed)
+		if (FlxG.mouse.justPressed)
 		{
 			var hadFocus:Bool = hasFocus;
 			var overlap = false;
-			for (camera in cameras)
-			{
-				if (checkInput(FlxG.mouse, camera))
+			if (visible) {
+				for (camera in cameras)
 				{
-					overlap = true;
-					break;
+					if (checkInput(FlxG.mouse, camera))
+					{
+						overlap = true;
+						break;
+					}
 				}
 			}
 			if (overlap)

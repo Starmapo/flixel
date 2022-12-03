@@ -24,6 +24,8 @@ class FlxUITabMenu extends FlxUIGroup implements IResizable implements IFlxUICli
 
 	public static inline var STACK_FRONT:String = "front"; // button goes in front of backing
 	public static inline var STACK_BACK:String = "back"; // buton goes behind backing
+	
+	public var onClick:String->Void = null;
 
 	public var numTabs(get, never):Int;
 
@@ -330,12 +332,14 @@ class FlxUITabMenu extends FlxUIGroup implements IResizable implements IFlxUICli
 	private function _onTabEvent(name:String):Void
 	{
 		showTabId(name);
+
+		if (onClick != null)
+			onClick(name);
+
 		var tab = getTab(name);
 		var params = (tab != null) ? tab.params : null;
 		if (broadcastToFlxUI)
-		{
 			FlxUI.event(CLICK_EVENT, this, name, params);
-		}
 	}
 
 	public function stackTabs():Void

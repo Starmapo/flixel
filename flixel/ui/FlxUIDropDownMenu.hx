@@ -449,8 +449,19 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				}
 			}
 
-			if (FlxG.mouse.justPressed && !FlxG.mouse.overlaps(this))
-				showList(false);
+			if (FlxG.mouse.justPressed) {
+				var overlap = false;
+				for (camera in cameras)
+				{
+					if (overlapsPoint(FlxG.mouse.getWorldPosition(camera, _point), true, camera))
+					{
+						overlap = true;
+						break;
+					}
+				}
+				if (!overlap)
+					showList(false);
+			}
 		}
 		#end
 	}
