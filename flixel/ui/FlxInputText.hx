@@ -296,7 +296,8 @@ class FlxInputText extends FlxSpriteGroup
 		{
 			var hadFocus:Bool = hasFocus;
 			var overlap = false;
-			if (visible) {
+			if (visible)
+			{
 				for (camera in cameras)
 				{
 					if (checkInput(FlxG.mouse, camera))
@@ -324,11 +325,13 @@ class FlxInputText extends FlxSpriteGroup
 		#end
 		if (hasFocus && FlxG.keys.pressed.CONTROL)
 		{
-			if (FlxG.keys.justPressed.V) {
+			if (FlxG.keys.justPressed.V)
+			{
 				var text = Clipboard.generalClipboard.getData(TEXT_FORMAT);
 				if (text != null)
 					onTextInput(text);
-			} else if (FlxG.keys.justPressed.C)
+			}
+			else if (FlxG.keys.justPressed.C)
 				Clipboard.generalClipboard.setData(TEXT_FORMAT, text);
 		}
 	}
@@ -941,5 +944,12 @@ class FlxInputText extends FlxSpriteGroup
 		textSprite.textField.text = Text;
 		onSetTextCheck();
 		return return_text;
+	}
+
+	public function resize(w:Float, h:Float):Void
+	{
+		textSprite.fieldWidth = w;
+		textSprite.updateHitbox();
+		regenSprites();
 	}
 }

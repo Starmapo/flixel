@@ -18,13 +18,6 @@ class FlxUIInputText extends FlxInputText implements IResizable implements IFlxU
 	public static inline var DELETE_EVENT:String = "delete_input_text"; // delete text in this text field
 	public static inline var INPUT_EVENT:String = "input_input_text"; // input text in this text field
 
-	public function resize(w:Float, h:Float):Void
-	{
-		textSprite.width = w;
-		textSprite.height = h;
-		regenSprites();
-	}
-
 	private override function onChange(action:String):Void
 	{
 		super.onChange(action);

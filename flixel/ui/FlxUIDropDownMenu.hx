@@ -49,25 +49,34 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 			return str;
 
 		var i:Int = 0;
-		for (btn in list)
+		if (list.length > 0)
 		{
-			if (btn != null && btn.name == str)
+			for (btn in list)
 			{
-				var item:FlxUIButton = list[i];
-				_selectedId = str;
-				if (item.label != null)
+				if (btn != null && btn.name == str)
 				{
-					_selectedLabel = item.label.text;
-					header.text.text = item.label.text;
+					var item:FlxUIButton = list[i];
+					_selectedId = str;
+					if (item.label != null)
+					{
+						_selectedLabel = item.label.text;
+						header.text.text = item.label.text;
+					}
+					else
+					{
+						_selectedLabel = "";
+						header.text.text = "";
+					}
+					return str;
 				}
-				else
-				{
-					_selectedLabel = "";
-					header.text.text = "";
-				}
-				return str;
+				i++;
 			}
-			i++;
+		}
+		else
+		{
+			_selectedId = "";
+			_selectedLabel = "";
+			header.text.text = "";
 		}
 		return str;
 	}
@@ -83,17 +92,26 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 			return str;
 
 		var i:Int = 0;
-		for (btn in list)
+		if (list.length > 0)
 		{
-			if (btn.label.text == str)
+			for (btn in list)
 			{
-				var item:FlxUIButton = list[i];
-				_selectedId = item.name;
-				_selectedLabel = str;
-				header.text.text = str;
-				return str;
+				if (btn.label.text == str)
+				{
+					var item:FlxUIButton = list[i];
+					_selectedId = item.name;
+					_selectedLabel = str;
+					header.text.text = str;
+					return str;
+				}
+				i++;
 			}
-			i++;
+		}
+		else
+		{
+			_selectedId = "";
+			_selectedLabel = "";
+			header.text.text = "";
 		}
 		return str;
 	}
@@ -169,7 +187,10 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				var data = DataList[i];
 				list.push(makeListButton(i, data.label, data.name));
 			}
-			selectSomething(DataList[0].name, DataList[0].label);
+			if (DataList.length > 0)
+				selectSomething(DataList[0].name, DataList[0].label);
+			else
+				selectSomething('', '');
 		}
 		else if (ButtonList != null)
 		{
@@ -313,7 +334,10 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				}
 			}
 
-			selectSomething(DataList[0].name, DataList[0].label);
+			if (DataList.length > 0)
+				selectSomething(DataList[0].name, DataList[0].label);
+			else
+				selectSomething('', '');
 		}
 
 		dropPanel.resize(header.background.width, getPanelHeight());
@@ -449,7 +473,8 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				}
 			}
 
-			if (FlxG.mouse.justPressed) {
+			if (FlxG.mouse.justPressed)
+			{
 				var overlap = false;
 				for (camera in cameras)
 				{
@@ -496,7 +521,8 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 
 	function onDropdown():Void
 	{
-		showList(!dropPanel.visible);
+		if (list.length > 0)
+			showList(!dropPanel.visible);
 	}
 
 	function onClickItem(i:Int):Void
