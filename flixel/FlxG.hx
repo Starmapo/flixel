@@ -74,11 +74,14 @@ class FlxG
 	{
 		widescreen = v;
 		for (e in FlxG.cameras.list)
-		{
 			e.updateScrollRect();
-		}
 		return widescreen;
 	}
+
+	/**
+	 * Whenever antialiasing should be forced off, even if the `antialiasing` property of the sprite is set to `true`.
+	 */
+	public static var forceNoAntialiasing = false;
 
 	/**
 	 * Whether the game should be paused when focus is lost or not. Use `-D FLX_NO_FOCUS_LOST_SCREEN`

@@ -1,5 +1,6 @@
 package flixel.graphics.tile;
 
+import openfl.display3D.Context3DTextureFilter;
 #if FLX_DRAW_QUADS
 import flixel.FlxCamera;
 import flixel.graphics.frames.FlxFrame;
@@ -120,7 +121,12 @@ class FlxDrawQuadsItem extends FlxDrawBaseItem<FlxDrawQuadsItem>
 			return;
 
 		shader.bitmap.input = graphics.bitmap;
-		shader.bitmap.filter = (camera.antialiasing || antialiasing) ? LINEAR : NEAREST;
+
+		var aaType:Context3DTextureFilter = LINEAR;
+		if (FlxG.forceNoAntialiasing)
+			aaType = NEAREST;
+		
+		shader.bitmap.filter = (camera.antialiasing || antialiasing) ? aaType : NEAREST;
 		shader.alpha.value = alphas;
 
 		if (colored || hasColorOffsets)

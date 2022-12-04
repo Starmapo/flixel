@@ -97,7 +97,7 @@ class FlxDrawTilesItem extends FlxDrawBaseItem<FlxDrawTilesItem>
 		flags |= blending;
 
 		#if !(nme && flash)
-		camera.canvas.graphics.drawTiles(graphics.tilesheet, drawData, (camera.antialiasing || antialiasing), flags, #if !openfl_legacy shader, #end position);
+		camera.canvas.graphics.drawTiles(graphics.tilesheet, drawData, !FlxG.forceNoAntialiasing && (camera.antialiasing || antialiasing), flags, #if !openfl_legacy shader, #end position);
 		#end
 
 		super.render(camera);
