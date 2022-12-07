@@ -24,7 +24,7 @@ class FlxAssetPaths
 		// create new fields based on file references!
 		for (fileRef in fileReferences)
 			fields.push(fileRef.createField());
-		
+
 		return fields;
 	}
 
@@ -47,7 +47,7 @@ class FlxAssetPaths
 
 				if (exclude != null && exclude.match(path))
 					continue;
-				
+
 				var reference = FileReference.fromPath(path, rename);
 				if (reference != null)
 					addIfUnique(fileReferences, reference);
@@ -60,7 +60,7 @@ class FlxAssetPaths
 
 		return fileReferences;
 	}
-	
+
 	static function addIfUnique(fileReferences:Array<FileReference>, file:FileReference)
 	{
 		for (i in 0...fileReferences.length)
@@ -73,16 +73,16 @@ class FlxAssetPaths
 				{
 					// replace it with the new one
 					fileReferences[i] = file;
-					Context.warning('Duplicate files named "${file.name}" ignoring $oldValue', Context.currentPos());
+					file.warn('Duplicate files named "${file.name}" ignoring $oldValue');
 				}
 				else
 				{
-					Context.warning('Duplicate files named "${file.name}" ignoring ${file.value}', Context.currentPos());
+					file.warn('Duplicate files named "${file.name}" ignoring ${file.value}');
 				}
 				return;
 			}
 		}
-		
+
 		fileReferences.push(file);
 	}
 }
@@ -109,13 +109,13 @@ private class FileReference
 		name = name.split("-").join("_").split(".").join("__");
 		if (!valid.match(name)) // #1796
 		{
-			Context.warning('Invalid name: $name for file: $value', Context.currentPos());
+			warnAsset('Invalid name: $name for file: $value', value);
 			return null;
 		}
-		
+
 		if (library != "default" && library != "" && library != null)
 			value = '$library:$value';
-		
+
 		return new FileReference(name, value);
 	}
 
@@ -129,7 +129,7 @@ private class FileReference
 		this.value = value;
 		this.documentation = "`\"" + value + "\"` (auto generated).";
 	}
-	
+
 	public function createField():Field
 	{
 		return {
@@ -139,6 +139,16 @@ private class FileReference
 			kind: FieldType.FVar(macro:String, macro $v{value}),
 			pos: Context.currentPos()
 		};
+	}
+
+	public inline function warn(msg:String)
+	{
+		warnAsset(msg, value);
+	}
+
+	public static inline function warnAsset(msg:String, filePath:String)
+	{
+		Context.warning(msg, Context.makePosition({min: 0, max: 0, file: filePath}));
 	}
 }
 #end

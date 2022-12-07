@@ -142,7 +142,7 @@ class FlxTilemap extends FlxBaseTilemap<FlxTile>
 	 * Controls whether the object is smoothed when rotated, affects performance.
 	 * @since 4.1.0
 	 */
-	public var antialiasing(default, set):Bool = false;
+	public var antialiasing(default, set):Bool = FlxSprite.defaultAntialiasing;
 
 	/**
 	 * Use to offset the drawing position of the tilemap,
