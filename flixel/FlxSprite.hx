@@ -244,16 +244,6 @@ class FlxSprite extends FlxObject
 	public var offset(default, null):FlxPoint;
 
 	/**
-	 * Whenever it should render the offset as the rotOffset. Defaults to false
-	 */
-	public var useOffsetAsRotOffset:Bool = false;
-
-	/**
-	 * Rotation hitbox
-	 */
-	public var rotOffset(default, null):FlxPoint;
-
-	/**
 	 * Change the size of your sprite's graphic.
 	 * NOTE: The hitbox is not automatically adjusted, use `updateHitbox()` for that (or `setGraphicSize()`).
 	 * WARNING: With `FlxG.renderBlit`, scaling sprites decreases rendering performance by a factor of about x10!
@@ -405,7 +395,6 @@ class FlxSprite extends FlxObject
 		_flashRect2 = new Rectangle();
 		_flashPointZero = new Point();
 		offset = FlxPoint.get();
-		rotOffset = FlxPoint.get();
 		origin = FlxPoint.get();
 		scale = FlxPoint.get(1, 1);
 		_halfSize = FlxPoint.get();
@@ -431,7 +420,6 @@ class FlxSprite extends FlxObject
 		animation = FlxDestroyUtil.destroy(animation);
 
 		offset = FlxDestroyUtil.put(offset);
-		rotOffset = FlxDestroyUtil.put(rotOffset);
 		origin = FlxDestroyUtil.put(origin);
 		scale = FlxDestroyUtil.put(scale);
 		_halfSize = FlxDestroyUtil.put(_halfSize);
@@ -802,9 +790,7 @@ class FlxSprite extends FlxObject
 			if (camera == null || !camera.visible || !camera.exists || !isOnScreen(camera))
 				continue;
 
-			getScreenPosition(_point, camera);
-			if (!useOffsetAsRotOffset)
-				_point.subtractPoint(offset);
+			getScreenPosition(_point, camera).subtractPoint(offset);
 
 			if (isSimpleRender(camera))
 				drawSimple(camera);
@@ -846,10 +832,6 @@ class FlxSprite extends FlxObject
 
 		_frame.prepareMatrix(_matrix, FlxFrameAngle.ANGLE_0, _flipX, _flipY);
 		_matrix.translate(-origin.x, -origin.y);
-		if (useOffsetAsRotOffset)
-			_matrix.translate(-offset.x, -offset.y);
-		else
-			_matrix.translate(-rotOffset.x, -rotOffset.y);
 		_matrix.scale(scale.x, scale.y);
 
 		if (bakedRotationAngle <= 0)
@@ -1232,15 +1214,12 @@ class FlxSprite extends FlxObject
 		if (pixelPerfectPosition)
 			newRect.floor();
 		_scaledOrigin.set(origin.x * Math.abs(scale.x), origin.y * Math.abs(scale.y));
-		var scaledRotOffset = FlxPoint.weak(rotOffset.x * Math.abs(scale.x), rotOffset.y * Math.abs(scale.y));
 		newRect.x -= offset.x - origin.x + _scaledOrigin.x;
 		newRect.y -= offset.y - origin.y + _scaledOrigin.y;
 		newRect.setSize(frameWidth * Math.abs(scale.x), frameHeight * Math.abs(scale.y));
 		if (pixelPerfectRender)
 			newRect.floor();
-		if (useOffsetAsRotOffset)
-			offset.put();
-		return newRect.getRotatedBounds(angle, _scaledOrigin, newRect, scaledRotOffset);
+		return newRect.getRotatedBounds(angle, _scaledOrigin, newRect);
 	}
 
 	public function getGraphicMidpoint(?point:FlxPoint):FlxPoint
@@ -1338,22 +1317,16 @@ class FlxSprite extends FlxObject
 		if (camera == null)
 			camera = FlxG.camera;
 
-		var offset = useOffsetAsRotOffset ? FlxPoint.get() : offset;
-		var rotOffset = useOffsetAsRotOffset ? offset : rotOffset;
-
 		newRect.setPosition(x, y);
 		if (pixelPerfectPosition)
 			newRect.floor();
 		_scaledOrigin.set(origin.x * Math.abs(scale.x), origin.y * Math.abs(scale.y));
-		var scaledRotOffset = FlxPoint.weak(rotOffset.x * Math.abs(scale.x), rotOffset.y * Math.abs(scale.y));
 		newRect.x += -Std.int(camera.scroll.x * scrollFactor.x) - offset.x + origin.x - _scaledOrigin.x;
 		newRect.y += -Std.int(camera.scroll.y * scrollFactor.y) - offset.y + origin.y - _scaledOrigin.y;
 		if (isPixelPerfectRender(camera))
 			newRect.floor();
 		newRect.setSize(frameWidth * Math.abs(scale.x), frameHeight * Math.abs(scale.y));
-		if (useOffsetAsRotOffset)
-			offset.put();
-		return newRect.getRotatedBounds(angle, _scaledOrigin, newRect, scaledRotOffset);
+		return newRect.getRotatedBounds(angle, _scaledOrigin, newRect);
 	}
 
 	public function getScreenMidpoint(?point:FlxPoint, ?camera:FlxCamera):FlxPoint

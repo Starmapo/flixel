@@ -508,6 +508,70 @@ class FlxAnimationController implements IFlxDestroyable
 	}
 
 	/**
+	 * Adds a new animation to the sprite.
+	 * Unlike `addByPrefix`, this makes sure that frames containing more than the atlas name aren't added.
+	 * For example, if you have two animations in the atlas like `"walk"` and `"walk slow"`, doing
+	 * `animation.addByAtlasName("walk", "walk");` will ignore the `"walk slow"` frames.
+	 *
+	 * @param   Name        What this animation should be called (e.g. `"run"`).
+	 * @param   AtlasName   The animation's name in the atlas.
+	 * @param   FrameRate   The speed in frames per second that the animation should play at (e.g. `40` fps).
+	 * @param   Looped      Whether or not the animation is looped or just plays once.
+	 * @param   FlipX       Whether the frames should be flipped horizontally.
+	 * @param   FlipY       Whether the frames should be flipped vertically.
+	 */
+	public function addByAtlasName(Name:String, AtlasName:String, FrameRate:Int = 30, Looped:Bool = true, FlipX:Bool = false, FlipY:Bool = false):Void
+	{
+		if (_sprite.frames != null)
+		{
+			var animFrames:Array<FlxFrame> = new Array<FlxFrame>();
+			findByAtlasName(animFrames, AtlasName); // adds valid frames to animFrames
+
+			if (animFrames.length > 0)
+			{
+				var frameIndices:Array<Int> = new Array<Int>();
+				byPrefixHelper(frameIndices, animFrames, AtlasName); // finds frames and appends them to the blank array
+
+				if (frameIndices.length > 0)
+				{
+					var anim:FlxAnimation = new FlxAnimation(this, Name, frameIndices, FrameRate, Looped, FlipX, FlipY);
+					_animations.set(Name, anim);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Adds to an existing animation in the sprite by appending the specified frames to the existing frames.
+	 * Frames are sorted numerically while ignoring postfixes (e.g. `".png"`, `".gif"`).
+	 * The animation must already exist in order to append frames to it.
+	 *
+	 * @param   Name     What the existing animation is called (e.g. `"run"`).
+	 * @param   Prefix   Common beginning of image names in atlas (e.g. `"tiles-"`)
+	 */
+	public function appendByAtlasName(Name:String, AtlasName:String):Void
+	{
+		var anim:FlxAnimation = _animations.get(Name);
+		if (anim == null)
+		{
+			FlxG.log.warn("No animation called \"" + Name + "\"");
+			return;
+		}
+
+		if (_sprite.frames != null)
+		{
+			var animFrames:Array<FlxFrame> = new Array<FlxFrame>();
+			findByAtlasName(animFrames, AtlasName); // adds valid frames to animFrames
+
+			if (animFrames.length > 0)
+			{
+				// finds frames and appends them to the existing array
+				byPrefixHelper(anim.frames, animFrames, AtlasName);
+			}
+		}
+	}
+
+	/**
 	 * Plays an existing animation (e.g. `"run"`).
 	 * If you call an animation that is already playing, it will be ignored.
 	 *
@@ -720,6 +784,28 @@ class FlxAnimationController implements IFlxDestroyable
 		}
 	}
 
+	function findByAtlasName(AnimIndices:Array<FlxFrame>, AtlasName:String):Void
+	{
+		for (frame in _sprite.frames.frames)
+		{
+			if (frame.name != null && StringTools.startsWith(frame.name, AtlasName))
+			{
+				var afterName = StringTools.trim(frame.name.substring(AtlasName.length));
+				var goodCheck = switch (frame.parent.atlasFrames.atlasType)
+				{
+					case TEXTUREPACKER_JSON:
+						~/instance [0-9]*/g.match(afterName);
+					case SPRITE_SHEET_PACKER:
+						~/_?[0-9]*/g.match(afterName);
+					default:
+						~/[0-9]*/g.match(afterName);
+				}
+				if (goodCheck)
+					AnimIndices.push(frame);
+			}
+		}
+	}
+
 	function set_frameIndex(Frame:Int):Int
 	{
 		if (_sprite.frames != null && frames > 0)
@@ -783,7 +869,7 @@ class FlxAnimationController implements IFlxDestroyable
 	public function getAnimationList():Array<FlxAnimation>
 	{
 		var animList:Array<FlxAnimation> = [];
-		
+
 		for (anims in _animations)
 		{
 			animList.push(anims);

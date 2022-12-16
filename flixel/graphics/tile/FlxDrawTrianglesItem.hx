@@ -63,6 +63,7 @@ class FlxDrawTrianglesItem extends FlxDrawBaseItem<FlxDrawTrianglesItem>
 		var shader = shader != null ? shader : graphics.shader;
 		shader.bitmap.input = graphics.bitmap;
 		shader.bitmap.filter = (camera.antialiasing || antialiasing) ? LINEAR : NEAREST;
+		shader.bitmap.wrap = REPEAT; // in order to prevent breaking tiling behaviour in classes that use drawTriangles
 		shader.alpha.value = alphas;
 
 		if (colored || hasColorOffsets)
@@ -213,7 +214,7 @@ class FlxDrawTrianglesItem extends FlxDrawBaseItem<FlxDrawTrianglesItem>
 		cameraBounds.putWeak();
 
 		#if !flash
-		for (_ in 0...numVertices)
+		for (_ in 0...numTriangles)
 		{
 			alphas.push(transform != null ? transform.alphaMultiplier : 1.0);
 			alphas.push(transform != null ? transform.alphaMultiplier : 1.0);
@@ -228,7 +229,7 @@ class FlxDrawTrianglesItem extends FlxDrawBaseItem<FlxDrawTrianglesItem>
 			if (colorOffsets == null)
 				colorOffsets = [];
 
-			for (_ in 0...numVertices)
+			for (_ in 0...(numTriangles * 3))
 			{
 				if (transform != null)
 				{

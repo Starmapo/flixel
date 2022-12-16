@@ -660,7 +660,7 @@ class FlxAtlas implements IFlxDestroyable
 		var atlasFrames:FlxAtlasFrames = graph.atlasFrames;
 		if (graph.atlasFrames == null)
 		{
-			atlasFrames = new FlxAtlasFrames(graph);
+			atlasFrames = new FlxAtlasFrames(graph, NODES);
 		}
 
 		for (node in nodes)

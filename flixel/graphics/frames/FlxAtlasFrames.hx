@@ -4,14 +4,14 @@ import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
-import flixel.graphics.frames.FlxFramesCollection.FlxFrameCollectionType;
+import flixel.graphics.frames.FlxFramesCollection;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.system.FlxAssets.FlxTexturePackerSource;
-import openfl.Assets;
 import haxe.Json;
 import haxe.xml.Access;
+import openfl.Assets;
 
 /**
  * Atlas frames collection. It makes possible to use texture atlases in Flixel.
@@ -19,9 +19,12 @@ import haxe.xml.Access;
  */
 class FlxAtlasFrames extends FlxFramesCollection
 {
-	public function new(parent:FlxGraphic, ?border:FlxPoint)
+	public var atlasType:FlxAtlasType;
+
+	public function new(parent:FlxGraphic, atlasType:FlxAtlasType, ?border:FlxPoint)
 	{
 		super(parent, FlxFrameCollectionType.ATLAS, border);
+		this.atlasType = atlasType;
 	}
 
 	/**
@@ -48,7 +51,7 @@ class FlxAtlasFrames extends FlxFramesCollection
 		if (graphic == null || Description == null)
 			return null;
 
-		frames = new FlxAtlasFrames(graphic);
+		frames = new FlxAtlasFrames(graphic, TEXTUREPACKER_JSON);
 
 		var data:TexturePackerObject;
 
@@ -138,7 +141,7 @@ class FlxAtlasFrames extends FlxFramesCollection
 		if ((graphic == null) || (description == null))
 			return null;
 
-		frames = new FlxAtlasFrames(graphic);
+		frames = new FlxAtlasFrames(graphic, LIBGDX);
 
 		if (Assets.exists(description))
 			description = Assets.getText(description);
@@ -254,7 +257,7 @@ class FlxAtlasFrames extends FlxFramesCollection
 		if (graphic == null || Description == null)
 			return null;
 
-		frames = new FlxAtlasFrames(graphic);
+		frames = new FlxAtlasFrames(graphic, SPARROW);
 
 		if (Assets.exists(Description))
 			Description = Assets.getText(Description);
@@ -319,7 +322,7 @@ class FlxAtlasFrames extends FlxFramesCollection
 		if (graphic == null || Description == null)
 			return null;
 
-		frames = new FlxAtlasFrames(graphic);
+		frames = new FlxAtlasFrames(graphic, TEXTUREPACKER_XML);
 
 		if (Assets.exists(Description))
 			Description = Assets.getText(Description);
@@ -371,7 +374,7 @@ class FlxAtlasFrames extends FlxFramesCollection
 		if (graphic == null || Description == null)
 			return null;
 
-		frames = new FlxAtlasFrames(graphic);
+		frames = new FlxAtlasFrames(graphic, SPRITE_SHEET_PACKER);
 
 		if (Assets.exists(Description))
 			Description = Assets.getText(Description);
@@ -424,7 +427,7 @@ class FlxAtlasFrames extends FlxFramesCollection
 		if (atlasFrames != null)
 			return atlasFrames;
 
-		atlasFrames = new FlxAtlasFrames(parent, resultBorder);
+		atlasFrames = new FlxAtlasFrames(parent, atlasType, resultBorder);
 
 		for (frame in frames)
 			atlasFrames.pushFrame(frame.setBorderTo(border));
@@ -436,4 +439,16 @@ class FlxAtlasFrames extends FlxFramesCollection
 typedef TexturePackerObject =
 {
 	frames:Dynamic
+}
+
+enum FlxAtlasType
+{
+	TEXTUREPACKER_JSON;
+	TEXTUREPACKER_XML;
+	LIBGDX;
+	SPARROW;
+	SPRITE_SHEET_PACKER;
+	NODES;
+	SPINE;
+	UNKNOWN;
 }

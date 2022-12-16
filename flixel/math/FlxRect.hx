@@ -344,16 +344,13 @@ class FlxRect implements IFlxPooled
 	 * @return A globally aligned `FlxRect` that fully contains the input rectangle.
 	 * @since 4.11.0
 	 */
-	public function getRotatedBounds(degrees:Float, ?origin:FlxPoint, ?newRect:FlxRect, ?rotOffset:FlxPoint):FlxRect
+	public function getRotatedBounds(degrees:Float, ?origin:FlxPoint, ?newRect:FlxRect):FlxRect
 	{
 		if (origin == null)
 			origin = FlxPoint.weak();
 		
 		if (newRect == null)
 			newRect = FlxRect.get();
-
-		if (rotOffset == null)
-			rotOffset = FlxPoint.weak();
 		
 		degrees = degrees % 360;
 		if (degrees == 0)
@@ -369,10 +366,10 @@ class FlxRect implements IFlxPooled
 		var cos = Math.cos(radians);
 		var sin = Math.sin(radians);
 		
-		var left = -origin.x - rotOffset.x;
-		var top = -origin.y - rotOffset.y;
-		var right = -origin.x + width - rotOffset.x;
-		var bottom = -origin.y + height - rotOffset.y;
+		var left = -origin.x;
+		var top = -origin.y;
+		var right = -origin.x + width;
+		var bottom = -origin.y + height;
 		if (degrees < 90)
 		{
 			newRect.x = x + origin.x + cos * left - sin * bottom;
@@ -399,7 +396,6 @@ class FlxRect implements IFlxPooled
 		newRect.height = newHeight;
 		
 		origin.putWeak();
-		rotOffset.putWeak();
 		return newRect;
 	}
 
