@@ -535,6 +535,7 @@ class FlxAnimationController implements IFlxDestroyable
 				if (frameIndices.length > 0)
 				{
 					var anim:FlxAnimation = new FlxAnimation(this, Name, frameIndices, FrameRate, Looped, FlipX, FlipY);
+					anim.prefix = AtlasName;
 					_animations.set(Name, anim);
 				}
 			}
@@ -567,6 +568,33 @@ class FlxAnimationController implements IFlxDestroyable
 			{
 				// finds frames and appends them to the existing array
 				byPrefixHelper(anim.frames, animFrames, AtlasName);
+			}
+		}
+	}
+
+	public function addByAtlasNameIndices(Name:String, AtlasName:String, Indices:Array<Int>, FrameRate:Int = 30, Looped:Bool = true, FlipX:Bool = false,
+			FlipY:Bool = false):Void
+	{
+		if (_sprite.frames != null)
+		{
+			var animFrames:Array<FlxFrame> = new Array<FlxFrame>();
+			findByAtlasName(animFrames, AtlasName); // adds valid frames to animFrames
+
+			if (animFrames.length > 0)
+			{
+				var frameIndices:Array<Int> = new Array<Int>();
+				var atlasFrameIndices:Array<Int> = new Array<Int>();
+				byPrefixHelper(atlasFrameIndices, animFrames, AtlasName); // finds frames and appends them to the blank array
+				for (index in Indices)
+				{
+					if (atlasFrameIndices[index] != null)
+						frameIndices.push(atlasFrameIndices[index]);
+				}
+
+				var anim:FlxAnimation = new FlxAnimation(this, Name, frameIndices, FrameRate, Looped, FlipX, FlipY);
+				anim.prefix = AtlasName;
+				anim.inputIndices = Indices;
+				_animations.set(Name, anim);
 			}
 		}
 	}
