@@ -59,6 +59,7 @@ class FlxAnimationController implements IFlxDestroyable
 	/**
 	 * Internal, reference to owner sprite.
 	 */
+	@:allow(flixel.animation)
 	var _sprite:FlxSprite;
 
 	/**
@@ -587,7 +588,7 @@ class FlxAnimationController implements IFlxDestroyable
 				byPrefixHelper(atlasFrameIndices, animFrames, AtlasName); // finds frames and appends them to the blank array
 				for (index in Indices)
 				{
-					if (atlasFrameIndices[index] != null)
+					if (index > -1 && atlasFrameIndices.length > index)
 						frameIndices.push(atlasFrameIndices[index]);
 				}
 
@@ -821,9 +822,9 @@ class FlxAnimationController implements IFlxDestroyable
 				var afterName = StringTools.trim(frame.name.substring(AtlasName.length));
 				var goodCheck = switch (frame.parent.atlasFrames.atlasType)
 				{
-					case TEXTUREPACKER_JSON:
+					case TEXTUREPACKER_JSON, TEXTUREPACKER_XML:
 						~/instance [0-9]*/g.match(afterName);
-					case SPRITE_SHEET_PACKER:
+					case LIBGDX, SPRITE_SHEET_PACKER:
 						~/_?[0-9]*/g.match(afterName);
 					default:
 						~/[0-9]*/g.match(afterName);

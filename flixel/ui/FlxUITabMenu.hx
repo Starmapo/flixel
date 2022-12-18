@@ -142,7 +142,7 @@ class FlxUITabMenu extends FlxUIGroup implements IResizable implements IFlxUICli
 
 	/***PUBLIC***/
 	public function new(?back_:FlxSprite, ?tabs_:Array<IFlxUIButton>, ?tab_names_and_labels_:Array<{name:String, label:String}>, ?tab_offset:FlxPoint,
-			?stretch_tabs:Bool = false, ?tab_spacing:Null<Float> = null, ?tab_stacking:Array<String> = null)
+			?stretch_tabs:Bool = true, ?tab_spacing:Null<Float> = null, ?tab_stacking:Array<String> = null)
 	{
 		super();
 
@@ -413,7 +413,7 @@ class FlxUITabMenu extends FlxUIGroup implements IResizable implements IFlxUICli
 
 	private var _tabs:Array<IFlxUIButton>;
 	private var _tab_groups:Array<FlxUIGroup>;
-	private var _stretch_tabs:Bool = false;
+	private var _stretch_tabs:Bool = true;
 	private var _tab_spacing:Null<Float> = null;
 	private var _tab_stacking:Array<String> = null;
 	private var _tab_offset:FlxPoint = null;

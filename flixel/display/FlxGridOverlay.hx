@@ -52,11 +52,7 @@ class FlxGridOverlay
 
 		var grid:FlxGraphic = createGrid(CellWidth, CellHeight, Width, Height, Alternate, Color1, Color2);
 
-		var output = new FlxSprite();
-
-		output.graphic = grid;
-		output.dirty = true;
-
+		var output = new FlxSprite().loadGraphic(grid);
 		return output;
 	}
 
@@ -102,7 +98,7 @@ class FlxGridOverlay
 
 	public static function createGrid(CellWidth:Int, CellHeight:Int, Width:Int, Height:Int, Alternate:Bool, Color1:FlxColor, Color2:FlxColor):FlxGraphic
 	{
-		var key = '$CellWidth::$CellHeight::$Width::$Height::$Alternate::$Color1::$Color2';
+		var key = 'grid::$CellWidth::$CellHeight::$Width::$Height::$Alternate::$Color1::$Color2';
 		if (FlxG.bitmap.checkCache(key))
 			return FlxG.bitmap.get(key);
 
@@ -120,7 +116,7 @@ class FlxGridOverlay
 			{
 				(lastColor == Color1) ? lastColor = Color2 : lastColor = Color1;
 			}
-			else if (y > 0 && lastColor != rowColor && !Alternate)
+			else if (y > 0 && lastColor != rowColor && Alternate == false)
 			{
 				(lastColor == Color2) ? lastColor = Color1 : lastColor = Color2;
 			}
@@ -151,7 +147,7 @@ class FlxGridOverlay
 			y += CellHeight;
 		}
 
-		var graphic:FlxGraphic = FlxG.bitmap.add(grid, false, key);
+		var graphic = FlxG.bitmap.add(grid, false, key);
 		return graphic;
 	}
 }

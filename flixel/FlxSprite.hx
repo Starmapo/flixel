@@ -766,7 +766,11 @@ class FlxSprite extends FlxObject
 	function checkEmptyFrame()
 	{
 		if (_frame == null)
-			loadGraphic("flixel/images/logo/default.png");
+			loadDefaultGraphic();
+	}
+
+	public function loadDefaultGraphic() {
+		loadGraphic("flixel/images/logo/default.png");
 	}
 
 	/**
@@ -776,8 +780,8 @@ class FlxSprite extends FlxObject
 	{
 		checkEmptyFrame();
 
-		if (alpha == 0 || _frame == null || _frame.type == FlxFrameType.EMPTY || _frame.parent.width == 0 || _frame.parent.height == 0
-			|| !_frame.parent.bitmap.readable || graphic.shader == null)
+		if (alpha == 0 || _frame == null || _frame.type == FlxFrameType.EMPTY || _frame.parent == null || _frame.parent.width == 0
+			|| _frame.parent.height == 0 || _frame.parent.bitmap == null || !_frame.parent.bitmap.readable || graphic == null || graphic.shader == null)
 			return;
 
 		if (dirty) // rarely

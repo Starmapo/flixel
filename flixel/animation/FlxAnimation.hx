@@ -80,6 +80,10 @@ class FlxAnimation extends FlxBaseAnimation
 	**/
 	public var prefix:String = null;
 
+	// should be ints, but FlxPoint axes are floats
+	public var width(get, never):Float;
+	public var height(get, never):Float;
+
 	/**
 	 * Internal, used to time each frame of animation.
 	 */
@@ -267,5 +271,31 @@ class FlxAnimation extends FlxBaseAnimation
 	inline function get_numFrames():Int
 	{
 		return frames.length;
+	}
+
+	function get_width():Float
+	{
+		var maxWidth = Math.NEGATIVE_INFINITY;
+		var atlasFrames = parent._sprite.graphic.atlasFrames;
+		for (frame in frames)
+		{
+			var frameWidth = atlasFrames.frames[frame].sourceSize.x;
+			if (frameWidth > maxWidth)
+				maxWidth = frameWidth;
+		}
+		return maxWidth;
+	}
+
+	function get_height():Float
+	{
+		var maxHeight = Math.NEGATIVE_INFINITY;
+		var atlasFrames = parent._sprite.graphic.atlasFrames;
+		for (frame in frames)
+		{
+			var frameHeight = atlasFrames.frames[frame].sourceSize.y;
+			if (frameHeight > maxHeight)
+				maxHeight = frameHeight;
+		}
+		return maxHeight;
 	}
 }
