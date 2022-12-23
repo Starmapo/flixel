@@ -394,7 +394,7 @@ class FlxSpine extends FlxSprite
 		var regionWidth:Float = region.rotate ? region.height : region.width;
 		var regionHeight:Float = region.rotate ? region.width : region.height;
 
-		var atlasFrames:FlxAtlasFrames = (graph.atlasFrames == null) ? new FlxAtlasFrames(graph, spine) : graph.atlasFrames;
+		var atlasFrames:FlxAtlasFrames = (graph.atlasFrames == null) ? new FlxAtlasFrames(graph, SPINE) : graph.atlasFrames;
 
 		var name:String = region.name;
 		var offset:FlxPoint = FlxPoint.get(0, 0);

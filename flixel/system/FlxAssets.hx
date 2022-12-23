@@ -16,6 +16,8 @@ import flixel.util.typeLimit.OneOfTwo;
 import openfl.Assets;
 import openfl.utils.ByteArray;
 
+using StringTools;
+
 @:keep @:bitmap("assets/images/logo/logo.png")
 class GraphicLogo extends BitmapData {}
 
@@ -45,6 +47,13 @@ typedef FlxShader =
 
 class FlxAssets
 {
+	/**
+	 * The default sound format to be assumed when unspecified, only affects calls to
+	 * `FlxAssets.getSound` which are not common. Currently set to ".ogg" on non-flash targets
+	 * for backwards compatibility reasons.
+	 */
+	public static var defaultSoundExtension = #if flash "mp3" #else "ogg" #end;
+
 	#if (macro || doc_gen)
 	/**
 	 * Reads files from a directory relative to this project and generates `public static inline`
@@ -69,21 +78,20 @@ class FlxAssets
 	 *                          Example: `"*exclude/*|*.ogg"` will exclude .ogg files and everything in the exclude folder
 	 * @param   rename          A function that takes the file path and returns a valid haxe field name.
 	 */
-	public static function buildFileReferences(directory = "assets/", subDirectories = false,
-			?include:Expr, ?exclude:Expr, ?rename:String->Null<String>):Array<Field>
+	public static function buildFileReferences(directory = "assets/", subDirectories = false, ?include:Expr, ?exclude:Expr,
+			?rename:String->Null<String>):Array<Field>
 	{
 		#if doc_gen
 		return [];
 		#else
-		return flixel.system.macros.FlxAssetPaths.buildFileReferences(directory, subDirectories,
-			exprToRegex(include), exprToRegex(exclude), rename);
+		return flixel.system.macros.FlxAssetPaths.buildFileReferences(directory, subDirectories, exprToRegex(include), exprToRegex(exclude), rename);
 		#end
 	}
 
 	#if !doc_gen
 	private static function exprToRegex(expr:Expr):EReg
 	{
-		switch(expr.expr)
+		switch (expr.expr)
 		{
 			case null | EConst(CIdent("null")):
 				return null;
@@ -101,7 +109,6 @@ class FlxAssets
 	}
 	#end
 	#end
-
 	#if (!macro || doc_gen)
 	// fonts
 	public static var FONT_DEFAULT:String = "Nokia Cellphone FC Small";
@@ -244,15 +251,19 @@ class FlxAssets
 		return null;
 	}
 
-	public static inline function getSound(id:String):Sound
+	/**
+	 * Loads an OpenFL sound asset from the given asset id. If an extension not provided the 
+	 * `defaultSoundExtension` is used (defaults to "ogg" on non-flash targets).
+	 * 
+	 * @param   id  The asset id of the local sound file.
+	 * @return  The sound file.
+	 */
+	public static function getSound(id:String):Sound
 	{
-		var extension = "";
-		#if flash
-		extension = ".mp3";
-		#else
-		extension = ".ogg";
-		#end
-		return Assets.getSound(id + extension);
+		if (!id.endsWith(".mp3") && !id.endsWith(".ogg") && !id.endsWith(".wav"))
+			id += "." + defaultSoundExtension;
+
+		return Assets.getSound(id);
 	}
 
 	public static function getVirtualInputFrames():FlxAtlasFrames

@@ -200,8 +200,7 @@ class FlxObject extends FlxBasic
 			case ALWAYS: true;
 			case IMMOVABLE: object2.immovable;
 			case HEAVIER: object2.immovable || object2.mass > object1.mass;
-		}
-	}
+		}}
 
 	/**
 	 * Internal function that computes overlap among two objects on the X axis. It also updates the `touching` variable.
@@ -330,7 +329,7 @@ class FlxObject extends FlxBasic
 				#else
 				object1.x -= overlap / 2;
 				object2.x += overlap / 2;
-				
+
 				var momentum = mass1 * vel1 + mass2 * vel2;
 				var newVel1 = (momentum + elasticity1 * mass2 * (vel2 - vel1)) / massSum;
 				var newVel2 = (momentum + elasticity2 * mass1 * (vel1 - vel2)) / massSum;
@@ -512,7 +511,7 @@ class FlxObject extends FlxBasic
 				#else
 				object1.y -= overlap / 2;
 				object2.y += overlap / 2;
-				
+
 				var momentum = mass1 * vel1 + mass2 * vel2;
 				var newVel1 = (momentum + elasticity1 * mass2 * (vel2 - vel1)) / massSum;
 				var newVel2 = (momentum + elasticity2 * mass1 * (vel1 - vel2)) / massSum;
@@ -1100,7 +1099,7 @@ class FlxObject extends FlxBasic
 	{
 		if (result == null)
 			result = FlxPoint.get();
-		
+
 		return result.set(x, y);
 	}
 
@@ -1177,7 +1176,7 @@ class FlxObject extends FlxBasic
 	 */
 	public inline function isTouching(direction:FlxDirectionFlags):Bool
 	{
-		return touching.has(direction);
+		return touching.hasAny(direction);
 	}
 
 	/**
@@ -1189,7 +1188,7 @@ class FlxObject extends FlxBasic
 	 */
 	public inline function justTouched(direction:FlxDirectionFlags):Bool
 	{
-		return touching.has(direction) && !wasTouching.has(direction);
+		return touching.hasAny(direction) && !wasTouching.hasAny(direction);
 	}
 
 	/**
@@ -1335,7 +1334,7 @@ class FlxObject extends FlxBasic
 
 		return _rect;
 	}
-	
+
 	/**
 	 * Calculates the smallest globally aligned bounding box that encompasses this
 	 * object's width and height, at its current rotation.
@@ -1349,7 +1348,7 @@ class FlxObject extends FlxBasic
 	{
 		if (newRect == null)
 			newRect = FlxRect.get();
-		
+
 		newRect.set(x, y, width, height);
 		return newRect.getRotatedBounds(angle, null, newRect);
 	}
