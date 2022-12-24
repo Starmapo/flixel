@@ -673,7 +673,6 @@ class FlxG
 			renderMethod = switch (stage.window.renderer.type)
 			{
 				case OPENGL, CONSOLE: DRAW_TILES;
-				case CANVAS, FLASH, CAIRO: BLITTING;
 				default: BLITTING;
 			}
 		}

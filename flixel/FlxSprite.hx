@@ -11,6 +11,7 @@ import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFrame;
 import flixel.graphics.frames.FlxFramesCollection;
 import flixel.graphics.frames.FlxTileFrames;
+import flixel.graphics.tile.FlxGraphicsShader;
 import flixel.math.FlxAngle;
 import flixel.math.FlxMath;
 import flixel.math.FlxMatrix;
@@ -769,7 +770,8 @@ class FlxSprite extends FlxObject
 			loadDefaultGraphic();
 	}
 
-	public function loadDefaultGraphic() {
+	public function loadDefaultGraphic()
+	{
 		loadGraphic("flixel/images/logo/default.png");
 	}
 
@@ -786,6 +788,9 @@ class FlxSprite extends FlxObject
 
 		if (dirty) // rarely
 			calcFrame(useFramePixels);
+
+		if (shader != null && shader is FlxGraphicsShader)
+			shader.setCamSize(_frame.frame.x, _frame.frame.y, _frame.frame.width, _frame.frame.height);
 
 		if (cameras == null)
 			cameras = [];
@@ -855,8 +860,15 @@ class FlxSprite extends FlxObject
 			_matrix.ty = Math.floor(_matrix.ty);
 		}
 
+		doAdditionalMatrixStuff(_matrix, camera);
+
 		camera.drawPixels(_frame, framePixels, _matrix, colorTransform, blend, antialiasing, shader);
 	}
+
+	/**
+	 * Made in case developer wanna finalize stuff with the matrix.
+	 */
+	 public function doAdditionalMatrixStuff(matrix:FlxMatrix, camera:FlxCamera) {}
 
 	/**
 	 * Stamps / draws another `FlxSprite` onto this `FlxSprite`.
