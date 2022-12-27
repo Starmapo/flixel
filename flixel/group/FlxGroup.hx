@@ -29,7 +29,6 @@ class FlxTypedGroup<T:FlxBasic> extends FlxBasic
 	static function overlaps(Callback:FlxBasic->Float->Float->Bool->FlxCamera->Bool, Group:FlxTypedGroup<FlxBasic>, X:Float, Y:Float, InScreenSpace:Bool,
 			Camera:FlxCamera):Bool
 	{
-		var result:Bool = false;
 		if (Group != null)
 		{
 			var i = 0;
@@ -42,12 +41,12 @@ class FlxTypedGroup<T:FlxBasic> extends FlxBasic
 
 				if (basic != null && Callback(basic, X, Y, InScreenSpace, Camera))
 				{
-					result = true;
+					return true;
 					break;
 				}
 			}
 		}
-		return result;
+		return false;
 	}
 
 	@:noCompletion

@@ -165,16 +165,15 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	 */
 	override public function overlapsPoint(point:FlxPoint, InScreenSpace:Bool = false, ?Camera:FlxCamera):Bool
 	{
-		var result:Bool = false;
 		for (sprite in _sprites)
 		{
-			if (sprite != null && sprite.exists && sprite.visible)
+			if (sprite != null && sprite.exists && sprite.visible && sprite.overlapsPoint(point, InScreenSpace, Camera))
 			{
-				result = result || sprite.overlapsPoint(point, InScreenSpace, Camera);
+				return true;
 			}
 		}
 
-		return result;
+		return false;
 	}
 
 	/**
@@ -188,16 +187,15 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	 */
 	override public function pixelsOverlapPoint(point:FlxPoint, Mask:Int = 0xFF, ?Camera:FlxCamera):Bool
 	{
-		var result:Bool = false;
 		for (sprite in _sprites)
 		{
-			if (sprite != null && sprite.exists && sprite.visible)
+			if (sprite != null && sprite.exists && sprite.visible && sprite.pixelsOverlapPoint(point, Mask, Camera))
 			{
-				result = result || sprite.pixelsOverlapPoint(point, Mask, Camera);
+				return true;
 			}
 		}
 
-		return result;
+		return false;
 	}
 
 	override public function update(elapsed:Float):Void
@@ -538,6 +536,26 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	}
 
 	/**
+	 * Destroys and removes all instances of `FlxSprite` from the list.
+	 */
+	public function destroyMembers()
+	{
+		var i:Int = members.length;
+		while (i > 0)
+		{
+			--i;
+			var member = members[i];
+			if (member != null)
+			{
+				member.kill();
+				remove(member, true);
+				member.destroy();
+			}
+		}
+		clear();
+	}
+
+	/**
 	 * Calls `kill()` on the group's members and then on the group itself.
 	 * You can revive this group later via `revive()` after this.
 	 */
@@ -567,10 +585,10 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 			if (sprite != null)
 				sprite.reset(sprite.x + X - x, sprite.y + Y - y);
 		}
-		
+
 		// prevent any transformations on children, mainly from setter overrides
 		_skipTransformChildren = true;
-		
+
 		// recreate super.reset() but call super.revive instead of revive
 		touching = NONE;
 		wasTouching = NONE;
@@ -579,7 +597,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 		// last.set(x, y); // null on sprite groups
 		velocity.set();
 		super.revive();
-		
+
 		_skipTransformChildren = false;
 	}
 
@@ -701,21 +719,21 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	override function set_x(Value:Float):Float
 	{
 		if (exists && x != Value)
-			transformChildren(xTransform, Value - x);// offset
+			transformChildren(xTransform, Value - x); // offset
 		return x = Value;
 	}
 
 	override function set_y(Value:Float):Float
 	{
 		if (exists && y != Value)
-			transformChildren(yTransform, Value - y);// offset
+			transformChildren(yTransform, Value - y); // offset
 		return y = Value;
 	}
 
 	override function set_angle(Value:Float):Float
 	{
 		if (exists && angle != Value)
-			transformChildren(angleTransform, Value - angle);// offset
+			transformChildren(angleTransform, Value - angle); // offset
 		return angle = Value;
 	}
 
@@ -816,7 +834,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	{
 		if (length == 0)
 			return 0;
-		
+
 		return findMaxXHelper() - findMinXHelper();
 	}
 
@@ -830,7 +848,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	{
 		return length == 0 ? x : findMinXHelper();
 	}
-	
+
 	function findMinXHelper()
 	{
 		var value = Math.POSITIVE_INFINITY;
@@ -838,19 +856,19 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 		{
 			if (member == null)
 				continue;
-			
+
 			var minX:Float;
 			if (member.flixelType == SPRITEGROUP)
-				minX = (cast member:FlxSpriteGroup).findMinX();
+				minX = (cast member : FlxSpriteGroup).findMinX();
 			else
 				minX = member.x;
-			
+
 			if (minX < value)
 				value = minX;
 		}
 		return value;
 	}
-	
+
 	/**
 	 * Returns the right-most position of the right-most member.
 	 * If there are no members, x is returned.
@@ -861,7 +879,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	{
 		return length == 0 ? x : findMaxXHelper();
 	}
-	
+
 	function findMaxXHelper()
 	{
 		var value = Math.NEGATIVE_INFINITY;
@@ -869,19 +887,19 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 		{
 			if (member == null)
 				continue;
-			
+
 			var maxX:Float;
 			if (member.flixelType == SPRITEGROUP)
-				maxX = (cast member:FlxSpriteGroup).findMaxX();
+				maxX = (cast member : FlxSpriteGroup).findMaxX();
 			else
 				maxX = member.x + member.width;
-			
+
 			if (maxX > value)
 				value = maxX;
 		}
 		return value;
 	}
-	
+
 	/**
 	 * This functionality isn't supported in SpriteGroup
 	 */
@@ -894,10 +912,10 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	{
 		if (length == 0)
 			return 0;
-		
+
 		return findMaxYHelper() - findMinYHelper();
 	}
-	
+
 	/**
 	 * Returns the top-most position of the top-most member.
 	 * If there are no members, y is returned.
@@ -908,7 +926,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	{
 		return length == 0 ? y : findMinYHelper();
 	}
-	
+
 	function findMinYHelper()
 	{
 		var value = Math.POSITIVE_INFINITY;
@@ -916,19 +934,19 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 		{
 			if (member == null)
 				continue;
-			
+
 			var minY:Float;
 			if (member.flixelType == SPRITEGROUP)
-				minY = (cast member:FlxSpriteGroup).findMinY();
+				minY = (cast member : FlxSpriteGroup).findMinY();
 			else
 				minY = member.y;
-			
+
 			if (minY < value)
 				value = minY;
 		}
 		return value;
 	}
-	
+
 	/**
 	 * Returns the top-most position of the top-most member.
 	 * If there are no members, y is returned.
@@ -939,7 +957,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	{
 		return length == 0 ? y : findMaxYHelper();
 	}
-	
+
 	function findMaxYHelper()
 	{
 		var value = Math.NEGATIVE_INFINITY;
@@ -947,13 +965,13 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 		{
 			if (member == null)
 				continue;
-			
+
 			var maxY:Float;
 			if (member.flixelType == SPRITEGROUP)
-				maxY = (cast member:FlxSpriteGroup).findMaxY();
+				maxY = (cast member : FlxSpriteGroup).findMaxY();
 			else
 				maxY = member.y + member.height;
-			
+
 			if (maxY > value)
 				value = maxY;
 		}
