@@ -72,6 +72,48 @@ class FlxMath
 	}
 
 	/**
+	 * Floor a decimal number to have reduced precision (less decimal numbers).
+	 *
+	 * ```haxe
+	 * roundDecimal(1.2485, 2) = 1.24
+	 * ```
+	 *
+	 * @param	Value		Any number.
+	 * @param	Precision	Number of decimals the result should have.
+	 * @return	The rounded value of that number.
+	 */
+	public static function floorDecimal(Value:Float, Precision:Int):Float
+	{
+		var mult:Float = 1;
+		for (i in 0...Precision)
+		{
+			mult *= 10;
+		}
+		return Math.ffloor(Value * mult) / mult;
+	}
+
+	/**
+	 * Rounds up a decimal number to have reduced precision (less decimal numbers).
+	 *
+	 * ```haxe
+	 * roundDecimal(1.2415, 2) = 1.25
+	 * ```
+	 *
+	 * @param	Value		Any number.
+	 * @param	Precision	Number of decimals the result should have.
+	 * @return	The rounded value of that number.
+	 */
+	public static function ceilDecimal(Value:Float, Precision:Int):Float
+	{
+		var mult:Float = 1;
+		for (i in 0...Precision)
+		{
+			mult *= 10;
+		}
+		return Math.fceil(Value * mult) / mult;
+	}
+
+	/**
 	 * Bound a number by a minimum and maximum. Ensures that this number is
 	 * no smaller than the minimum, and no larger than the maximum.
 	 * Leaving a bound `null` means that side is unbounded.
@@ -84,6 +126,22 @@ class FlxMath
 	public static inline function bound(Value:Float, ?Min:Float, ?Max:Float):Float
 	{
 		var lowerBound:Float = (Min != null && Value < Min) ? Min : Value;
+		return (Max != null && lowerBound > Max) ? Max : lowerBound;
+	}
+
+	/**
+	 * Bound an integer by a minimum and maximum. Ensures that this number is
+	 * no smaller than the minimum, and no larger than the maximum.
+	 * Leaving a bound `null` means that side is unbounded.
+	 *
+	 * @param	Value	Any number.
+	 * @param	Min		Any number.
+	 * @param	Max		Any number.
+	 * @return	The bounded value of the number.
+	 */
+	public static inline function boundInt(Value:Int, ?Min:Int, ?Max:Int):Int
+	{
+		var lowerBound:Int = (Min != null && Value < Min) ? Min : Value;
 		return (Max != null && lowerBound > Max) ? Max : lowerBound;
 	}
 
@@ -285,6 +343,21 @@ class FlxMath
 	public static function remapToRange(value:Float, start1:Float, stop1:Float, start2:Float, stop2:Float):Float
 	{
 		return start2 + (value - start1) * ((stop2 - start2) / (stop1 - start1));
+	}
+
+	/**
+	 * Remaps an integer from one range to another.
+	 *
+	 * @param 	value	The incoming value to be converted
+	 * @param 	start1 	Lower bound of the value's current range
+	 * @param 	stop1 	Upper bound of the value's current range
+	 * @param 	start2  Lower bound of the value's target range
+	 * @param 	stop2 	Upper bound of the value's target range
+	 * @return The remapped value
+	 */
+	public static function remapIntToRange(value:Int, start1:Int, stop1:Int, start2:Int, stop2:Int):Int
+	{
+		return start2 + Std.int((value - start1) * ((stop2 - start2) / (stop1 - start1)));
 	}
 
 	/**

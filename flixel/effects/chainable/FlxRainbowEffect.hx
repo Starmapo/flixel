@@ -66,7 +66,7 @@ class FlxRainbowEffect implements IFlxEffect
 		alpha = Alpha;
 		brightness = Brightness;
 		speed = Speed;
-		_time = _hue = Std.int(FlxMath.bound(StartHue, 0, 360));
+		_time = _hue = FlxMath.boundInt(StartHue, 0, 360);
 	}
 
 	public function destroy():Void

@@ -132,7 +132,7 @@ class CompletionList extends Sprite
 
 	function bound(index:Int)
 	{
-		return Std.int(FlxMath.bound(index, 0, items.length - 1));
+		return FlxMath.boundInt(index, 0, items.length - 1);
 	}
 
 	function updateEntries()

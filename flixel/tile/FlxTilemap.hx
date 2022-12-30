@@ -532,8 +532,8 @@ class FlxTilemap extends FlxBaseTilemap<FlxTile>
 		var screenColumns:Int = buffer.columns;
 
 		// Bound the upper left corner
-		screenXInTiles = Std.int(FlxMath.bound(screenXInTiles, 0, widthInTiles - screenColumns));
-		screenYInTiles = Std.int(FlxMath.bound(screenYInTiles, 0, heightInTiles - screenRows));
+		screenXInTiles = FlxMath.boundInt(screenXInTiles, 0, widthInTiles - screenColumns);
+		screenYInTiles = FlxMath.boundInt(screenYInTiles, 0, heightInTiles - screenRows);
 
 		var rowIndex:Int = screenYInTiles * widthInTiles + screenXInTiles;
 		var columnIndex:Int;
@@ -702,10 +702,10 @@ class FlxTilemap extends FlxBaseTilemap<FlxTile>
 		var selectionHeight:Int = selectionY + Math.ceil(object.height / scaledTileHeight) + 1;
 
 		// Then bound these coordinates by the map edges
-		selectionX = Std.int(FlxMath.bound(selectionX, 0, widthInTiles));
-		selectionY = Std.int(FlxMath.bound(selectionY, 0, heightInTiles));
-		selectionWidth = Std.int(FlxMath.bound(selectionWidth, 0, widthInTiles));
-		selectionHeight = Std.int(FlxMath.bound(selectionHeight, 0, heightInTiles));
+		selectionX = FlxMath.boundInt(selectionX, 0, widthInTiles);
+		selectionY = FlxMath.boundInt(selectionY, 0, heightInTiles);
+		selectionWidth = FlxMath.boundInt(selectionWidth, 0, widthInTiles);
+		selectionHeight = FlxMath.boundInt(selectionHeight, 0, heightInTiles);
 
 		// Then loop through this selection of tiles
 		var rowStart:Int = selectionY * widthInTiles;
@@ -1234,8 +1234,8 @@ class FlxTilemap extends FlxBaseTilemap<FlxTile>
 		var screenColumns:Int = buffer.columns;
 
 		// Bound the upper left corner
-		screenXInTiles = Std.int(FlxMath.bound(screenXInTiles, 0, widthInTiles - screenColumns));
-		screenYInTiles = Std.int(FlxMath.bound(screenYInTiles, 0, heightInTiles - screenRows));
+		screenXInTiles = FlxMath.boundInt(screenXInTiles, 0, widthInTiles - screenColumns);
+		screenYInTiles = FlxMath.boundInt(screenYInTiles, 0, heightInTiles - screenRows);
 
 		var rowIndex:Int = screenYInTiles * widthInTiles + screenXInTiles;
 		_flashPoint.y = 0;

@@ -272,8 +272,8 @@ class FlxRandom
 				EndIndex = Objects.length - 1;
 			}
 
-			StartIndex = Std.int(FlxMath.bound(StartIndex, 0, Objects.length - 1));
-			EndIndex = Std.int(FlxMath.bound(EndIndex, 0, Objects.length - 1));
+			StartIndex = FlxMath.boundInt(StartIndex, 0, Objects.length - 1);
+			EndIndex = FlxMath.boundInt(EndIndex, 0, Objects.length - 1);
 
 			// Swap values if reversed
 			if (EndIndex < StartIndex)
@@ -439,7 +439,7 @@ class FlxRandom
 	 */
 	static inline function rangeBound(Value:Int):Int
 	{
-		return Std.int(FlxMath.bound(Value, 1, MODULUS - 1));
+		return FlxMath.boundInt(Value, 1, MODULUS - 1);
 	}
 
 	/**

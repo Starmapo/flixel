@@ -139,8 +139,8 @@ class FlxTilemapExt extends FlxTilemap
 		var screenColumns:Int = Buffer.columns;
 
 		// Bound the upper left corner
-		screenXInTiles = Std.int(FlxMath.bound(screenXInTiles, 0, widthInTiles - screenColumns));
-		screenYInTiles = Std.int(FlxMath.bound(screenYInTiles, 0, heightInTiles - screenRows));
+		screenXInTiles = FlxMath.boundInt(screenXInTiles, 0, widthInTiles - screenColumns);
+		screenYInTiles = FlxMath.boundInt(screenYInTiles, 0, heightInTiles - screenRows);
 
 		var rowIndex:Int = screenYInTiles * widthInTiles + screenXInTiles;
 		_flashPoint.y = 0;
