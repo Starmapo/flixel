@@ -1617,9 +1617,27 @@ class FlxCamera extends FlxBasic
 	}
 
 	/**
-	 * Sets the filter array to be applied to the camera.
+	 * Sets the filter array to be applied to the camera. Automatically makes sure that it doesn't add `null` filters.
+	 * If you want to make changes to the array and not have to call `setFilters` again, use `setFiltersUnsafe`.
 	 */
 	public function setFilters(filters:Array<BitmapFilter>):Void
+	{
+		var copyFilters:Array<BitmapFilter> = [];
+		for (filter in filters)
+		{
+			if (filter != null)
+			{
+				copyFilters.push(filter);
+			}
+		}
+		_filters = copyFilters;
+	}
+
+	/**
+	 * Sets the filter array to be applied to the camera.
+	 * WARNING: If the array contains `null`, the game will crash!
+	 */
+	public function setFiltersUnsafe(filters:Array<BitmapFilter>):Void
 	{
 		_filters = filters;
 	}
