@@ -823,11 +823,13 @@ class FlxAnimationController implements IFlxDestroyable
 				var goodCheck = switch (frame.parent.atlasFrames.atlasType)
 				{
 					case TEXTUREPACKER_JSON, TEXTUREPACKER_XML:
-						~/instance [0-9]*/g.match(afterName);
+						~/^instance [0-9]*$/g.match(afterName);
 					case LIBGDX, SPRITE_SHEET_PACKER:
-						~/_?[0-9]*/g.match(afterName);
+						~/^_?[0-9]*$/g.match(afterName);
+					case SPARROW:
+						~/^[0-9]{4}$/g.match(afterName);
 					default:
-						~/[0-9]*/g.match(afterName);
+						~/^[0-9]*$/g.match(afterName);
 				}
 				if (goodCheck)
 					AnimIndices.push(frame);
