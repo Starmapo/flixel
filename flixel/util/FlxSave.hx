@@ -56,16 +56,16 @@ import openfl.net.SharedObjectFlushStatus;
 class FlxSave implements IFlxDestroyable
 {
 	
-	static var invalidChars = ~/[ ~%&\\;:"',<>?#]+/;
+	static var invalidChars = ~/[ ~%&\\;:"',<>?#\|\*]+/;
 	
 	/**
-	 * Checks for `~%&\;:"',<>?#` or space characters
+	 * Checks for invalid or space characters
 	 */
 	static function hasInvalidChars(str:String)
 	{
 		#if html5
 		// most chars are fine on browsers
-		return true;
+		return false;
 		#else
 		return invalidChars.match(str);
 		#end

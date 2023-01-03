@@ -839,19 +839,10 @@ class FlxSprite extends FlxObject
 		camera.copyPixels(_frame, framePixels, _flashRect, _flashPoint, colorTransform, blend, antialiasing);
 	}
 
-	var _flipX:Bool = false;
-	var _flipY:Bool = false;
-
 	@:noCompletion
 	function drawComplex(camera:FlxCamera):Void
 	{
-		_flipX = checkFlipX();
-		_flipY = checkFlipY();
-
-		_flipX = _flipX != camera.flipX;
-		_flipY = _flipY != camera.flipY;
-
-		_frame.prepareMatrix(_matrix, FlxFrameAngle.ANGLE_0, _flipX, _flipY);
+		_frame.prepareMatrix(_matrix, FlxFrameAngle.ANGLE_0, checkFlipX(), checkFlipY());
 		_matrix.translate(-origin.x, -origin.y);
 		_matrix.scale(scale.x, scale.y);
 
