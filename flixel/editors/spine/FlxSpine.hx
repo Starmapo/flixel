@@ -180,8 +180,12 @@ class FlxSpine extends FlxSprite
 	 */
 	override public function draw():Void
 	{
-		if (alpha == 0)
+		if ((alpha == 0 || !visible) && graphic._hasBeenDrawn)
 			return;
+
+		var lastAlpha = alpha;
+		if (!visible)
+			alpha = 0;
 
 		if (renderMeshes)
 			renderWithTriangles();
@@ -189,6 +193,8 @@ class FlxSpine extends FlxSprite
 			renderWithQuads();
 
 		collider.draw();
+
+		alpha = lastAlpha;
 	}
 
 	function renderWithTriangles():Void

@@ -22,7 +22,7 @@ class FlxBGSprite extends FlxSprite
 	{
 		for (camera in cameras)
 		{
-			if (!camera.visible || !camera.exists)
+			if (camera == null || !camera.visible || !camera.exists)
 			{
 				continue;
 			}

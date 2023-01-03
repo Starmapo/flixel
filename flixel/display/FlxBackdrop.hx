@@ -98,11 +98,19 @@ class FlxBackdrop extends FlxSprite
 
 		checkEmptyFrame();
 
-		if (alpha == 0 || _frame.type == FlxFrameType.EMPTY)
+		if (_frame == null || _frame.type == FlxFrameType.EMPTY || _frame.parent == null || _frame.parent.width == 0 || _frame.parent.height == 0
+			|| _frame.parent.bitmap == null || !_frame.parent.bitmap.readable || graphic == null || graphic.shader == null)
+			return;
+
+		if ((alpha == 0 || !visible) && graphic._hasBeenDrawn)
 			return;
 
 		if (scale.x <= 0 || scale.y <= 0)
 			return;
+
+		var lastAlpha = alpha;
+		if (!visible)
+			alpha = 0;
 
 		if (dirty) // rarely
 			calcFrame(useFramePixels);
@@ -114,7 +122,9 @@ class FlxBackdrop extends FlxSprite
 
 		for (camera in cameras)
 		{
-			if (!camera.visible || !camera.exists || !isOnScreen(camera))
+			if (camera == null || !camera.visible || !camera.exists)
+				continue;
+			if (!isOnScreen(camera) && graphic._hasBeenDrawn)
 				continue;
 
 			if (isSimpleRender(camera))
@@ -125,12 +135,16 @@ class FlxBackdrop extends FlxSprite
 			#if FLX_DEBUG
 			FlxBasic.visibleCount++;
 			#end
+
+			graphic._hasBeenDrawn = true;
 		}
 
 		#if FLX_DEBUG
 		if (FlxG.debugger.drawDebug)
 			drawDebug();
 		#end
+
+		alpha = lastAlpha;
 	}
 
 	override function isOnScreen(?camera:FlxCamera):Bool

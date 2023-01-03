@@ -194,7 +194,7 @@ class FlxTypedGroup<T:FlxBasic> extends FlxBasic
 		{
 			basic = members[i++];
 
-			if (basic != null && basic.exists && basic.visible)
+			if (basic != null && basic.exists && (basic.visible || (basic is FlxSprite)))
 			{
 				basic.draw();
 			}

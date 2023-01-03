@@ -1,3 +1,9 @@
+# About
+My fork of HaxeFlixel which adds and changes a lot of stuff in my efforts to make it better.
+
+Huge thanks to [YoshiCrafter29](https://github.com/YoshiCrafter29) for their [own fork of HaxeFlixel](https://github.com/YoshiCrafter29/flixel), from which I've ported some stuff over.
+
+# HaxeFlixel
 [![](https://raw.github.com/HaxeFlixel/haxeflixel.com/master/src/files/images/flixel-logos/HaxeFlixel.png)](http://haxeflixel.com/)
 
 [flixel](https://github.com/HaxeFlixel/flixel) | [addons](https://github.com/HaxeFlixel/flixel-addons) | [ui](https://github.com/HaxeFlixel/flixel-ui) | [demos](https://github.com/HaxeFlixel/flixel-demos) | [tools](https://github.com/HaxeFlixel/flixel-tools) | [templates](https://github.com/HaxeFlixel/flixel-templates) | [docs](https://github.com/HaxeFlixel/flixel-docs) | [haxeflixel.com](https://github.com/HaxeFlixel/haxeflixel.com)

@@ -820,7 +820,7 @@ class FlxTween implements IFlxDestroyable
 	{
 		return false;
 	}
-	
+
 	/**
 	 * Set both type of delays for this tween.
 	 *
@@ -967,6 +967,8 @@ class FlxTweenManager extends FlxBasic
 	 */
 	public function tween(Object:Dynamic, Values:Dynamic, Duration:Float = 1, ?Options:TweenOptions):VarTween
 	{
+		if (Object == null)
+			throw 'Cannot tween an object that is equal to null.';
 		var tween = new VarTween(Options, this);
 		tween.tween(Object, Values, Duration);
 		return add(tween);
@@ -1016,6 +1018,8 @@ class FlxTweenManager extends FlxBasic
 	 */
 	public function shake(Sprite:FlxSprite, Intensity:Float = 0.05, Duration:Float = 1, ?Axes:FlxAxes = XY, ?Options:TweenOptions):ShakeTween
 	{
+		if (Sprite == null)
+			throw 'Cannot tween a sprite that is equal to null.';
 		var tween = new ShakeTween(Options, this);
 		tween.tween(Sprite, Intensity, Duration, Axes);
 		return add(tween);
@@ -1038,6 +1042,8 @@ class FlxTweenManager extends FlxBasic
 	 */
 	public function angle(?Sprite:FlxSprite, FromAngle:Float, ToAngle:Float, Duration:Float = 1, ?Options:TweenOptions):AngleTween
 	{
+		if (Sprite == null)
+			throw 'Cannot tween a sprite that is equal to null.';
 		var tween = new AngleTween(Options, this);
 		tween.tween(FromAngle, ToAngle, Duration, Sprite);
 		return add(tween);
@@ -1060,6 +1066,8 @@ class FlxTweenManager extends FlxBasic
 	 */
 	public function color(?Sprite:FlxSprite, Duration:Float = 1, FromColor:FlxColor, ToColor:FlxColor, ?Options:TweenOptions):ColorTween
 	{
+		if (Sprite == null)
+			throw 'Cannot tween a sprite that is equal to null.';
 		var tween = new ColorTween(Options, this);
 		tween.tween(Duration, FromColor, ToColor, Sprite);
 		return add(tween);
@@ -1086,6 +1094,8 @@ class FlxTweenManager extends FlxBasic
 	public function linearMotion(Object:FlxObject, FromX:Float, FromY:Float, ToX:Float, ToY:Float, DurationOrSpeed:Float = 1, UseDuration:Bool = true,
 			?Options:TweenOptions):LinearMotion
 	{
+		if (Object == null)
+			throw 'Cannot tween an object that is equal to null.';
 		var tween = new LinearMotion(Options, this);
 		tween.setObject(Object);
 		tween.setMotion(FromX, FromY, ToX, ToY, DurationOrSpeed, UseDuration);
@@ -1115,6 +1125,8 @@ class FlxTweenManager extends FlxBasic
 	public function quadMotion(Object:FlxObject, FromX:Float, FromY:Float, ControlX:Float, ControlY:Float, ToX:Float, ToY:Float, DurationOrSpeed:Float = 1,
 			UseDuration:Bool = true, ?Options:TweenOptions):QuadMotion
 	{
+		if (Object == null)
+			throw 'Cannot tween an object that is equal to null.';
 		var tween = new QuadMotion(Options, this);
 		tween.setObject(Object);
 		tween.setMotion(FromX, FromY, ControlX, ControlY, ToX, ToY, DurationOrSpeed, UseDuration);
@@ -1145,6 +1157,8 @@ class FlxTweenManager extends FlxBasic
 	public function cubicMotion(Object:FlxObject, FromX:Float, FromY:Float, aX:Float, aY:Float, bX:Float, bY:Float, ToX:Float, ToY:Float, Duration:Float = 1,
 			?Options:TweenOptions):CubicMotion
 	{
+		if (Object == null)
+			throw 'Cannot tween an object that is equal to null.';
 		var tween = new CubicMotion(Options, this);
 		tween.setObject(Object);
 		tween.setMotion(FromX, FromY, aX, aY, bX, bY, ToX, ToY, Duration);
@@ -1174,6 +1188,8 @@ class FlxTweenManager extends FlxBasic
 	public function circularMotion(Object:FlxObject, CenterX:Float, CenterY:Float, Radius:Float, Angle:Float, Clockwise:Bool, DurationOrSpeed:Float = 1,
 			UseDuration:Bool = true, ?Options:TweenOptions):CircularMotion
 	{
+		if (Object == null)
+			throw 'Cannot tween an object that is equal to null.';
 		var tween = new CircularMotion(Options, this);
 		tween.setObject(Object);
 		tween.setMotion(CenterX, CenterY, Radius, Angle, Clockwise, DurationOrSpeed, UseDuration);
@@ -1197,6 +1213,8 @@ class FlxTweenManager extends FlxBasic
 	 */
 	public function linearPath(Object:FlxObject, Points:Array<FlxPoint>, DurationOrSpeed:Float = 1, UseDuration:Bool = true, ?Options:TweenOptions):LinearPath
 	{
+		if (Object == null)
+			throw 'Cannot tween an object that is equal to null.';
 		var tween = new LinearPath(Options, this);
 
 		if (Points != null)
@@ -1229,6 +1247,8 @@ class FlxTweenManager extends FlxBasic
 	 */
 	public function quadPath(Object:FlxObject, Points:Array<FlxPoint>, DurationOrSpeed:Float = 1, UseDuration:Bool = true, ?Options:TweenOptions):QuadPath
 	{
+		if (Object == null)
+			throw 'Cannot tween an object that is equal to null.';
 		var tween = new QuadPath(Options, this);
 
 		if (Points != null)
@@ -1354,7 +1374,7 @@ class FlxTweenManager extends FlxBasic
 	 */
 	public function cancelTweensOf(Object:Dynamic, ?FieldPaths:Array<String>):Void
 	{
-		forEachTweensOf(Object, FieldPaths, function (tween) tween.cancel());
+		forEachTweensOf(Object, FieldPaths, function(tween) tween.cancel());
 	}
 
 	/**
@@ -1380,13 +1400,11 @@ class FlxTweenManager extends FlxBasic
 	 */
 	public function completeTweensOf(Object:Dynamic, ?FieldPaths:Array<String>):Void
 	{
-		forEachTweensOf(Object, FieldPaths,
-			function (tween)
-			{
-				if ((tween.type & FlxTweenType.LOOPING) == 0 && (tween.type & FlxTweenType.PINGPONG) == 0 && tween.active)
-					tween.update(FlxMath.MAX_VALUE_FLOAT);
-			}
-		);
+		forEachTweensOf(Object, FieldPaths, function(tween)
+		{
+			if ((tween.type & FlxTweenType.LOOPING) == 0 && (tween.type & FlxTweenType.PINGPONG) == 0 && tween.active)
+				tween.update(FlxMath.MAX_VALUE_FLOAT);
+		});
 	}
 
 	/**
@@ -1405,7 +1423,7 @@ class FlxTweenManager extends FlxBasic
 	{
 		if (Object == null)
 			throw "Cannot cancel tween variables of an object that is null.";
-		
+
 		if (FieldPaths == null || FieldPaths.length == 0)
 		{
 			var i = _tweens.length;
@@ -1431,11 +1449,11 @@ class FlxTweenManager extends FlxBasic
 					if (!Reflect.isObject(target))
 						break;
 				}
-				
+
 				if (Reflect.isObject(target))
-					propertyInfos.push({ object:target, field:field });
+					propertyInfos.push({object: target, field: field});
 			}
-			
+
 			var i = _tweens.length;
 			while (i-- > 0)
 			{
@@ -1447,7 +1465,7 @@ class FlxTweenManager extends FlxBasic
 						Function(tween);
 						break;
 					}
-				} 
+				}
 			}
 		}
 	}

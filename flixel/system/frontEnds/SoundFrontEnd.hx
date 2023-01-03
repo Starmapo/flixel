@@ -97,6 +97,11 @@ class SoundFrontEnd
 	public var volume(default, set):Float = 1;
 
 	/**
+	 * Whenever switching volume is enabled or not.
+	 */
+	public var enableVolumeChanges:Bool = true;
+
+	/**
 	 * Set up and play a looping background soundtrack.
 	 *
 	 * @param   embeddedMusic  The sound file you want to loop in the background.
@@ -385,12 +390,15 @@ class SoundFrontEnd
 			list.update(elapsed);
 
 		#if FLX_KEYBOARD
-		if (FlxG.keys.anyJustReleased(muteKeys))
-			toggleMuted();
-		else if (FlxG.keys.anyJustReleased(volumeUpKeys))
-			changeVolume(0.1);
-		else if (FlxG.keys.anyJustReleased(volumeDownKeys))
-			changeVolume(-0.1);
+		if (enableVolumeChanges)
+		{
+			if (FlxG.keys.anyJustReleased(muteKeys))
+				toggleMuted();
+			else if (FlxG.keys.anyJustReleased(volumeUpKeys))
+				changeVolume(0.1);
+			else if (FlxG.keys.anyJustReleased(volumeDownKeys))
+				changeVolume(-0.1);
+		}
 		#end
 	}
 

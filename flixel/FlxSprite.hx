@@ -366,6 +366,8 @@ class FlxSprite extends FlxObject
 	@:noCompletion
 	var _facingFlip:Map<FlxDirectionFlags, {x:Bool, y:Bool}> = new Map<FlxDirectionFlags, {x:Bool, y:Bool}>();
 
+	var __firstDraw = true;
+
 	/**
 	 * Creates a `FlxSprite` at a specified position with a specified one-frame graphic.
 	 * If none is provided, a 16x16 image of the HaxeFlixel logo is used.
@@ -782,9 +784,16 @@ class FlxSprite extends FlxObject
 	{
 		checkEmptyFrame();
 
-		if (alpha == 0 || _frame == null || _frame.type == FlxFrameType.EMPTY || _frame.parent == null || _frame.parent.width == 0
-			|| _frame.parent.height == 0 || _frame.parent.bitmap == null || !_frame.parent.bitmap.readable || graphic == null || graphic.shader == null)
+		if (_frame == null || _frame.type == FlxFrameType.EMPTY || _frame.parent == null || _frame.parent.width == 0 || _frame.parent.height == 0
+			|| _frame.parent.bitmap == null || !_frame.parent.bitmap.readable || graphic == null || graphic.shader == null)
 			return;
+
+		if ((alpha == 0 || !visible) && graphic._hasBeenDrawn)
+			return;
+
+		var lastAlpha = alpha;
+		if (!visible)
+			alpha = 0;
 
 		if (dirty) // rarely
 			calcFrame(useFramePixels);
@@ -793,7 +802,9 @@ class FlxSprite extends FlxObject
 			cameras = [];
 		for (camera in cameras)
 		{
-			if (camera == null || !camera.visible || !camera.exists || !isOnScreen(camera))
+			if (camera == null || !camera.visible || !camera.exists)
+				continue;
+			if (!isOnScreen(camera) && graphic._hasBeenDrawn)
 				continue;
 
 			getScreenPosition(_point, camera).subtractPoint(offset);
@@ -806,12 +817,16 @@ class FlxSprite extends FlxObject
 			#if FLX_DEBUG
 			FlxBasic.visibleCount++;
 			#end
+
+			graphic._hasBeenDrawn = true;
 		}
 
 		#if FLX_DEBUG
 		if (FlxG.debugger.drawDebug)
 			drawDebug();
 		#end
+
+		alpha = lastAlpha;
 	}
 
 	@:noCompletion
@@ -865,7 +880,7 @@ class FlxSprite extends FlxObject
 	/**
 	 * Made in case developer wanna finalize stuff with the matrix.
 	 */
-	 public function doAdditionalMatrixStuff(matrix:FlxMatrix, camera:FlxCamera) {}
+	public function doAdditionalMatrixStuff(matrix:FlxMatrix, camera:FlxCamera) {}
 
 	/**
 	 * Stamps / draws another `FlxSprite` onto this `FlxSprite`.

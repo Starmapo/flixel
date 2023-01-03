@@ -383,7 +383,7 @@ class FlxBitmapText extends FlxSprite
 
 			for (camera in cameras)
 			{
-				if (!camera.visible || !camera.exists || !isOnScreen(camera))
+				if (camera == null || !camera.visible || !camera.exists || !isOnScreen(camera))
 				{
 					continue;
 				}

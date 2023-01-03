@@ -350,6 +350,9 @@ class FlxGraphic implements IFlxDestroyable
 	 */
 	public var atlasFrames(get, never):FlxAtlasFrames;
 
+	@:allow(flixel.FlxSprite)
+	var _hasBeenDrawn:Bool = false;
+
 	/**
 	 * Storage for all available frame collection of all types for this graphic object.
 	 */
@@ -368,8 +371,6 @@ class FlxGraphic implements IFlxDestroyable
 	 * It is `false` by default, since it significantly increases memory consumption.
 	 */
 	public var unique:Bool = false;
-
-	public var hasJustBeenAdded:Bool = true;
 
 	/**
 	 * Internal var holding `FlxImageFrame` for the whole bitmap of this graphic.
