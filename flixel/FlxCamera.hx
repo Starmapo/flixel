@@ -491,11 +491,6 @@ class FlxCamera extends FlxBasic
 	var _headTriangles:FlxDrawTrianglesItem;
 
 	/**
-	 * Scroll Rect (non affected by widescreen)
-	 */
-	var scrlRect:Rectangle;
-
-	/**
 	 * Draw tiles stack items that can be reused
 	 */
 	static var _storageTilesHead:FlxDrawItem;
@@ -532,26 +527,6 @@ class FlxCamera extends FlxBasic
 	 * Whenever the fix for black bars when the camera rotates should be enabled. Defaults to `true`.
 	 */
 	public var angleFix:Bool = true;
-
-	/**
-	 * Whenever the camera should be widescreen or not.
-	 * If null, will use the `FlxG.widescreen` variable.
-	 */
-	public var widescreen(default, set):Null<Bool> = null;
-
-	private function set_widescreen(v:Null<Bool>)
-	{
-		if (widescreen != (widescreen = v))
-			updateScrollRect();
-		return widescreen;
-	}
-
-	/**
-	 * Widescreen dimensions multipliers
-	 * For example, if the camera is in widescreen mode and the game is in 1920x720 while the camera is in 1280x720,
-	 * the value will be equal to `new FlxPoint(1.5, 1);`.
-	 */
-	public var widescreenMultipliers:FlxPoint = FlxPoint.get();
 
 	@:noCompletion
 	public function startQuadBatch(graphic:FlxGraphic, colored:Bool, hasColorOffsets:Bool = false, ?blend:BlendMode, smooth:Bool = false, ?shader:FlxShader)
@@ -1080,7 +1055,6 @@ class FlxCamera extends FlxBasic
 		scroll = FlxDestroyUtil.put(scroll);
 		targetOffset = FlxDestroyUtil.put(targetOffset);
 		deadzone = FlxDestroyUtil.put(deadzone);
-		widescreenMultipliers = FlxDestroyUtil.put(widescreenMultipliers);
 
 		target = null;
 		flashSprite = null;
@@ -1113,39 +1087,6 @@ class FlxCamera extends FlxBasic
 
 		updateFlashSpritePosition();
 		updateShake(elapsed);
-
-		if (filtersEnabled && flashSprite.filters != null)
-		{
-			var rect = scrlRect;
-
-			if (rect == null)
-			{
-				rect = calculateScrollRect();
-			}
-
-			var w = width * initialZoom * FlxG.scaleMode.scale.x;
-			var h = height * initialZoom * FlxG.scaleMode.scale.y;
-
-			for (f in flashSprite.filters)
-			{
-				if (Std.isOfType(f, ShaderFilter))
-				{
-					var f2 = cast(f, ShaderFilter);
-					if (Std.isOfType(f2.shader, FlxGraphicsShader))
-					{
-						var shader = cast(f2.shader, FlxGraphicsShader);
-
-						if (rect != null)
-							shader.setCamSize(rect.x
-								+ (_scrollRect.x + (w * 0.5)), rect.y
-								+ (_scrollRect.y + (h * 0.5)),
-								rect.width
-								- (2 * (_scrollRect.x + (w * 0.5))), rect.height
-								- (2 * (_scrollRect.y + (h * 0.5))));
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -1359,62 +1300,34 @@ class FlxCamera extends FlxBasic
 	@:allow(flixel.FlxG)
 	function updateScrollRect():Void
 	{
-		calculateScrollRect();
+		var rect:Rectangle = (_scrollRect != null) ? _scrollRect.scrollRect : null;
 
-		var w = width * initialZoom * FlxG.scaleMode.scale.x;
-		var h = height * initialZoom * FlxG.scaleMode.scale.y;
-
-		_scrollRect.x = _scrollRect.y = 0;
-		if (widescreen == null ? FlxG.widescreen : widescreen)
+		if (rect != null)
 		{
-			var w2:Float = Application.current.window.width;
-			var h2:Float = Application.current.window.height;
-			var offsetX = (w - w2) / 2;
-			_scrollRect.x += offsetX;
-			var offsetY = (h - h2) / 2;
-			_scrollRect.y += offsetY;
-
-			_scrollRect.scrollRect = new Rectangle(offsetX, offsetY, w2 - offsetX, h2 - offsetY);
-
-			widescreenMultipliers.set(w2 / w, h2 / h);
-		}
-		else
-		{
-			_scrollRect.scrollRect = scrlRect;
-			widescreenMultipliers.set(1, 1);
-		}
-
-		if (angle != 0 && angleFix)
-		{
-			var flxRect = FlxRect.get();
-
-			flxRect.copyFromFlash(_scrollRect.scrollRect);
-			flxRect.getRotatedBounds(angle, FlxPoint.get(FlxMath.lerp(flxRect.left, flxRect.right, 0.5), FlxMath.lerp(flxRect.top, flxRect.bottom, 0.5)),
-				flxRect);
-			_scrollRect.x = flxRect.x;
-			_scrollRect.y = flxRect.y;
-			flxRect.copyToFlash(_scrollRect.scrollRect);
-
-			flxRect.put();
-		}
-
-		_scrollRect.x -= w * 0.5;
-		_scrollRect.y -= h * 0.5;
-	}
-
-	function calculateScrollRect()
-	{
-		if (_scrollRect != null)
-		{
-			var rect:Rectangle = (_scrollRect.scrollRect != null) ? _scrollRect.scrollRect : new Rectangle();
 			rect.x = rect.y = 0;
 
 			rect.width = width * initialZoom * FlxG.scaleMode.scale.x;
 			rect.height = height * initialZoom * FlxG.scaleMode.scale.y;
 
-			return scrlRect = rect;
+			_scrollRect.scrollRect = rect;
+
+			if (angleFix && angle != 0)
+			{
+				var flxRect = FlxRect.get();
+
+				flxRect.copyFromFlash(_scrollRect.scrollRect);
+				flxRect.getRotatedBounds(angle, FlxPoint.get(FlxMath.lerp(flxRect.left, flxRect.right, 0.5), FlxMath.lerp(flxRect.top, flxRect.bottom, 0.5)),
+					flxRect);
+				_scrollRect.x += flxRect.x - _scrollRect.scrollRect.x;
+				_scrollRect.y += flxRect.y - _scrollRect.scrollRect.y;
+				_scrollRect.scrollRect = flxRect.copyToFlash();
+
+				flxRect.put();
+			}
+
+			_scrollRect.x = -0.5 * rect.width;
+			_scrollRect.y = -0.5 * rect.height;
 		}
-		return scrlRect = null;
 	}
 
 	/**
@@ -1689,18 +1602,7 @@ class FlxCamera extends FlxBasic
 			}
 			else
 			{
-				if (widescreen == null ? FlxG.widescreen : widescreen)
-				{
-					var rect = new Rectangle((_flashRect.x * widescreenMultipliers.x) - (1 + ((widescreenMultipliers.x - 1) / 2)),
-						(_flashRect.y * widescreenMultipliers.y) - (1 + ((widescreenMultipliers.y - 1) / 2)), _flashRect.width * widescreenMultipliers.x,
-						_flashRect.height * widescreenMultipliers.y);
-
-					buffer.fillRect(rect, Color);
-				}
-				else
-				{
-					buffer.fillRect(_flashRect, Color);
-				}
+				buffer.fillRect(_flashRect, Color);
 			}
 		}
 		else
@@ -1713,13 +1615,7 @@ class FlxCamera extends FlxBasic
 			targetGraphics.beginFill(Color, FxAlpha);
 			// i'm drawing rect with these parameters to avoid light lines at the top and left of the camera,
 			// which could appear while cameras fading
-			targetGraphics.drawRect(viewOffsetX
-				- 1
-				- (width * (((widescreenMultipliers.x - 1) / 2))),
-				viewOffsetY
-				- 1
-				- (height * (((widescreenMultipliers.y - 1) / 2))), (viewWidth + 2) * widescreenMultipliers.x,
-				(viewHeight + 2) * widescreenMultipliers.y);
+			targetGraphics.drawRect(viewOffsetX - 1, viewOffsetY - 1, viewWidth + 2, viewHeight + 2);
 			targetGraphics.endFill();
 		}
 	}
@@ -1926,29 +1822,7 @@ class FlxCamera extends FlxBasic
 	 */
 	public inline function containsPoint(point:FlxPoint, width:Float = 0, height:Float = 0):Bool
 	{
-		var offsetX = viewOffsetX;
-		var offsetY = viewOffsetY;
-		var offsetW = viewOffsetWidth;
-		var offsetH = viewOffsetHeight;
-		if (widescreen == null ? FlxG.widescreen : widescreen)
-		{
-			var w2:Float = Application.current.window.width;
-			var h2:Float = Application.current.window.height;
-
-			var w = width * (initialZoom) * FlxG.scaleMode.scale.x;
-			var h = height * (initialZoom) * FlxG.scaleMode.scale.y;
-
-			var wRatio = (w - (w2)) * FlxG.scaleMode.scale.x;
-			var hRatio = (h - (h2)) * FlxG.scaleMode.scale.y;
-
-			offsetX += wRatio * 2;
-			offsetW -= wRatio * 2;
-
-			offsetY += hRatio * 2;
-			offsetH -= hRatio * 2;
-		}
-
-		var contained = (point.x + width > offsetX) && (point.x < offsetW) && (point.y + height > offsetY) && (point.y < offsetH);
+		var contained = (point.x + width > viewOffsetX) && (point.x < viewOffsetWidth) && (point.y + height > viewOffsetY) && (point.y < viewOffsetHeight);
 		point.putWeak();
 		return contained;
 	}
@@ -1959,30 +1833,7 @@ class FlxCamera extends FlxBasic
 	 */
 	public inline function containsRect(rect:FlxRect):Bool
 	{
-		var offsetX = viewOffsetX;
-		var offsetY = viewOffsetY;
-		var offsetW = viewOffsetWidth;
-		var offsetH = viewOffsetHeight;
-
-		if (widescreen == null ? FlxG.widescreen : widescreen)
-		{
-			var w2:Float = Application.current.window.width;
-			var h2:Float = Application.current.window.height;
-
-			var w = width * (initialZoom) * FlxG.scaleMode.scale.x;
-			var h = height * (initialZoom) * FlxG.scaleMode.scale.y;
-
-			var wRatio = (w - (w2)) * FlxG.scaleMode.scale.x;
-			var hRatio = (h - (h2)) * FlxG.scaleMode.scale.y;
-
-			offsetX += wRatio * 2;
-			offsetW -= wRatio * 2;
-
-			offsetY += hRatio * 2;
-			offsetH -= hRatio * 2;
-		}
-
-		var contained = (rect.right > offsetX) && (rect.x < offsetW) && (rect.bottom > offsetY) && (rect.y < offsetH);
+		var contained = (rect.right > viewOffsetX) && (rect.x < viewOffsetWidth) && (rect.bottom > viewOffsetY) && (rect.y < viewOffsetHeight);
 		rect.putWeak();
 		return contained;
 	}

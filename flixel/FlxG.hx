@@ -66,19 +66,6 @@ import flixel.system.frontEnds.HTML5FrontEnd;
 class FlxG
 {
 	/**
-	 * Whenever black bars for cameras shouldn't show up.
-	 */
-	public static var widescreen(default, set):Bool = false;
-
-	private static function set_widescreen(v:Bool)
-	{
-		widescreen = v;
-		for (e in FlxG.cameras.list)
-			e.updateScrollRect();
-		return widescreen;
-	}
-
-	/**
 	 * Whenever antialiasing should be forced off, even if the `antialiasing` property of the sprite is set to `true`.
 	 */
 	public static var forceNoAntialiasing = false;

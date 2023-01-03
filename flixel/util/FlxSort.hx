@@ -11,6 +11,14 @@ class FlxSort
 	public static inline var DESCENDING:Int = 1;
 
 	/**
+	 * You can use this function in FlxTypedGroup.sort() to sort FlxObjects by their x values.
+	 */
+	public static inline function byX(Order:Int, Obj1:FlxObject, Obj2:FlxObject):Int
+	{
+		return byValues(Order, Obj1.x, Obj2.x);
+	}
+
+	/**
 	 * You can use this function in FlxTypedGroup.sort() to sort FlxObjects by their y values.
 	 */
 	public static inline function byY(Order:Int, Obj1:FlxObject, Obj2:FlxObject):Int
