@@ -1296,9 +1296,11 @@ class FlxSprite extends FlxObject
 	 */
 	public function isSimpleRenderBlit(?camera:FlxCamera):Bool
 	{
-		var result:Bool = (angle == 0 || bakedRotationAngle > 0) && scale.x == 1 && scale.y == 1 && blend == null;
-		result = result && (camera != null ? isPixelPerfectRender(camera) : pixelPerfectRender);
-		return result;
+		return (angle == 0 || bakedRotationAngle > 0)
+			&& scale.x == 1
+			&& scale.y == 1
+			&& blend == null
+			&& (camera != null ? isPixelPerfectRender(camera) : pixelPerfectRender);
 	}
 
 	/**
