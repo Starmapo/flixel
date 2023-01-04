@@ -366,8 +366,6 @@ class FlxSprite extends FlxObject
 	@:noCompletion
 	var _facingFlip:Map<FlxDirectionFlags, {x:Bool, y:Bool}> = new Map<FlxDirectionFlags, {x:Bool, y:Bool}>();
 
-	var __firstDraw = true;
-
 	/**
 	 * Creates a `FlxSprite` at a specified position with a specified one-frame graphic.
 	 * If none is provided, a 16x16 image of the HaxeFlixel logo is used.
