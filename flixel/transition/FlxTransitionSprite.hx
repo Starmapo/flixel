@@ -1,12 +1,8 @@
 package flixel.transition;
 
-import flixel.transition.FlxTransitionSprite.TransitionStatus;
-import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
-import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
-import flixel.util.FlxTimer;
 import openfl.display.BitmapData;
 
 @:keep @:bitmap("assets/images/transitions/circle.png")

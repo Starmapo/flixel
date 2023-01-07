@@ -12,12 +12,17 @@ import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
  */
 class TransitionTiles extends TransitionEffect
 {
+	var back:FlxSprite;
 	var _grpSprites:FlxTypedSpriteGroup<FlxTransitionSprite>;
 	var _isCenter:Bool = false;
 
 	public function new(data:TransitionData)
 	{
 		super(data);
+
+		back = new FlxSprite(data.region.x, data.region.y).makeGraphic(Std.int(data.region.width), Std.int(data.region.height), data.color);
+		back.visible = false;
+		add(back);
 
 		_grpSprites = new FlxTypedSpriteGroup<FlxTransitionSprite>();
 		var delay:Float = 0;
@@ -128,6 +133,8 @@ class TransitionTiles extends TransitionEffect
 			if (allDone)
 			{
 				_started = false;
+				if (_endStatus == FULL)
+					back.visible = true;
 				delayThenFinish();
 			}
 		}

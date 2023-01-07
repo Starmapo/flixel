@@ -1,6 +1,7 @@
 package flixel.transition;
 
 import flixel.FlxState;
+import flixel.util.FlxDestroyUtil;
 
 /**
  * A `FlxState` which can perform visual transitions
@@ -67,8 +68,10 @@ class FlxTransitionableState extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
-		transIn = null;
-		transOut = null;
+		if (transIn != defaultTransIn)
+			transIn = FlxDestroyUtil.destroy(transIn);
+		if (transOut != defaultTransOut)
+			transOut = FlxDestroyUtil.destroy(transOut);
 		_onExit = null;
 	}
 

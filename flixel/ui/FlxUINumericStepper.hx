@@ -14,7 +14,7 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 {
 	public var button_plus:FlxUITypedButton<FlxSprite>;
 	public var button_minus:FlxUITypedButton<FlxSprite>;
-	public var text_field:FlxInputText;
+	public var text_field:FlxText;
 
 	public var stepSize:Float = 0;
 	public var defaultValue:Float = 0;
@@ -59,7 +59,15 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 		color = Value;
 		button_plus.color = Value;
 		button_minus.color = Value;
-		text_field.backgroundColor = Value;
+		if ((text_field is FlxInputText))
+		{
+			var fit:FlxInputText = cast text_field;
+			fit.backgroundColor = Value;
+		}
+		else
+		{
+			text_field.color = Value;
+		}
 		return Value;
 	}
 
@@ -87,7 +95,8 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 		if (value > max)
 			value = max;
 		value = decimalize(value, decimals);
-		if (text_field != null && !text_field.hasFocus)
+
+		var updateText = function()
 		{
 			var displayValue:Float = value;
 			if (isPercent)
@@ -97,6 +106,18 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 			}
 			else
 				text_field.text = Std.string(displayValue);
+		}
+		if ((text_field is FlxInputText))
+		{
+			var fit:FlxInputText = cast text_field;
+			if (!fit.hasFocus)
+			{
+				updateText();
+			}
+		}
+		else
+		{
+			updateText();
 		}
 		return value;
 	}
@@ -177,16 +198,16 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 
 		if (TextField == null)
 			TextField = new FlxUIInputText(0, 0, 25);
-		TextField.x = 0;
+		else if ((TextField is FlxText))
+			TextField.x = 0;
 		TextField.y = 0;
-		text_field = TextField;
+		text_field = cast TextField;
 		text_field.text = Std.string(DefaultValue);
-		text_field.lines = 1;
-		text_field.focusLost = _onInputTextEvent; // internal communication only
-
 		if ((text_field is FlxUIInputText))
 		{
 			var fuit:FlxUIInputText = cast text_field;
+			fuit.lines = 1;
+			fuit.focusLost = _onInputTextEvent; // internal communication only
 			fuit.broadcastToFlxUI = false;
 		}
 
@@ -286,7 +307,7 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 	{
 		if (callback != null)
 			callback(event_name, value);
-		
+
 		if (broadcastToFlxUI)
 			FlxUI.event(event_name, this, value, params);
 	}
