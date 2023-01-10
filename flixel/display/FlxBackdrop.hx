@@ -395,7 +395,7 @@ class FlxBackdrop extends FlxSprite
 		newRect.y += -Std.int(camera.scroll.y * scrollFactor.y) - offset.y + origin.y - scaledOrigin.y;
 		if (isPixelPerfectRender(camera))
 			newRect.floor();
-		newRect.setSize(frameWidth * Math.abs(scale.x), frameHeight * Math.abs(scale.y));
+		newRect.setSize(graphicWidth, graphicHeight);
 		return newRect.getRotatedBounds(angle, scaledOrigin, newRect);
 	}
 

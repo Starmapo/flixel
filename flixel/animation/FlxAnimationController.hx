@@ -1,5 +1,7 @@
 package flixel.animation;
 
+import flixel.util.FlxDestroyUtil;
+import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxFrame;
@@ -57,6 +59,41 @@ class FlxAnimationController implements IFlxDestroyable
 	public var finishCallback:(name:String) -> Void;
 
 	/**
+		Offsets for each animation.
+		If an animation is played and it doesn't have an offset added, the sprite's offset remains unchanged.
+	**/
+	public var offsets(default, null):Map<String, FlxPoint> = new Map();
+
+	/**
+		Whether offsets should be adjusted depending on the sprite's flip values or its scale.
+	**/
+	public var adjustOffsets:Bool = true;
+
+	/**
+		Offsets will be flipped horizontally if the sprite's `flipX` isn't this value.
+		Set automatically when the first animation is played, but you can change it manually afterwards.
+	**/
+	public var defaultFlipX:Bool = false;
+
+	/**
+		Offsets will be flipped vertically if the sprite's `flipY` isn't this value.
+		Set automatically when the first animation is played, but you can change it manually afterwards.
+	**/
+	public var defaultFlipY:Bool = false;
+
+	/**
+		The default frame size, needed for offset calculations.
+		Set automatically when the first animation is played, but you can change it manually afterwards.
+	**/
+	public var defaultSize:FlxPoint = FlxPoint.get();
+
+	/**
+		If the sprite's scale differs from this value, offsets will be scaled accordingly.
+		Set automatically when the first animation is played, but you can change it manually afterwards.
+	**/
+	public var defaultScale:FlxPoint = FlxPoint.get(1, 1);
+
+	/**
 	 * Internal, reference to owner sprite.
 	 */
 	@:allow(flixel.animation)
@@ -74,6 +111,10 @@ class FlxAnimationController implements IFlxDestroyable
 	var _animations(default, null):Map<String, FlxAnimation>;
 
 	var _prerotated:FlxPrerotatedAnimation;
+
+	var _point:FlxPoint = FlxPoint.get();
+
+	var _firstAnim:Bool = true;
 
 	public function new(Sprite:FlxSprite)
 	{
@@ -99,7 +140,12 @@ class FlxAnimationController implements IFlxDestroyable
 
 		for (anim in controller._animations)
 		{
-			add(anim.name, anim.frames, anim.frameRate, anim.looped, anim.flipX, anim.flipY);
+			var animName = anim.name;
+			add(animName, anim.frames, anim.frameRate, anim.looped, anim.flipX, anim.flipY);
+			if (controller.offsets.exists(animName))
+			{
+				addOffsetFromPoint(animName, controller.offsets.get(animName));
+			}
 		}
 
 		if (controller._prerotated != null)
@@ -135,8 +181,10 @@ class FlxAnimationController implements IFlxDestroyable
 	{
 		destroyAnimations();
 		_animations = null;
+		offsets = null;
 		callback = null;
 		_sprite = null;
+		_point = FlxDestroyUtil.put(_point);
 	}
 
 	function clearPrerotated():Void
@@ -165,6 +213,20 @@ class FlxAnimationController implements IFlxDestroyable
 
 		_animations = new Map<String, FlxAnimation>();
 		_curAnim = null;
+
+		if (offsets != null)
+		{
+			var offset:FlxPoint;
+			for (key in offsets.keys())
+			{
+				offset = offsets.get(key);
+				if (offset != null)
+				{
+					offset.put();
+				}
+			}
+		}
+		offsets.clear();
 	}
 
 	/**
@@ -218,6 +280,7 @@ class FlxAnimationController implements IFlxDestroyable
 		{
 			_animations.remove(Name);
 			anim.destroy();
+			removeOffset(Name);
 		}
 	}
 
@@ -600,6 +663,68 @@ class FlxAnimationController implements IFlxDestroyable
 		}
 	}
 
+	public function addOffset(Name:String, OffsetX:Float = 0, OffsetY:Float = 0)
+	{
+		var offset = offsets.get(Name);
+		if (offset == null)
+			offset = FlxPoint.get();
+
+		offsets.set(Name, offset.set(OffsetX, OffsetY));
+	}
+
+	public function removeOffset(Name:String)
+	{
+		var offset = offsets.get(Name);
+		if (offset != null)
+		{
+			offsets.remove(Name);
+			offset.put();
+		}
+	}
+
+	public function addOffsetFromPoint(Name:String, Point:FlxPoint)
+	{
+		var offset = offsets.get(Name);
+		if (offset == null)
+			offset = FlxPoint.get();
+
+		offsets.set(Name, offset.copyFrom(Point));
+		Point.putWeak();
+	}
+
+	public function updateOffset()
+	{
+		if (_curAnim != null)
+		{
+			var offset = offsets.get(_curAnim.name);
+			if (offset != null)
+			{
+				_point.copyFrom(offset);
+				if (adjustOffsets)
+				{
+					if (_sprite.flipX != defaultFlipX)
+					{
+						_point.x = (_sprite.frameWidth - defaultSize.x) * defaultScale.x - _point.x;
+					}
+					if (_sprite.flipY != defaultFlipY)
+					{
+						_point.y = (_sprite.frameHeight - defaultSize.y) * defaultScale.y - _point.y;
+					}
+					if (_sprite.scale.x != defaultScale.x)
+					{
+						_point.x *= (_sprite.scale.x / defaultScale.x);
+					}
+					if (_sprite.scale.y != defaultScale.y)
+					{
+						_point.y *= (_sprite.scale.y / defaultScale.y);
+					}
+				}
+				_sprite.offset.set(-0.5 * ((defaultSize.x * defaultScale.x) - defaultSize.x), -0.5 * ((defaultSize.y * defaultScale.y) - defaultSize.y));
+				_sprite.offset.addPoint(_point);
+			}
+		}
+	}
+
 	/**
 	 * Plays an existing animation (e.g. `"run"`).
 	 * If you call an animation that is already playing, it will be ignored.
@@ -638,6 +763,17 @@ class FlxAnimationController implements IFlxDestroyable
 		}
 		_curAnim = _animations.get(AnimName);
 		_curAnim.play(Force, Reversed, Frame);
+
+		if (_firstAnim)
+		{
+			defaultFlipX = _sprite.flipX;
+			defaultFlipY = _sprite.flipY;
+			defaultSize.set(_sprite.frameWidth, _sprite.frameHeight);
+			defaultScale.copyFrom(_sprite.scale);
+			_firstAnim = false;
+		}
+
+		updateOffset();
 
 		if (oldFlipX != _curAnim.flipX || oldFlipY != _curAnim.flipY)
 		{

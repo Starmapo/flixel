@@ -179,14 +179,24 @@ class FlxSprite extends FlxObject
 	public var frame(default, set):FlxFrame;
 
 	/**
-	 * The width of the actual graphic or image being displayed (not necessarily the game object/bounding box).
+	 * The width of the original graphic or image being displayed (not necessarily the game object/bounding box).
 	 */
 	public var frameWidth(default, null):Int = 0;
 
 	/**
-	 * The height of the actual graphic or image being displayed (not necessarily the game object/bounding box).
+	 * The height of the original graphic or image being displayed (not necessarily the game object/bounding box).
 	 */
 	public var frameHeight(default, null):Int = 0;
+
+	/**
+	 * The width of the graphic or image being displayed, taking into account its scale.
+	 */
+	public var graphicWidth(get, set):Float;
+
+	/**
+	 * The height of the graphic or image being displayed, taking into account its scale.
+	 */
+	public var graphicHeight(get, set):Float;
 
 	/**
 	 * The total number of frames in this image.
@@ -717,8 +727,8 @@ class FlxSprite extends FlxObject
 	 */
 	public function updateHitbox():Void
 	{
-		width = Math.abs(scale.x) * frameWidth;
-		height = Math.abs(scale.y) * frameHeight;
+		width = graphicWidth;
+		height = graphicHeight;
 		offset.set(-0.5 * (width - frameWidth), -0.5 * (height - frameHeight));
 		centerOrigin();
 	}
@@ -1233,7 +1243,7 @@ class FlxSprite extends FlxObject
 		_scaledOrigin.set(origin.x * Math.abs(scale.x), origin.y * Math.abs(scale.y));
 		newRect.x -= offset.x - origin.x + _scaledOrigin.x;
 		newRect.y -= offset.y - origin.y + _scaledOrigin.y;
-		newRect.setSize(frameWidth * Math.abs(scale.x), frameHeight * Math.abs(scale.y));
+		newRect.setSize(graphicWidth, graphicHeight);
 		if (pixelPerfectRender)
 			newRect.floor();
 		return newRect.getRotatedBounds(angle, _scaledOrigin, newRect);
@@ -1344,7 +1354,7 @@ class FlxSprite extends FlxObject
 		newRect.y += -Std.int(camera.scroll.y * scrollFactor.y) - offset.y + origin.y - _scaledOrigin.y;
 		if (isPixelPerfectRender(camera))
 			newRect.floor();
-		newRect.setSize(frameWidth * Math.abs(scale.x), frameHeight * Math.abs(scale.y));
+		newRect.setSize(graphicWidth, graphicHeight);
 		return newRect.getRotatedBounds(angle, _scaledOrigin, newRect);
 	}
 
@@ -1419,6 +1429,18 @@ class FlxSprite extends FlxObject
 		}
 
 		return this;
+	}
+
+	public function setClipRect(X:Float, Y:Float, Width:Float, Height:Float)
+	{
+		if (clipRect == null)
+		{
+			clipRect = FlxRect.get(X, Y, Width, Height);
+		}
+		else
+		{
+			clipRect = clipRect.set(X, Y, Width, Height);
+		}
 	}
 
 	@:noCompletion
@@ -1630,6 +1652,10 @@ class FlxSprite extends FlxObject
 			_facingHorizontalMult = Value ? -1 : 1;
 		}
 		dirty = (flipX != Value) || dirty;
+		if (animation.adjustOffsets)
+		{
+			animation.updateOffset();
+		}
 		return flipX = Value;
 	}
 
@@ -1641,6 +1667,10 @@ class FlxSprite extends FlxObject
 			_facingVerticalMult = Value ? -1 : 1;
 		}
 		dirty = (flipY != Value) || dirty;
+		if (animation.adjustOffsets)
+		{
+			animation.updateOffset();
+		}
 		return flipY = Value;
 	}
 
@@ -1673,6 +1703,28 @@ class FlxSprite extends FlxObject
 			useFramePixels = true;
 			return true;
 		}
+	}
+
+	function get_graphicWidth()
+	{
+		return frameWidth * Math.abs(scale.x);
+	}
+
+	function get_graphicHeight()
+	{
+		return frameHeight * Math.abs(scale.y);
+	}
+
+	function set_graphicWidth(value:Float)
+	{
+		setGraphicSize(Std.int(value), Std.int(graphicHeight));
+		return value;
+	}
+
+	function set_graphicHeight(value:Float)
+	{
+		setGraphicSize(Std.int(graphicWidth), Std.int(value));
+		return value;
 	}
 
 	@:noCompletion

@@ -275,7 +275,7 @@ class FlxAnimation extends FlxBaseAnimation
 
 	function get_width():Float
 	{
-		var maxWidth = Math.NEGATIVE_INFINITY;
+		var maxWidth:Float = 0;
 		var atlasFrames = parent._sprite.graphic.atlasFrames;
 		for (frame in frames)
 		{
@@ -288,7 +288,7 @@ class FlxAnimation extends FlxBaseAnimation
 
 	function get_height():Float
 	{
-		var maxHeight = Math.NEGATIVE_INFINITY;
+		var maxHeight:Float = 0;
 		var atlasFrames = parent._sprite.graphic.atlasFrames;
 		for (frame in frames)
 		{
