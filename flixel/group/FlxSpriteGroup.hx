@@ -208,6 +208,9 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 
 	override public function draw():Void
 	{
+		if (!visible)
+			return;
+		
 		group.draw();
 
 		#if FLX_DEBUG

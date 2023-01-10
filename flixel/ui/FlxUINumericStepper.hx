@@ -14,7 +14,8 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 {
 	public var button_plus:FlxUITypedButton<FlxSprite>;
 	public var button_minus:FlxUITypedButton<FlxSprite>;
-	public var text_field:FlxText;
+	public var text_field:FlxSprite;
+	public var flxText:FlxText;
 
 	public var stepSize:Float = 0;
 	public var defaultValue:Float = 0;
@@ -66,7 +67,7 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 		}
 		else
 		{
-			text_field.color = Value;
+			flxText.color = Value;
 		}
 		return Value;
 	}
@@ -102,10 +103,10 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 			if (isPercent)
 			{
 				displayValue *= 100;
-				text_field.text = Std.string(decimalize(displayValue, decimals)) + "%";
+				flxText.text = Std.string(decimalize(displayValue, decimals)) + "%";
 			}
 			else
-				text_field.text = Std.string(displayValue);
+				flxText.text = Std.string(displayValue);
 		}
 		if ((text_field is FlxInputText))
 		{
@@ -191,25 +192,33 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 	 * @param	IsPercent			Whether to portray the number as a percentage
 	 */
 	public function new(X:Float = 0, Y:Float = 0, StepSize:Float = 1, DefaultValue:Float = 0, Min:Float = -999, Max:Float = 999, Decimals:Int = 0,
-			Stack:Int = STACK_HORIZONTAL, ?TextField:FlxInputText, ?ButtonPlus:FlxUITypedButton<FlxSprite>, ?ButtonMinus:FlxUITypedButton<FlxSprite>,
+			Stack:Int = STACK_HORIZONTAL, ?TextField:FlxSprite, ?ButtonPlus:FlxUITypedButton<FlxSprite>, ?ButtonMinus:FlxUITypedButton<FlxSprite>,
 			IsPercent:Bool = false)
 	{
 		super(X, Y);
 
 		if (TextField == null)
 			TextField = new FlxUIInputText(0, 0, 25);
-		else if ((TextField is FlxText))
-			TextField.x = 0;
-		TextField.y = 0;
-		text_field = cast TextField;
-		text_field.text = Std.string(DefaultValue);
-		if ((text_field is FlxUIInputText))
+		TextField.setPosition(0, 0);
+
+		text_field = TextField;
+		if ((TextField is FlxInputText))
 		{
-			var fuit:FlxUIInputText = cast text_field;
-			fuit.lines = 1;
-			fuit.focusLost = _onInputTextEvent; // internal communication only
-			fuit.broadcastToFlxUI = false;
+			var fit:FlxInputText = cast TextField;
+			flxText = fit.textSprite;
+			fit.lines = 1;
+			fit.focusLost = _onInputTextEvent; // internal communication only
+			if ((TextField is FlxUIInputText))
+			{
+				var fuit:FlxUIInputText = cast TextField;
+				fuit.broadcastToFlxUI = false;
+			}
 		}
+		else
+		{
+			flxText = cast TextField;
+		}
+		flxText.text = Std.string(DefaultValue);
 
 		stepSize = StepSize;
 		defaultValue = DefaultValue;
@@ -251,12 +260,12 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 
 		stack = Stack;
 
-		lastText = text_field.text;
+		lastText = flxText.text;
 	}
 
 	private function _onInputTextEvent():Void
 	{
-		var text = text_field.text;
+		var text = flxText.text;
 		if (text == lastText)
 			return; // dont continue if nothing actually changed
 
@@ -286,7 +295,7 @@ class FlxUINumericStepper extends FlxUIGroup implements IFlxUIWidget implements 
 			_doCallback(CHANGE_EVENT);
 		}
 
-		lastText = text_field.text;
+		lastText = flxText.text;
 	}
 
 	private function _onPlus():Void
