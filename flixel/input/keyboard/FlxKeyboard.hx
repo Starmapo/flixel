@@ -138,6 +138,59 @@ class FlxKeyboard extends FlxKeyManager<FlxKey, FlxKeyList>
 	}
 
 	/**
+		Gets an angle based on the arrow keys.
+	**/
+	public inline function angleFromArrowKeys()
+	{
+		return angleFromKeys([UP, LEFT, DOWN, RIGHT]);
+	}
+
+	/**
+		Gets an angle based on the WASD keys.
+	**/
+	public inline function angleFromWASD()
+	{
+		return angleFromKeys([W, A, S, D]);
+	}
+
+	/**
+		Gets an angle based on directional keys. The array must have atleast 4 keys.
+	**/
+	public function angleFromKeys(keys:Array<FlxKey>)
+	{
+		if (keys == null)
+			keys = [UP, LEFT, DOWN, RIGHT];
+		if (keys.length < 4)
+			return 0;
+
+		var angle:Float = 0;
+		var up = checkStatus(keys[0], PRESSED);
+		var left = checkStatus(keys[1], PRESSED);
+		var down = checkStatus(keys[2], PRESSED);
+		var right = checkStatus(keys[3], PRESSED);
+		if (up)
+		{
+			angle = 270;
+			if (left)
+				angle -= 45;
+			else if (right)
+				angle += 45;
+		}
+		else if (down)
+		{
+			angle = 90;
+			if (left)
+				angle += 45;
+			else if (right)
+				angle -= 45;
+		}
+		else if (left)
+			angle = 180;
+
+		return angle;
+	}
+
+	/**
 	 * If any keys are not "released",
 	 * this function will return an array indicating
 	 * which keys are pressed and what state they are in.
