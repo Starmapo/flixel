@@ -1,11 +1,11 @@
 package flixel.animation;
 
-import flixel.util.FlxDestroyUtil;
-import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxFrame;
+import flixel.math.FlxPoint;
 import flixel.util.FlxDestroyUtil.IFlxDestroyable;
+import flixel.util.FlxDestroyUtil;
 
 class FlxAnimationController implements IFlxDestroyable
 {
@@ -63,6 +63,11 @@ class FlxAnimationController implements IFlxDestroyable
 		If an animation is played and it doesn't have an offset added, the sprite's offset remains unchanged.
 	**/
 	public var offsets(default, null):Map<String, FlxPoint> = new Map();
+
+	/**
+		Whether offsets are enabled.
+	**/
+	public var useOffsets:Bool = true;
 
 	/**
 		Whether offsets should be adjusted depending on the sprite's flip values or its scale.
@@ -694,7 +699,7 @@ class FlxAnimationController implements IFlxDestroyable
 
 	public function updateOffset()
 	{
-		if (_curAnim != null)
+		if (_curAnim != null && useOffsets)
 		{
 			var offset = offsets.get(_curAnim.name);
 			if (offset != null)
