@@ -501,8 +501,7 @@ class FlxTypedEmitter<T:FlxSprite & IFlxParticle> extends FlxTypedGroup<T>
 			particle.scaleRange.end.x = FlxG.random.float(scale.end.min.x, scale.end.max.x);
 			particle.scaleRange.end.y = keepScaleRatio ? particle.scaleRange.end.x : FlxG.random.float(scale.end.min.y, scale.end.max.y);
 			particle.scaleRange.active = particle.lifespan > 0 && !particle.scaleRange.start.equals(particle.scaleRange.end);
-			particle.scale.x = particle.scaleRange.start.x;
-			particle.scale.y = particle.scaleRange.start.y;
+			particle.scale.set(particle.scaleRange.start.x, particle.scaleRange.start.y);
 			if (particle.autoUpdateHitbox)
 				particle.updateHitbox();
 		}

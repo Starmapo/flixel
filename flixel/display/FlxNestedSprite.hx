@@ -104,8 +104,8 @@ class FlxNestedSprite extends FlxSprite
 			return Child;
 
 		children.push(Child);
-		Child.velocity.set(0, 0);
-		Child.acceleration.set(0, 0);
+		Child.velocity.set();
+		Child.acceleration.set();
 		Child.scrollFactor.copyFrom(scrollFactor);
 
 		Child.alpha = Child.relativeAlpha * alpha;
@@ -217,8 +217,8 @@ class FlxNestedSprite extends FlxSprite
 		{
 			if (child.active && child.exists)
 			{
-				child.velocity.x = child.velocity.y = 0;
-				child.acceleration.x = child.acceleration.y = 0;
+				child.velocity.set();
+				child.acceleration.set();
 				child.angularVelocity = child.angularAcceleration = 0;
 				child.postUpdate(elapsed);
 
@@ -246,13 +246,10 @@ class FlxNestedSprite extends FlxSprite
 				}
 
 				child.angle = angle + child.relativeAngle;
-				child.scale.x = scale.x * child.relativeScale.x;
-				child.scale.y = scale.y * child.relativeScale.y;
+				child.scale.set(scale.x * child.relativeScale.x, scale.y * child.relativeScale.y);
 
-				child.velocity.x = velocity.x;
-				child.velocity.y = velocity.y;
-				child.acceleration.x = acceleration.x;
-				child.acceleration.y = acceleration.y;
+				child.velocity.copyFrom(velocity);
+				child.acceleration.copyFrom(acceleration);
 			}
 		}
 	}

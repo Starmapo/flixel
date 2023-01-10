@@ -172,8 +172,7 @@ class FlxParticle extends FlxSprite implements IFlxParticle
 
 			if (scaleRange.active)
 			{
-				scale.x += (scaleRange.end.x - scaleRange.start.x) * _delta;
-				scale.y += (scaleRange.end.y - scaleRange.start.y) * _delta;
+				scale.add((scaleRange.end.x - scaleRange.start.x) * _delta, (scaleRange.end.y - scaleRange.start.y) * _delta);
 				if (autoUpdateHitbox)
 					updateHitbox();
 			}

@@ -192,10 +192,7 @@ class FlxOgmo3Loader
 		{
 			var s = new FlxSprite(decal.x, decal.y, decalsPath + decal.texture);
 			s.offset.set(s.width / 2, s.height / 2);
-			if (decal.scaleX != null)
-				s.scale.x = decal.scaleX;
-			if (decal.scaleY != null)
-				s.scale.y = decal.scaleY;
+			s.scale.set(decal.scaleX != null ? decal.scaleX : s.scale.x, decal.scaleY != null ? decal.scaleY : s.scale.y);
 			if (decal.rotation != null)
 				s.angle = project.anglesRadians ? FlxAngle.asDegrees(decal.rotation) : decal.rotation;
 			g.add(s);

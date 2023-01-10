@@ -367,10 +367,7 @@ class FlxSpine extends FlxSprite
 					wrapper.angle += 180;
 				wrapper.angle *= flip;
 
-				wrapper.scale.x *= (wrapperAngle == 0) ? worldScaleX : worldScaleY;
-				wrapper.scale.x *= flipX;
-				wrapper.scale.y *= (wrapperAngle == 0) ? worldScaleY : worldScaleX;
-				wrapper.scale.y *= flipY;
+				wrapper.scale.scale(((wrapperAngle == 0) ? worldScaleX : worldScaleY) * flipX, ((wrapperAngle == 0) ? worldScaleY : worldScaleX) * flipY);
 
 				wrapper.x = bone.worldX + _matrix.tx;
 				wrapper.y = bone.worldY + _matrix.ty;
@@ -414,8 +411,8 @@ class FlxSpine extends FlxSprite
 		wrapper.antialiasing = antialiasing;
 
 		wrapper.angle = -regionAttachment.rotation;
-		wrapper.scale.x = regionAttachment.scaleX * (regionAttachment.width / region.width);
-		wrapper.scale.y = regionAttachment.scaleY * (regionAttachment.height / region.height);
+		wrapper.scale.set(regionAttachment.scaleX * (regionAttachment.width / region.width),
+			regionAttachment.scaleY * (regionAttachment.height / region.height));
 
 		// Position using attachment translation, shifted as if scale and rotation were at image center.
 		var radians:Float = -regionAttachment.rotation * Math.PI / 180;

@@ -217,8 +217,7 @@ class FlxTrail extends FlxSpriteGroup
 				// the scale...
 				if (scalesEnabled)
 				{
-					trailSprite.scale.x = _recentScales[i].x;
-					trailSprite.scale.y = _recentScales[i].y;
+					trailSprite.scale.set(_recentScales[i].x, _recentScales[i].y);
 				}
 
 				// and frame...

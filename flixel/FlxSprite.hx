@@ -713,12 +713,11 @@ class FlxSprite extends FlxObject
 
 		var newScaleX:Float = Width / frameWidth;
 		var newScaleY:Float = Height / frameHeight;
-		scale.set(newScaleX, newScaleY);
-
 		if (Width <= 0)
-			scale.x = newScaleY;
+			newScaleX = newScaleY;
 		else if (Height <= 0)
-			scale.y = newScaleX;
+			newScaleY = newScaleX;
+		scale.set(newScaleX, newScaleY);
 	}
 
 	/**
