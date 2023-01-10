@@ -87,7 +87,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 
 		offset = new FlxCallbackPoint(offsetCallback);
 		origin = new FlxCallbackPoint(originCallback);
-		scale = new FlxCallbackPoint(scaleCallback);
+		scale = new FlxCallbackPoint(groupScaleCallback);
 		scrollFactor = new FlxCallbackPoint(scrollFactorCallback);
 
 		scale.set(1, 1);
@@ -1097,7 +1097,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	inline function originCallback(Origin:FlxPoint)
 		transformChildren(originTransform, Origin);
 
-	inline function scaleCallback(Scale:FlxPoint)
+	inline function groupScaleCallback(Scale:FlxPoint)
 		transformChildren(scaleTransform, Scale);
 
 	inline function scrollFactorCallback(ScrollFactor:FlxPoint)

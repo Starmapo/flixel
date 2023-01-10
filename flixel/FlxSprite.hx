@@ -407,7 +407,7 @@ class FlxSprite extends FlxObject
 		_flashPointZero = new Point();
 		offset = FlxPoint.get();
 		origin = FlxPoint.get();
-		scale = FlxPoint.get(1, 1);
+		scale = new FlxCallbackPoint(scaleCallback).set(1, 1);
 		_halfSize = FlxPoint.get();
 		_matrix = new FlxMatrix();
 		colorTransform = new ColorTransform();
@@ -432,7 +432,7 @@ class FlxSprite extends FlxObject
 
 		offset = FlxDestroyUtil.put(offset);
 		origin = FlxDestroyUtil.put(origin);
-		scale = FlxDestroyUtil.put(scale);
+		scale = FlxDestroyUtil.destroy(scale);
 		_halfSize = FlxDestroyUtil.put(_halfSize);
 		_scaledOrigin = FlxDestroyUtil.put(_scaledOrigin);
 
@@ -1747,6 +1747,14 @@ class FlxSprite extends FlxObject
 			return doFlipY != animation.curAnim.flipY;
 		}
 		return doFlipY;
+	}
+
+	function scaleCallback(Scale:FlxPoint)
+	{
+		if (animation != null && animation.adjustOffsets)
+		{
+			animation.updateOffset();
+		}
 	}
 }
 
