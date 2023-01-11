@@ -1,6 +1,5 @@
 package flixel;
 
-import flixel.input.FlxTextInput;
 import flash.Lib;
 import flash.display.DisplayObject;
 import flash.display.Stage;
@@ -329,8 +328,6 @@ class FlxG
 	 */
 	public static var plugins(default, null):PluginFrontEnd;
 
-	public static var textInput:FlxTextInput;
-
 	public static var initialWidth(default, null):Int = 0;
 	public static var initialHeight(default, null):Int = 0;
 
@@ -606,7 +603,6 @@ class FlxG
 		// Instantiate inputs
 		#if FLX_KEYBOARD
 		keys = inputs.add(new FlxKeyboard());
-		textInput = new FlxTextInput();
 		#end
 
 		#if FLX_MOUSE

@@ -156,7 +156,7 @@ class FlxKeyboard extends FlxKeyManager<FlxKey, FlxKeyList>
 	/**
 		Gets an angle based on directional keys. The array must have atleast 4 keys.
 	**/
-	public function angleFromKeys(keys:Array<FlxKey>)
+	public function angleFromKeys(keys:Array<FlxKey>):Float
 	{
 		if (keys == null)
 			keys = [UP, LEFT, DOWN, RIGHT];
