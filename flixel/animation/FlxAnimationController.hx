@@ -99,6 +99,11 @@ class FlxAnimationController implements IFlxDestroyable
 	public var defaultScale:FlxPoint = FlxPoint.get(1, 1);
 
 	/**
+		Whether the sprite's origin should be centered every time an animation is played.
+	**/
+	public var centerOrigin:Bool = true;
+
+	/**
 	 * Internal, reference to owner sprite.
 	 */
 	@:allow(flixel.animation)
@@ -779,6 +784,11 @@ class FlxAnimationController implements IFlxDestroyable
 		}
 
 		updateOffset();
+
+		if (centerOrigin)
+		{
+			_sprite.centerOrigin();
+		}
 
 		if (oldFlipX != _curAnim.flipX || oldFlipY != _curAnim.flipY)
 		{

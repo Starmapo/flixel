@@ -3838,21 +3838,23 @@ class FlxUI extends FlxUIGroup implements IEventGetter
 
 		switch (stack)
 		{
-			case "horizontal", "h", "horz":
-				stacking = FlxUINumericStepper.STACK_HORIZONTAL;
 			case "vertical", "v", "vert":
 				stacking = FlxUINumericStepper.STACK_VERTICAL;
 			default:
 				stacking = FlxUINumericStepper.STACK_HORIZONTAL;
 		}
 
-		var theText:FlxInputText = null;
+		var theText:FlxSprite = null;
 		var buttPlus:FlxUITypedButton<FlxSprite> = null;
 		var buttMinus:FlxUITypedButton<FlxSprite> = null;
 
 		if (data.hasNode.text)
 		{
 			theText = cast _loadThing("text", data.node.text);
+		}
+		else if (data.hasNode.input_text)
+		{
+			theText = cast _loadThing("input_text", data.node.input_text);
 		}
 		if (data.hasNode.plus)
 		{

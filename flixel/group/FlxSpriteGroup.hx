@@ -210,7 +210,7 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	{
 		if (!visible)
 			return;
-		
+
 		group.draw();
 
 		#if FLX_DEBUG
@@ -260,6 +260,16 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	 */
 	public function add(Sprite:T):T
 	{
+		if (Sprite == null)
+		{
+			FlxG.log.warn("Cannot add a `null` sprite to a FlxSpriteGroup.");
+			return null;
+		}
+
+		// Don't bother adding an object twice.
+		if (members.indexOf(Sprite) >= 0)
+			return Sprite;
+
 		preAdd(Sprite);
 		return group.add(Sprite);
 	}
@@ -275,6 +285,16 @@ class FlxTypedSpriteGroup<T:FlxSprite> extends FlxSprite
 	 */
 	public function insert(Position:Int, Sprite:T):T
 	{
+		if (Sprite == null)
+		{
+			FlxG.log.warn("Cannot insert a `null` sprite to a FlxSpriteGroup.");
+			return null;
+		}
+
+		// Don't bother adding an object twice.
+		if (members.indexOf(Sprite) >= 0)
+			return Sprite;
+
 		preAdd(Sprite);
 		return group.insert(Position, Sprite);
 	}

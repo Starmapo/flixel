@@ -228,10 +228,11 @@ class FlxInputText extends FlxSpriteGroup
 		{
 			fieldBorderSprite = new FlxSprite(X, Y);
 			backgroundSprite = new FlxSprite(X + fieldBorderThickness, Y + fieldBorderThickness);
+			
+			add(fieldBorderSprite);
+			add(backgroundSprite);
 		}
 
-		add(fieldBorderSprite);
-		add(backgroundSprite);
 		add(textSprite);
 		add(caret);
 

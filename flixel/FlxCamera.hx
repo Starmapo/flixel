@@ -1377,14 +1377,8 @@ class FlxCamera extends FlxBasic
 	 *                   manually specify the deadzone after calling `follow()`.
 	 * @param   Lerp     How much lag the camera should have (can help smooth out the camera movement).
 	 */
-	public function follow(Target:FlxObject, ?Style:FlxCameraFollowStyle, ?Lerp:Float):Void
+	public function follow(Target:FlxObject, Style:FlxCameraFollowStyle = LOCKON, Lerp:Float = 1):Void
 	{
-		if (Style == null)
-			Style = LOCKON;
-
-		if (Lerp == null)
-			Lerp = 1;
-
 		style = Style;
 		target = Target;
 		followLerp = Lerp;
