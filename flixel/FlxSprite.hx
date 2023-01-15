@@ -730,6 +730,10 @@ class FlxSprite extends FlxObject
 		height = graphicHeight;
 		offset.set(-0.5 * (width - frameWidth), -0.5 * (height - frameHeight));
 		centerOrigin();
+		if (animation.adjustOffsets)
+		{
+			animation.updateOffset();
+		}
 	}
 
 	/**
