@@ -73,8 +73,7 @@ class FlxSave implements IFlxDestroyable
 	/**
 	 * Converts invalid characters to "-", producing a valid string for a FlxSave's name and path
 	 */
-	@:allow(flixel.FlxG.initSave)
-	static function validate(str:String)
+	public static function validate(str:String)
 	{
 		#if html5
 		// most chars are fine on browsers
