@@ -8,19 +8,19 @@ import flash.geom.Rectangle;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
-import openfl.display.DisplayObject;
 import flixel.FlxG;
+import flixel.system.FlxAssets;
+import flixel.system.debug.completion.CompletionList;
 import flixel.system.debug.console.Console;
+import flixel.system.debug.interaction.Interaction;
+import flixel.system.debug.log.BitmapLog;
 import flixel.system.debug.log.Log;
 import flixel.system.debug.stats.Stats;
-import flixel.system.debug.watch.Watch;
 import flixel.system.debug.watch.Tracker;
-import flixel.system.debug.completion.CompletionList;
-import flixel.system.debug.log.BitmapLog;
-import flixel.system.debug.interaction.Interaction;
-import flixel.system.FlxAssets;
+import flixel.system.debug.watch.Watch;
 import flixel.system.ui.FlxSystemButton;
 import flixel.util.FlxHorizontalAlign;
+import openfl.display.DisplayObject;
 
 using flixel.util.FlxArrayUtil;
 

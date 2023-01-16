@@ -580,7 +580,12 @@ class FlxG
 		// if the URL does not already start with "http://" or "https://", add it.
 		if (!~/^https?:\/\//.match(URL))
 			prefix = "http://";
+
+		#if linux
+		Sys.command('/usr/bin/xdg-open', [prefix + URL, "&"]);
+		#else
 		Lib.getURL(new URLRequest(prefix + URL), Target);
+		#end
 	}
 
 	/**
