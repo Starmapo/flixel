@@ -1,5 +1,6 @@
 package flixel;
 
+import flixel.util.FlxStringUtil;
 import flash.Lib;
 import flash.display.DisplayObject;
 import flash.display.Stage;
@@ -679,7 +680,7 @@ class FlxG
 
 		// Use Project.xml data to determine save id (since 5.0.0).
 		final name = stage.application.meta["file"];
-		save.bind(FlxSave.validate(name));
+		save.bind(FlxStringUtil.validate(name, true));
 		// look for the pre 5.0 save and convert it if it exists.
 		if (save.isEmpty())
 			save.mergeDataFrom("flixel", null, false, false);

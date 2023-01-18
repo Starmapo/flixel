@@ -55,40 +55,12 @@ import openfl.net.SharedObjectFlushStatus;
 @:allow(flixel.util.FlxSharedObject)
 class FlxSave implements IFlxDestroyable
 {
-	static var invalidChars = ~/[ ~%&\\;:"',<>?#\|\*]+/;
-
-	/**
-	 * Checks for invalid or space characters
-	 */
-	static function hasInvalidChars(str:String)
-	{
-		#if html5
-		// most chars are fine on browsers
-		return false;
-		#else
-		return invalidChars.match(str);
-		#end
-	}
-
-	/**
-	 * Converts invalid characters to "-", producing a valid string for a FlxSave's name and path
-	 */
-	public static function validate(str:String)
-	{
-		#if html5
-		// most chars are fine on browsers
-		return str;
-		#else
-		return invalidChars.split(str).join("-");
-		#end
-	}
-
 	/**
 	 * Converts invalid characters to "-", and logs a warning in debug mode
 	 */
 	static function validateAndWarn(str, fieldId:String)
 	{
-		var newStr = validate(str);
+		var newStr = FlxStringUtil.validate(str, true);
 		#if debug
 		if (newStr != str)
 			FlxG.log.warn('FlxSave $fieldId: "$str" contains invalid characters, using "$newStr" instead');
@@ -414,7 +386,7 @@ private class FlxSharedObject extends SharedObject
 		if (path == null || path == "")
 			path = "HaxeFlixel";
 		else
-			path = FlxSave.validate(path);
+			path = FlxStringUtil.validate(path, true);
 
 		return path;
 	}

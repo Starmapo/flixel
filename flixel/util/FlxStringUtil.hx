@@ -19,6 +19,36 @@ import flash.geom.Matrix;
  */
 class FlxStringUtil
 {
+	static var invalidChars = ~/[~%&\\;:"',<>?#\|\*]+/g;
+
+	/**
+	 * Checks for invalid characters.
+	 *
+	 * @param	space	If true, will consider space an invalid character.
+	 */
+	public static function hasInvalidChars(str:String, space:Bool = false)
+	{
+		if (invalidChars.match(str))
+			return true;
+		if (space && str.contains(' '))
+			return true;
+		return false;
+	}
+
+	/**
+	 * Converts invalid characters to "-", producing a valid string for a file/FlxSave's name and path.
+	 *
+	 * @param	space	If true, will consider space an invalid character.
+	 */
+	public static function validate(str:String, space:Bool = false)
+	{
+		var validatedStr = invalidChars.replace(str, '-');
+		if (space)
+			validatedStr = validatedStr.replace(' ', '-');
+
+		return validatedStr;
+	}
+
 	/**
 	 * Takes two "ticks" timestamps and formats them into the number of seconds that passed as a String.
 	 * Useful for logging, debugging, the watch window, or whatever else.
