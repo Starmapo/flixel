@@ -1,7 +1,14 @@
-5.2.0 (Unreleased)
+5.2.0 January 17, 2023
 ------------------------------
 #### New features:
 - `FlxMouse`: added `deltaX`, `deltaY`, `deltaScreenX` and `deltaScreenY` ([#2709](https://github.com/HaxeFlixel/flixel/pull/2709))
+- `FlxCamera`: added public `view` and `viewMargin` properties, deprecated old, private viewOffset fields([2714](https://github.com/HaxeFlixel/flixel/pull/2714))
+
+#### Changes and improvements:
+- `FlxStrip`: allows shaders and color transforms ([2696](https://github.com/HaxeFlixel/flixel/pull/2696))
+
+#### Bugfixes:
+- `FlxSpriteGroup`: Fix `findMinY()` and `findMaxY()` returning `x` instead of `y` ([2713](https://github.com/HaxeFlixel/flixel/pull/2713))
 
 5.1.0 December 22, 2022
 ------------------------------
@@ -11,9 +18,6 @@
 #### New features:
 - `FlxArrayUtil`: Added `swap`, `swapByIndex`, `safeSwap` and `safeSwapByIndex` ([#2685](https://github.com/HaxeFlixel/flixel/pull/2685))
 - `FlxDirectionFlags`: Added `hasAny` ([#2705](https://github.com/HaxeFlixel/flixel/pull/2705))
-
-#### Changes and improvements:
-- `FlxStrip`: Added support for `color`, `colorTransform` and `shader` ([#2671](https://github.com/HaxeFlixel/flixel/pull/2671))
 
 #### Bugfixes:
 - `FlxPoint`: fixed math error in `rotate`, `pivotDegrees` and `pivotRadians` ([#2700](https://github.com/HaxeFlixel/flixel/pull/2700))

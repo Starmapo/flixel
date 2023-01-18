@@ -114,7 +114,7 @@ class FlxTilemapExt extends FlxTilemap
 		var scaledWidth:Float = tileWidth;
 		var scaledHeight:Float = tileHeight;
 
-		var _tileTransformMatrix:FlxMatrix = null;
+		var tileTransformMatrix:FlxMatrix = null;
 		var matrixToUse:FlxMatrix;
 
 		if (FlxG.renderBlit)
@@ -130,8 +130,13 @@ class FlxTilemapExt extends FlxTilemap
 		}
 
 		// Copy tile images into the tile buffer
+		#if (flixel < "5.2.0")
 		_point.x = (Camera.scroll.x * scrollFactor.x) - x - offset.x + Camera.viewOffsetX; // modified from getScreenPosition()
 		_point.y = (Camera.scroll.y * scrollFactor.y) - y - offset.y + Camera.viewOffsetY;
+		#else
+		_point.x = (Camera.scroll.x * scrollFactor.x) - x - offset.x + Camera.viewMarginX; // modified from getScreenPosition()
+		_point.y = (Camera.scroll.y * scrollFactor.y) - y - offset.y + Camera.viewMarginY;
+		#end
 
 		var screenXInTiles:Int = Math.floor(_point.x / tileWidth);
 		var screenYInTiles:Int = Math.floor(_point.y / tileHeight);
@@ -220,8 +225,8 @@ class FlxTilemapExt extends FlxTilemap
 
 						if (isSpecial)
 						{
-							_tileTransformMatrix = special.getMatrix();
-							matrixToUse = _tileTransformMatrix;
+							tileTransformMatrix = special.getMatrix();
+							matrixToUse = tileTransformMatrix;
 						}
 						else
 						{
@@ -318,18 +323,18 @@ class FlxTilemapExt extends FlxTilemap
 	{
 		var results:Bool = false;
 
-		var X:Float = x;
-		var Y:Float = y;
+		var useX:Float = x;
+		var useY:Float = y;
 
 		if (Position != null)
 		{
-			X = Position.x;
-			Y = Position.y;
+			useX = Position.x;
+			useY = Position.y;
 		}
 
 		// Figure out what tiles we need to check against
-		var selectionX:Int = Math.floor((Object.x - X) / tileWidth);
-		var selectionY:Int = Math.floor((Object.y - Y) / tileHeight);
+		var selectionX:Int = Math.floor((Object.x - useX) / tileWidth);
+		var selectionY:Int = Math.floor((Object.y - useY) / tileHeight);
 		var selectionWidth:Int = selectionX + (Math.ceil(Object.width / tileWidth)) + 1;
 		var selectionHeight:Int = selectionY + Math.ceil(Object.height / tileHeight) + 1;
 
@@ -345,8 +350,8 @@ class FlxTilemapExt extends FlxTilemap
 		var column:Int;
 		var tile:FlxTile;
 		var overlapFound:Bool;
-		var deltaX:Float = X - last.x;
-		var deltaY:Float = Y - last.y;
+		var deltaX:Float = useX - last.x;
+		var deltaY:Float = useY - last.y;
 
 		while (row < selectionHeight)
 		{
@@ -359,8 +364,8 @@ class FlxTilemapExt extends FlxTilemap
 
 				if (tile.allowCollisions != 0)
 				{
-					tile.x = X + column * tileWidth;
-					tile.y = Y + row * tileHeight;
+					tile.x = useX + column * tileWidth;
+					tile.y = useY + row * tileHeight;
 					tile.last.x = tile.x - deltaX;
 					tile.last.y = tile.y - deltaY;
 

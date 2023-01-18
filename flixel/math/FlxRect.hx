@@ -1,8 +1,8 @@
 package flixel.math;
 
 import flash.geom.Rectangle;
-import flixel.util.FlxPool;
 import flixel.util.FlxPool.IFlxPooled;
+import flixel.util.FlxPool;
 import flixel.util.FlxStringUtil;
 
 /**
@@ -348,24 +348,24 @@ class FlxRect implements IFlxPooled
 	{
 		if (origin == null)
 			origin = FlxPoint.weak();
-		
+
 		if (newRect == null)
 			newRect = FlxRect.get();
-		
+
 		degrees = degrees % 360;
 		if (degrees == 0)
 		{
 			origin.putWeak();
 			return newRect.set(x, y, width, height);
 		}
-		
+
 		if (degrees < 0)
 			degrees += 360;
-		
+
 		var radians = FlxAngle.TO_RAD * degrees;
 		var cos = Math.cos(radians);
 		var sin = Math.sin(radians);
-		
+
 		var left = -origin.x;
 		var top = -origin.y;
 		var right = -origin.x + width;
@@ -378,7 +378,7 @@ class FlxRect implements IFlxPooled
 		else if (degrees < 180)
 		{
 			newRect.x = x + origin.x + cos * right - sin * bottom;
-			newRect.y = y + origin.y + sin * left  + cos * bottom;
+			newRect.y = y + origin.y + sin * left + cos * bottom;
 		}
 		else if (degrees < 270)
 		{
@@ -391,10 +391,10 @@ class FlxRect implements IFlxPooled
 			newRect.y = y + origin.y + sin * right + cos * top;
 		}
 		// temp var, in case input rect is the output rect
-		var newHeight = Math.abs(cos * height) + Math.abs(sin * width );
-		newRect.width = Math.abs(cos * width ) + Math.abs(sin * height);
+		var newHeight = Math.abs(cos * height) + Math.abs(sin * width);
+		newRect.width = Math.abs(cos * width) + Math.abs(sin * height);
 		newRect.height = newHeight;
-		
+
 		origin.putWeak();
 		return newRect;
 	}
