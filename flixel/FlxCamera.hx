@@ -1882,7 +1882,7 @@ class FlxCamera extends FlxBasic
 		if (rect == null)
 			rect = FlxRect.get();
 
-		rect.set(viewMarginLeft, viewMarginTop, viewWidth, viewHeight)
+		rect.set(viewMarginLeft, viewMarginTop, viewWidth, viewHeight);
 		if (angle != 0)
 		{
 			rect.getRotatedBounds(angle, FlxPoint.weak(FlxMath.lerp(rect.left, rect.right, 0.5), FlxMath.lerp(rect.top, rect.bottom, 0.5)), rect);
