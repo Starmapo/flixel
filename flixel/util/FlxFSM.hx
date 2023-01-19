@@ -1,8 +1,6 @@
 package flixel.util;
 
 import flixel.util.FlxDestroyUtil;
-import flixel.math.FlxRandom;
-import flixel.FlxG;
 import flixel.util.FlxPool;
 import flixel.util.FlxSignal.FlxTypedSignal;
 

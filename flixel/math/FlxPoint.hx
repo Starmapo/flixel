@@ -71,8 +71,6 @@ import openfl.geom.Point;
  */
 @:forward abstract FlxPoint(FlxBasePoint) to FlxBasePoint from FlxBasePoint
 {
-	public static inline var EPSILON:Float = 0.0000001;
-	public static inline var EPSILON_SQUARED:Float = EPSILON * EPSILON;
 
 	static var _point1 = new FlxPoint();
 	static var _point2 = new FlxPoint();
@@ -801,7 +799,7 @@ import openfl.geom.Point;
 	 */
 	public inline function isPerpendicular(p:FlxPoint):Bool
 	{
-		return Math.abs(dotProduct(p)) < EPSILON_SQUARED;
+		return Math.abs(dotProduct(p)) < FlxMath.EPSILON_SQUARED;
 	}
 
 	/**
@@ -851,7 +849,7 @@ import openfl.geom.Point;
 	 */
 	inline function isParallelWeak(p:FlxPoint):Bool
 	{
-		return Math.abs(crossProductLengthWeak(p)) < EPSILON_SQUARED;
+		return Math.abs(crossProductLengthWeak(p)) < FlxMath.EPSILON_SQUARED;
 	}
 
 	/**
@@ -861,7 +859,7 @@ import openfl.geom.Point;
 	 */
 	public inline function isZero():Bool
 	{
-		return Math.abs(x) < EPSILON && Math.abs(y) < EPSILON;
+		return Math.abs(x) < FlxMath.EPSILON && Math.abs(y) < FlxMath.EPSILON;
 	}
 
 	/**
@@ -890,7 +888,7 @@ import openfl.geom.Point;
 	 */
 	public inline function isNormalized():Bool
 	{
-		return Math.abs(lengthSquared - 1) < EPSILON_SQUARED;
+		return Math.abs(lengthSquared - 1) < FlxMath.EPSILON_SQUARED;
 	}
 
 	/**
@@ -1114,7 +1112,7 @@ import openfl.geom.Point;
 	{
 		if (isParallelWeak(p))
 			return Math.NaN;
-		if (lengthSquared < EPSILON_SQUARED || p.lengthSquared < EPSILON_SQUARED)
+		if (lengthSquared < FlxMath.EPSILON_SQUARED || p.lengthSquared < FlxMath.EPSILON_SQUARED)
 			return Math.NaN;
 
 		_point1 = b.clone(_point1);

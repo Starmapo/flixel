@@ -49,6 +49,7 @@ class FlxMath
 	 * Used to account for floating-point inaccuracies.
 	 */
 	public static inline var EPSILON:Float = 0.0000001;
+	public static inline var EPSILON_SQUARED:Float = EPSILON * EPSILON;
 
 	/**
 	 * Round a decimal number to have reduced precision (less decimal numbers).
@@ -72,7 +73,7 @@ class FlxMath
 	}
 
 	/**
-	 * Floor a decimal number to have reduced precision (less decimal numbers).
+	 * Rounds down a decimal number to have reduced precision (less decimal numbers).
 	 *
 	 * ```haxe
 	 * roundDecimal(1.2485, 2) = 1.24
