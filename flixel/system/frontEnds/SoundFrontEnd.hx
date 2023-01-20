@@ -27,6 +27,11 @@ class SoundFrontEnd
 	public var music:FlxSound;
 
 	/**
+	 * Whether or not background music is currently playing.
+	 */
+	public var musicPlaying(get, never):Bool;
+
+	/**
 	 * Whether or not the game sounds are muted.
 	 */
 	public var muted:Bool = false;
@@ -465,6 +470,11 @@ class SoundFrontEnd
 			volumeHandler(param);
 		}
 		return volume = Volume;
+	}
+
+	function get_musicPlaying()
+	{
+		return music != null && music.active;
 	}
 }
 #end

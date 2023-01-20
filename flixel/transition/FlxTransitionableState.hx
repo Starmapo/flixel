@@ -129,7 +129,6 @@ class FlxTransitionableState extends FlxState
 
 			_trans.setStatus(FULL);
 			openSubState(_trans);
-			persistentUpdate = persistentDraw = true;
 
 			_trans.finishCallback = finishTransIn;
 			_trans.start(OUT);
@@ -148,7 +147,6 @@ class FlxTransitionableState extends FlxState
 
 			_trans.setStatus(EMPTY);
 			openSubState(_trans);
-			persistentUpdate = false;
 
 			_trans.finishCallback = finishTransOut;
 			_trans.start(IN);
