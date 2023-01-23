@@ -804,14 +804,14 @@ class FlxG
 		#end;
 	}
 
-	function onResizeGame(w:Int, h:Int)
+	static function onResizeGame(w:Int, h:Int)
 	{
 		if (cameras == null)
 			return;
 
 		for (cam in cameras.list)
 		{
-			if (cam != null && (cam.flashSprite.filters != null && cam.flashSprite.filters.length > 0))
+			if (cam != null && cam.flashSprite != null && (cam.flashSprite.filters != null && cam.flashSprite.filters.length > 0))
 			{
 				@:privateAccess {
 					var sprite:Sprite = camera.flashSprite;
