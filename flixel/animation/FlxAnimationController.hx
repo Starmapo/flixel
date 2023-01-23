@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxFrame;
 import flixel.math.FlxPoint;
-import flixel.util.FlxDestroyUtil.IFlxDestroyable;
 import flixel.util.FlxDestroyUtil;
 
 class FlxAnimationController implements IFlxDestroyable
@@ -97,6 +96,12 @@ class FlxAnimationController implements IFlxDestroyable
 		Set automatically when the first animation is played, but you can change it manually afterwards.
 	**/
 	public var defaultScale:FlxPoint = FlxPoint.get(1, 1);
+
+	/**
+		If the sprite's angle differs from this value, offsets will be rotated accordingly.
+		Set automatically when the first animation is played, but you can change it manually afterwards.
+	**/
+	public var defaultAngle:Float = 0;
 
 	/**
 		Whether the sprite's origin should be centered every time an animation is played.
@@ -728,9 +733,13 @@ class FlxAnimationController implements IFlxDestroyable
 					{
 						_point.y *= (_sprite.scale.y / defaultScale.y);
 					}
+					if (_sprite.angle != defaultAngle)
+					{
+						_point.rotateByDegrees(_sprite.angle - defaultAngle);
+					}
 				}
-				_sprite.offset.set(-0.5 * ((defaultSize.x * defaultScale.x) - defaultSize.x), -0.5 * ((defaultSize.y * defaultScale.y) - defaultSize.y));
-				_sprite.offset.addPoint(_point);
+				_sprite.offset.set((-0.5 * ((defaultSize.x * _sprite.scale.x) - defaultSize.x)) + _point.x,
+					(-0.5 * ((defaultSize.y * _sprite.scale.y) - defaultSize.y)) + _point.y);
 			}
 		}
 	}
@@ -780,6 +789,7 @@ class FlxAnimationController implements IFlxDestroyable
 			defaultFlipY = _sprite.flipY;
 			defaultSize.set(_sprite.frameWidth, _sprite.frameHeight);
 			defaultScale.copyFrom(_sprite.scale);
+			defaultAngle = _sprite.angle;
 			_firstAnim = false;
 		}
 
