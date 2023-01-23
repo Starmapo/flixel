@@ -1,6 +1,5 @@
 package flixel;
 
-import flixel.util.FlxStringUtil;
 import flash.Lib;
 import flash.display.DisplayObject;
 import flash.display.Stage;
@@ -28,6 +27,8 @@ import flixel.system.scaleModes.BaseScaleMode;
 import flixel.system.scaleModes.RatioScaleMode;
 import flixel.util.FlxCollision;
 import flixel.util.FlxSave;
+import flixel.util.FlxStringUtil;
+import openfl.display.Sprite;
 #if FLX_TOUCH
 import flixel.input.touch.FlxTouchManager;
 #end
@@ -627,6 +628,8 @@ class FlxG
 		#if FLX_SOUND_SYSTEM
 		sound = new SoundFrontEnd();
 		#end
+
+		signals.gameResized.add(onResizeGame);
 	}
 
 	static function initRenderMethod():Void
@@ -799,6 +802,30 @@ class FlxG
 		#else
 			false
 		#end;
+	}
+
+	function onResizeGame(w:Int, h:Int)
+	{
+		if (cameras == null)
+			return;
+
+		for (cam in cameras.list)
+		{
+			if (cam != null && (cam.flashSprite.filters != null && cam.flashSprite.filters.length > 0))
+			{
+				@:privateAccess {
+					var sprite:Sprite = camera.flashSprite;
+					if (sprite != null)
+					{
+						sprite.__cacheBitmap = null;
+						sprite.__cacheBitmapData = null;
+						sprite.__cacheBitmapData2 = null;
+						sprite.__cacheBitmapData3 = null;
+						sprite.__cacheBitmapColorTransform = null;
+					}
+				}
+			}
+		}
 	}
 }
 
